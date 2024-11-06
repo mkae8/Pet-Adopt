@@ -1,10 +1,10 @@
-// import { UserModel } from "../../src/database/models/userModel";
+import { UserModel } from "../../src/database/models/userModel";
 import bcrypt from "bcrypt";
 import env from "dotenv";
-// import { connectDataBase } from "../../src/database/config";
+import { connectDataBase } from "../../src/database/config";
 import jwt from "jsonwebtoken";
 env.config();
-// connectDataBase();
+connectDataBase();
 
 export const loginController = async (req: any, res: any) => {
   const { email, password } = req.body;
