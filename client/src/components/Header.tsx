@@ -5,12 +5,26 @@ import Link from "next/link";
 import { Button } from "../components/ui/button";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaX } from "react-icons/fa6";
+import axios from "axios";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleClick = async () => {
+    const { data } = await axios.get("/api/user");
+
+    console.log(data);
   };
 
   return (
@@ -20,21 +34,7 @@ export default function Header() {
           <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
             <div className="flex justify-start lg:w-0 lg:flex-1">
               <Link href="/" className="flex items-center">
-                <span className="sr-only">Your Company</span>
-                <svg
-                  className="h-8 w-auto sm:h-10 text-primary"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
+                <img src="logo.png" alt="" />
               </Link>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
@@ -68,8 +68,14 @@ export default function Header() {
               </Link>
             </nav>
             <div className="hidden md:flex items-center gap-3 justify-end md:flex-1 lg:w-0">
-              <Button>login</Button>
-              <Button>Register</Button>
+              <div className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
+                <SignedOut>
+                  <SignInButton />
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+              </div>
             </div>
           </div>
         </div>
@@ -88,13 +94,7 @@ export default function Header() {
                 href="/about"
                 className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
               >
-                About
-              </Link>
-              <Link
-                href="/services"
-                className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
-              >
-                Services
+                Adopt
               </Link>
               <Link
                 href="/contact"
@@ -105,7 +105,7 @@ export default function Header() {
             </div>
             <div className="pt-4 pb-3 border-t border-muted">
               <div className="px-2 flex flex-row gap-3">
-                <Button>login</Button>
+                <Button>Login</Button>
                 <Button>Register</Button>
               </div>
             </div>

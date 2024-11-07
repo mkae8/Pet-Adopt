@@ -13,21 +13,22 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center min-h-screen">
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-[url('/placeholder.svg')]">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-[url('/headerbanner-1.jpg')]">
+          <div className="container px-4 md:pl-10">
+            <div className="flex flex-col items-center  md:items-start space-y-4 text-center">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  Find Your Perfect Companion
+                <h1 className="text-3xl font-bold text-center tracking-tighter sm:text-4xl  md:text-start md:text-5xl lg:text-6xl/none">
+                  төгс хамтрагчаа олоорой
                 </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Give a loving home to a pet in need. Browse our adorable
-                  adoptable pets and start your journey to pet parenthood today.
+                <p className="mx-auto max-w-[700px] text-xs text-gray-500  md:text-start md:text-base dark:text-gray-400">
+                  тэжээвэр амьтанд хайраар дүүрэн гэр бүл бэлэглээрэй. Манай
+                  үрчлэгдэх өхөөрдөм тэжээвэр амьтдыг үзэж, өнөөдрөөс эхлэн
+                  тэжээвэр амьтдын эцэг эх болох аялалаа эхлүүлээрэй.
                 </p>
               </div>
-              <div className="space-x-4">
-                <Button>Find a Pet</Button>
-                <Button variant="outline">Learn More</Button>
+              <div className="space-x-4 ">
+                <Button>үрчлэх</Button>
+                <Button variant="outline">үрчлүүлэх</Button>
               </div>
             </div>
           </div>
@@ -35,12 +36,12 @@ export default function HomePage() {
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8">
-              Featured Pets
+              Онцлох тэжээвэр амьтад
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Buddy</CardTitle>
+                  <CardTitle>Нохой</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <img
@@ -54,15 +55,16 @@ export default function HomePage() {
                     }}
                     width="400"
                   />
-                  <p className="mt-2">Friendly Labrador, 3 years old</p>
                 </CardContent>
                 <CardFooter>
-                  <Button>Meet Buddy</Button>
+                  <Link href={"/buddy-list"}>
+                    <Button>Meet Buddy</Button>
+                  </Link>
                 </CardFooter>
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle>Whiskers</CardTitle>
+                  <CardTitle>Муур</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <img
@@ -76,15 +78,16 @@ export default function HomePage() {
                     }}
                     width="400"
                   />
-                  <p className="mt-2">Playful Tabby, 2 years old</p>
                 </CardContent>
                 <CardFooter>
-                  <Button>Meet Whiskers</Button>
+                  <Link href={"/whiskers-list"}>
+                    <Button>Meet Whiskers</Button>
+                  </Link>
                 </CardFooter>
               </Card>
               <Card>
                 <CardHeader>
-                  <CardTitle>Hoppy</CardTitle>
+                  <CardTitle>Туулай</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <img
@@ -98,10 +101,11 @@ export default function HomePage() {
                     }}
                     width="400"
                   />
-                  <p className="mt-2">Gentle Lop Rabbit, 1 year old</p>
                 </CardContent>
                 <CardFooter>
-                  <Button>Meet Hoppy</Button>
+                  <Link href={"/bunny-list"}>
+                    <Button>Meet Hoppy</Button>
+                  </Link>
                 </CardFooter>
               </Card>
             </div>
