@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import {
@@ -6,10 +7,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
+} from "@/components/ui/card";
+
+import { ToastAction } from "@/components/ui/toast";
 import { Heart, Home, Search, Menu } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function HomePage() {
+  const { toast } = useToast();
+
   return (
     <div className="flex flex-col items-center min-h-screen">
       <main className="flex-1">
@@ -27,8 +33,37 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="space-x-4 ">
-                <Button>үрчлэх</Button>
-                <Button variant="outline">үрчлүүлэх</Button>
+                <Button
+                  onClick={() => {
+                    toast({
+                      title: "Scheduled: Catch up ",
+                      description: "Friday, February 10, 2023 at 5:57 PM",
+                      action: (
+                        <ToastAction altText="Goto schedule to undo">
+                          Undo
+                        </ToastAction>
+                      ),
+                    });
+                  }}
+                >
+                  үрчлэх
+                </Button>
+                <Button
+                  onClick={() => {
+                    toast({
+                      title: "Scheduled: Catch up ",
+                      description: "Friday, February 10, 2023 at 5:57 PM",
+                      action: (
+                        <ToastAction altText="Goto schedule to undo">
+                          Undo
+                        </ToastAction>
+                      ),
+                    });
+                  }}
+                  variant="outline"
+                >
+                  үрчлүүлэх
+                </Button>
               </div>
             </div>
           </div>
