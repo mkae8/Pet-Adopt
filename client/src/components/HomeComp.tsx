@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/components/ui/Card";
 import { Heart, Home, Search, Menu } from "lucide-react";
 
 export default function HomePage() {

@@ -30,7 +30,8 @@
     "tailwindcss-animate": "^1.0.7",
     "toast": "^0.5.4",
     "ts-node": "^10.9.2",
-    "v0": "^2.2.5"
+    "v0": "^2.2.5",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
