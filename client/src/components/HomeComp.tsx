@@ -12,10 +12,14 @@ import {
 import { ToastAction } from "@/components/ui/toast";
 import { Heart, Home, Search, Menu } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const { toast } = useToast();
-
+  const data = useUser();
+  console.log(data);
+  const { push } = useRouter();
   return (
     <div className="flex flex-col items-center min-h-screen">
       <main className="flex-1">
@@ -35,34 +39,35 @@ export default function HomePage() {
               <div className="space-x-4 ">
                 <Button
                   onClick={() => {
-                    toast({
-                      title: "Scheduled: Catch up ",
-                      description: "Friday, February 10, 2023 at 5:57 PM",
-                      action: (
-                        <ToastAction altText="Goto schedule to undo">
-                          Undo
-                        </ToastAction>
-                      ),
-                    });
+                    push("/adopt");
                   }}
                 >
-                  үрчлэх
+                  амьтан үрчлэх
                 </Button>
                 <Button
                   onClick={() => {
-                    toast({
-                      title: "Scheduled: Catch up ",
-                      description: "Friday, February 10, 2023 at 5:57 PM",
-                      action: (
-                        <ToastAction altText="Goto schedule to undo">
-                          Undo
-                        </ToastAction>
-                      ),
-                    });
+                    if (!data.isSignedIn) {
+                      toast({
+                        title: "Нэвтэрч орно уу",
+                        description: "Бүртгэлгүй бол бүртгүүлнэ үү",
+                        action: (
+                          <ToastAction
+                            onClick={() => {
+                              push("/sign-in");
+                            }}
+                            altText="Goto schedule to undo"
+                          >
+                            нэвтрэх
+                          </ToastAction>
+                        ),
+                      });
+                    } else {
+                      push("/application");
+                    }
                   }}
                   variant="outline"
                 >
-                  үрчлүүлэх
+                  амьтан үрчлүүлэх
                 </Button>
               </div>
             </div>
