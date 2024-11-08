@@ -5,9 +5,9 @@ enum Sex {
   Female = "Female",
 }
 enum Size {
-  S = "S",
-  M = "M",
-  L = "L",
+  S = "Small",
+  M = "Medium",
+  L = "Large",
 }
 enum Status {
   Adopted = "Adopted",

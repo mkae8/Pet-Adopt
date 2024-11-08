@@ -4,13 +4,14 @@ import env from "dotenv";
 env.config();
 
 export const registerController = async (req: any, res: any) => {
-  const { username, email, address, password } = req.body;
+  const { firstname, lastname, email, address, password } = req.body;
 
   const hashedPassword = bcrypt.hashSync(password, 11);
 
   try {
     const newUser = await UserModel.create({
-      username,
+      firstname,
+      lastname,
       email,
       address,
       password: hashedPassword,
