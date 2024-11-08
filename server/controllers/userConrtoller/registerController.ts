@@ -1,26 +1,27 @@
 import { UserModel } from "../../src/database/models/userModel";
-import bcrypt from "bcrypt";
 import env from "dotenv";
 env.config();
 
 export const registerController = async (req: any, res: any) => {
-  const { firstname, lastname, email, address, password, phoneNumber } =
-    req.body;
+  const { firstName, username, lastName, email, id } = req.body;
 
-  const hashedPassword = bcrypt.hashSync(password, 11);
+  const isUserExisted = await UserModel.findOne({ authId: id });
 
-
-  try {
-    const newUser = await UserModel.create({
-      firstname,
-      lastname,
-      email,
-      address,
-      phoneNumber,
-      password: hashedPassword,
-    });
-    res.status(201).send({ message: "User created successfully" });
-  } catch (error) {
-    res.send({ message: "Email already registered" });
+  if (!isUserExisted) {
+    try {
+      await UserModel.create({
+        firstname: firstName,
+        authId: id,
+        username,
+        lastname: lastName,
+        email,
+      });
+      res.status(201).send({ message: "User created successfully" });
+    } catch (error) {
+      console.log(error);
+      res.send({ message: "Email already registered" });
+    }
+  } else {
+    res.status(200).send({ message: "Successfully Logged In" });
   }
 };
