@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "./ui/Button";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -12,7 +12,9 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
+  useUser,
 } from "@clerk/nextjs";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,12 +23,26 @@ export default function Header() {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleClick = async () => {
-    const { data } = await axios.get("/api/user");
-
-    console.log(data);
+  const user = useUser();
+  useEffect(() => {
+    console.log(user.user?.username);
+  });
+  const DotIcon = () => {
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 512 512"
+        fill="currentColor"
+      >
+        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
+      </svg>
+    );
   };
 
+  const pathname = usePathname();
+  if (pathname === "/sign-in" || pathname === "/sign-up") {
+    return null;
+  }
   return (
     <>
       <header className="bg-background shadow-sm sticky top-0 z-50">
@@ -68,14 +84,37 @@ export default function Header() {
               </Link>
             </nav>
             <div className="hidden md:flex items-center gap-3 justify-end md:flex-1 lg:w-0">
-              <div className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
-                <SignedOut>
-                  <SignInButton />
-                </SignedOut>
-                <SignedIn>
-                  <UserButton />
-                </SignedIn>
-              </div>
+              {user.isLoaded ? (
+                <div className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
+                  <SignedOut>
+                    <SignInButton>нэвтрэх</SignInButton>
+                  </SignedOut>
+                  <SignedIn>
+                    {user.user?.username}
+                    <UserButton>
+                      <UserButton.MenuItems>
+                        <UserButton.Action
+                          label="Help"
+                          labelIcon={<DotIcon />}
+                          open="help"
+                        />
+                      </UserButton.MenuItems>
+                      <UserButton.UserProfilePage
+                        label="Help"
+                        labelIcon={<DotIcon />}
+                        url="/help"
+                      >
+                        <div>
+                          <h1>Help Page</h1>
+                          <p>This is the custom help page</p>
+                        </div>
+                      </UserButton.UserProfilePage>
+                    </UserButton>
+                  </SignedIn>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
