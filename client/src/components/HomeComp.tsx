@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import {
@@ -6,10 +7,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/Card";
+} from "@/components/ui/card";
+
+import { ToastAction } from "@/components/ui/toast";
 import { Heart, Home, Search, Menu } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
 
 export default function HomePage() {
+  const { toast } = useToast();
+  const data = useUser();
+  console.log(data);
+  const { push } = useRouter();
   return (
     <div className="flex flex-col items-center min-h-screen">
       <main className="flex-1">
@@ -27,8 +37,38 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="space-x-4 ">
-                <Button>үрчлэх</Button>
-                <Button variant="outline">үрчлүүлэх</Button>
+                <Button
+                  onClick={() => {
+                    push("/adopt");
+                  }}
+                >
+                  амьтан үрчлэх
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (!data.isSignedIn) {
+                      toast({
+                        title: "Нэвтэрч орно уу",
+                        description: "Бүртгэлгүй бол бүртгүүлнэ үү",
+                        action: (
+                          <ToastAction
+                            onClick={() => {
+                              push("/sign-in");
+                            }}
+                            altText="Goto schedule to undo"
+                          >
+                            нэвтрэх
+                          </ToastAction>
+                        ),
+                      });
+                    } else {
+                      push("/application");
+                    }
+                  }}
+                  variant="outline"
+                >
+                  амьтан үрчлүүлэх
+                </Button>
               </div>
             </div>
           </div>
@@ -181,3 +221,4 @@ export default function HomePage() {
     </div>
   );
 }
+// a
