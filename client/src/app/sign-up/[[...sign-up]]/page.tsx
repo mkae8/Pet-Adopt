@@ -5,6 +5,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
+
     <div className="flex min-h-screen">
       <div className="hidden w-1/2 bg-primary bg-center lg:flex flex-col items-center gap-32 justify-between">
         <div className="flex justify-start items-center gap-4 w-4/5 h-[100px]">
@@ -42,6 +43,7 @@ export default function Page() {
           </div>
         </div>
       </div>
+
     </div>
   );
 }

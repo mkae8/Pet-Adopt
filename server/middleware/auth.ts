@@ -1,26 +1,17 @@
-import jwt from "jsonwebtoken";
+import { UserModel } from "../src/database/models/userModel";
 import env from "dotenv";
 
 env.config();
 
 export const authMiddleware = async (req: any, res: any, next: any) => {
-  const token = req.headers.authorization;
-
-  if (!token) {
+  const { id } = req.body;
+  if (!id) {
     return req.status(404).send({ message: "Token provided" });
   }
-
-  const jwtToken = token.split(" ")[1];
-
-  if (!jwtToken) {
-    return req.status(401).send({ message: "Token yostoo bhq bn shuu " });
+  const user = await UserModel.findOne({ authid: id });
+  if (!user) {
+    return res.status(401).send({ message: "oroogui bn" });
+  } else {
+    next();
   }
-  jwt.verify(jwtToken, process.env.SECRET as string, (err: any, succ: any) => {
-    if (err) {
-      return res.status(401).send({ message: err.message });
-    } else {
-      res.locals.userId = succ.id;
-      next();
-    }
-  });
 };
