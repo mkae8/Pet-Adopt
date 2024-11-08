@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import userRouter from "./router/users/userRouter";
+import petRouter from "./router/petAdopt/petRouter";
+import appRouter from "./router/application/appRouter";
 import { connectDataBase } from "./src/database/config";
 
 const port = process.env.PORT;
@@ -10,6 +12,8 @@ app.use(cors());
 connectDataBase();
 
 app.use("/", userRouter);
+app.use("/", petRouter);
+app.use("/", appRouter);
 
 app.listen(port, () => {
   console.log(`nee deer asna --> http://localhost:${port}`);

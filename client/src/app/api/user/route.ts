@@ -1,5 +1,6 @@
-export async function GET(res: Response, req: Request) {
-  console.log(123);
+import { NextRequest, NextResponse } from "next/server";
 
-  return new Response("hello");
+export async function GET(req: NextRequest) {
+  console.log(123);
+  return new NextResponse("hello");
 }

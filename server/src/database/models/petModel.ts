@@ -5,9 +5,9 @@ enum Sex {
   Female = "Female",
 }
 enum Size {
-  S = "Small",
-  M = "Medium",
-  L = "Large",
+  Small = "Small",
+  Medium = "Medium",
+  Large = "Large",
 }
 enum Status {
   Adopted = "Adopted",
@@ -17,8 +17,8 @@ enum Status {
 
 export type PetsModelType = {
   _id: Types.ObjectId;
-  userId: Types.ObjectId;
-  petCategory: Types.ObjectId[];
+  // userId: Types.ObjectId;
+  // petCategory: Schema.Types.ObjectId;
   petName: string;
   image: string[];
   description: string;
@@ -31,8 +31,8 @@ export type PetsModelType = {
 };
 
 const PetSchema = new Schema<PetsModelType>({
-  userId: { type: Schema.Types.ObjectId, required: true, ref: "Users" },
-  petCategory: { type: [Schema.Types.ObjectId], ref: "Categories" },
+  // userId: { type: Schema.Types.ObjectId, required: true, ref: "Users" },
+  // petCategory: { type: [Schema.Types.ObjectId], required: true ,ref: "Category" },
   petName: { type: String, required: true },
   image: { type: [String], required: true },
   description: { type: String, required: true },
