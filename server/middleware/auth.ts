@@ -5,12 +5,13 @@ env.config();
 
 export const authMiddleware = async (req: any, res: any, next: any) => {
   const { id } = req.body;
+
   if (!id) {
-    return req.status(404).send({ message: "Token provided" });
+    return res.status(404).send({ message: "Token provided" });
   }
-  const user = await UserModel.findOne({ authid: id });
+  const user = await UserModel.findOne({ authId: id });
   if (!user) {
-    return res.status(401).send({ message: "oroogui bn" });
+    return res.status(401).send({ message: "user bhq bn" });
   } else {
     next();
   }
