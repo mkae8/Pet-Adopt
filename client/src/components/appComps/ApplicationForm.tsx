@@ -63,7 +63,7 @@ export default function ApplicationForm() {
         question.id !== 8 &&
         (inputValue === "" || inputValue === undefined)
       ) {
-        setErrorMessage("Бүх асуултад хариулт бичнэ үү.");
+        setErrorMessage("Бүх асуултад хариулт бичнэ үү!");
         return;
       }
     }
