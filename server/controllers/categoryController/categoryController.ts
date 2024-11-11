@@ -5,8 +5,6 @@ env.config();
 export const categoryController = async (req: any, res: any) => {
   const { categoryName } = req.body;
 
-//   console.log(categoryName, "catname");
-
   if (!categoryName) {
     return res.status(400).send({ message: "hooson bn" });
   }

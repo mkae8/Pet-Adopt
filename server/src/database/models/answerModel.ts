@@ -2,7 +2,7 @@ import { Model, Schema, models, model, Types } from "mongoose";
 
 export type ApplicationModelType = {
   _id: Types.ObjectId;
-  petID: Types.ObjectId;
+  petId: Types.ObjectId;
   userId: Types.ObjectId;
   question1: string;
   question2: string;
@@ -11,13 +11,13 @@ export type ApplicationModelType = {
   question5: string;
   question6: string;
   question7: string;
-  question8: string;
+  question8: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
 
 const ApplicationSchema = new Schema<ApplicationModelType>({
-  petID: {
+  petId: {
     type: Schema.Types.ObjectId,
     required: true,
     ref: "Pet",
@@ -35,7 +35,7 @@ const ApplicationSchema = new Schema<ApplicationModelType>({
   question5: { type: String, required: true },
   question6: { type: String, required: true },
   question7: { type: String, required: true },
-  question8: { type: String, required: true },
+  question8: { type: Boolean, required: true },
 
   createdAt: {
     type: Date,

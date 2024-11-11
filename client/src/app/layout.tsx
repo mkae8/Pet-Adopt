@@ -123,7 +123,9 @@ export default function RootLayout({
           <Header />
 
           {children}
-          <Footer />
+          <div className="pt-20">
+            <Footer />
+          </div>
         </body>
       </html>
     </ClerkProvider>
