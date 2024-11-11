@@ -17,10 +17,13 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import FileUpload from "./FileUpload";
 
 // Амьтны мэдээлэл нэмэх Modal
 const PetAddModal = () => {
@@ -34,6 +37,7 @@ const PetAddModal = () => {
     weight: "",
     location: "",
     status: "",
+    file: null,
   });
 
   const handleChange = (
@@ -74,7 +78,28 @@ const PetAddModal = () => {
             Амьтны мэдээллийг оруулсаны дараа илгээх товчийг дараарай 😻
           </DialogDescription>
         </DialogHeader>
+
         <div className="grid gap-4 py-4">
+          <div className="pl-[142px]">
+            <Select>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Амьтны төрөл" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="dog">Нохой 🐕</SelectItem>
+                  <SelectItem value="cat">Муур 🐈</SelectItem>
+                  <SelectItem value="bird">Шувуу 🦜</SelectItem>
+                  <SelectItem value="rabbit">Туулай 🐇</SelectItem>
+                  <SelectItem value="hamster">Мэрэгч 🐹</SelectItem>
+                  <SelectItem value="fish">Загас 🐠</SelectItem>
+                  <SelectItem value="reptile">Мөлхөгч 🐢</SelectItem>
+                  <SelectItem value="more">Бусад</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="petName" className="text-right">
               Амьтны нэр
@@ -87,18 +112,7 @@ const PetAddModal = () => {
               className="col-span-3"
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="image" className="text-right">
-              Зурагны холбоос
-            </Label>
-            <Input
-              id="image"
-              value={formData.image}
-              onChange={handleChange}
-              placeholder="Cloudinary ашиглана.!!!"
-              className="col-span-3"
-            />
-          </div>
+
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="description" className="text-right">
               Тайлбар
@@ -196,6 +210,9 @@ const PetAddModal = () => {
                 </SelectItem>
               </SelectContent>
             </Select>
+          </div>
+          <div className="">
+            <FileUpload />
           </div>
         </div>
         <DialogFooter>
