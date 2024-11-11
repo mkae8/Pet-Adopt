@@ -38,7 +38,12 @@ export default function Header() {
   };
 
   const pathname = usePathname();
-  if (pathname === "/sign-in" || pathname === "/sign-up") {
+  if (
+    pathname === "/sign-in" ||
+    pathname === "/sign-up" ||
+    pathname === "/sign-up/verify-email-address" ||
+    pathname === "/sign-in/factor-one"
+  ) {
     return null;
   }
   return (
@@ -66,19 +71,19 @@ export default function Header() {
                 href="/"
                 className="text-base font-medium text-foreground hover:text-primary"
               >
-                Home
+                Нүүр
               </Link>
               <Link
                 href="/petcard"
                 className="text-base font-medium text-foreground hover:text-primary"
               >
-                Adopt
+                Үрчлэх
               </Link>
               <Link
                 href="/contact"
                 className="text-base font-medium text-foreground hover:text-primary"
               >
-                Contact
+                Холбоо барих
               </Link>
             </nav>
             <div className="hidden md:flex items-center gap-3 justify-end md:flex-1 lg:w-0">
@@ -125,25 +130,54 @@ export default function Header() {
                 href="/"
                 className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
               >
-                Home
+                Нүүр
               </Link>
               <Link
                 href="/about"
                 className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
               >
-                Adopt
+                Үрчлэх
               </Link>
               <Link
                 href="/contact"
                 className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
               >
-                Contact
+                Холбоо барих
               </Link>
             </div>
             <div className="pt-4 pb-3 border-t border-muted">
               <div className="px-2 flex flex-row gap-3">
-                <Button>Login</Button>
-                <Button>Register</Button>
+                {user.isLoaded ? (
+                  <div className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
+                    <SignedOut>
+                      <SignInButton>нэвтрэх</SignInButton>
+                    </SignedOut>
+                    <SignedIn>
+                      {user.user?.username}
+                      <UserButton>
+                        <UserButton.MenuItems>
+                          <UserButton.Action
+                            label="Help"
+                            labelIcon={<DotIcon />}
+                            open="help"
+                          />
+                        </UserButton.MenuItems>
+                        <UserButton.UserProfilePage
+                          label="Help"
+                          labelIcon={<DotIcon />}
+                          url="/help"
+                        >
+                          <div>
+                            <h1>Help Page</h1>
+                            <p>This is the custom help page</p>
+                          </div>
+                        </UserButton.UserProfilePage>
+                      </UserButton>
+                    </SignedIn>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
