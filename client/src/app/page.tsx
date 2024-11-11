@@ -21,7 +21,7 @@ const Home = () => {
             email: user.user?.emailAddresses[0].emailAddress,
           });
         } catch (error) {
-          console.error("Error registering user:", error);
+          console.log("Error registering user:", error);
         }
       };
       registerUser();
