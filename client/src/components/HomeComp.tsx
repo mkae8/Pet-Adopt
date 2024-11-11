@@ -18,7 +18,6 @@ import { useRouter } from "next/navigation";
 export default function HomePage() {
   const { toast } = useToast();
   const data = useUser();
-  console.log(data);
   const { push } = useRouter();
   return (
     <div className="flex flex-col items-center min-h-screen">

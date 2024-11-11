@@ -24,9 +24,7 @@ export default function Header() {
   };
 
   const user = useUser();
-  useEffect(() => {
-    console.log(user.user?.username);
-  });
+  useEffect(() => {});
   const DotIcon = () => {
     return (
       <svg

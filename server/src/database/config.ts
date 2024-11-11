@@ -3,7 +3,6 @@ import env from "dotenv";
 env.config();
 
 const URL: string = process.env.DB_URL || "";
-console.log(URL);
 
 export const connectDataBase = async () => {
   try {
