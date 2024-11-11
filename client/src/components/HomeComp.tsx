@@ -61,7 +61,7 @@ export default function HomePage() {
                         ),
                       });
                     } else {
-                      push("/application");
+                      push("/pet-add-adoption");
                     }
                   }}
                   variant="outline"
