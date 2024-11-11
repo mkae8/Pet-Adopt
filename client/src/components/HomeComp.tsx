@@ -38,7 +38,7 @@ export default function HomePage() {
               <div className="space-x-4 ">
                 <Button
                   onClick={() => {
-                    push("/adopt");
+                    push("/petcard");
                   }}
                 >
                   амьтан үрчлэх
