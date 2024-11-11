@@ -1,22 +1,36 @@
-import Link from "next/link";
-import { Input } from "@/components/ui/input";
+"use client";
 
-import { Facebook, Twitter, Instagram, Linkedin, Github } from "lucide-react";
-import { Button } from "./ui/button";
+import Link from "next/link";
+import { FaFacebook } from "react-icons/fa";
+import { GrInstagram } from "react-icons/gr";
+import { FaTwitter } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (
+    pathname === "/sign-in" ||
+    pathname === "/sign-up" ||
+    pathname === "/sign-up/verify-email-address" ||
+    pathname === "/sign-in//factor-one"
+  ) {
+    return null;
+  }
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-20">
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold">Company Name</h2>
+            <h2 className="text-2xl font-bold">Pet Adopt</h2>
             <p className="text-gray-300">
-              We are dedicated to providing the best service to our customers.
+              Бид үйлчлүүлэгчиддээ хамгийн сайн үйлчилгээг үзүүлэхийн төлөө
+              ажилладаг.
             </p>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4">Түргэн холбоосууд</h3>
             <ul className="space-y-2">
               <li>
                 <Link
@@ -28,18 +42,10 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/about"
+                  href="/adopt"
                   className="hover:text-gray-300 transition-colors"
                 >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services"
-                  className="hover:text-gray-300 transition-colors"
-                >
-                  Services
+                  Adopt
                 </Link>
               </li>
               <li>
@@ -53,70 +59,31 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+            <h3 className="text-lg font-semibold mb-4">
+              Бидэнтэй холбоо барина уу
+            </h3>
             <ul className="space-y-2 text-gray-300">
-              <li>123 Main St, City, Country</li>
-              <li>Phone: (123) 456-7890</li>
-              <li>Email: info@company.com</li>
+              <li>Chinggis Ave 17 40, СБД - 1 хороо, Улаанбаатар 14240</li>
+              <li>Phone: (976) 99484778</li>
+              <li>Email: Petadopt@gmail.com</li>
             </ul>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-4">
-              Subscribe to Our Newsletter
-            </h3>
-            <form className="space-y-2">
-              <Input
-                type="email"
-                placeholder="Enter your email"
-                className="bg-gray-800 border-gray-700 text-white placeholder-gray-400"
-              />
-              <Button type="submit" className="w-full">
-                Subscribe
-              </Button>
-            </form>
+          <div className="flex  gap-10">
+            <div className="flex flex-col gap-5 text-4xl">
+              <FaFacebook />
+              <GrInstagram />
+            </div>
+            <div className="flex flex-col gap-5 text-4xl">
+              <FaTwitter />
+              <FaGithub />
+            </div>
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-gray-400">
-            &copy; {new Date().getFullYear()} Company Name. All rights reserved.
+            &copy; {new Date().getFullYear()} Pet Adopt . Бүх эрх хуулиар
+            хамгаалагдсан.
           </p>
-          <div className="flex space-x-4 mt-4 sm:mt-0">
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <span className="sr-only">Facebook</span>
-              <Facebook className="h-6 w-6" />
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <span className="sr-only">Twitter</span>
-              <Twitter className="h-6 w-6" />
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <span className="sr-only">Instagram</span>
-              <Instagram className="h-6 w-6" />
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <span className="sr-only">LinkedIn</span>
-              <Linkedin className="h-6 w-6" />
-            </Link>
-            <Link
-              href="#"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              <span className="sr-only">GitHub</span>
-              <Github className="h-6 w-6" />
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
