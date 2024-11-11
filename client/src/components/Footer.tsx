@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 
 import { Facebook, Twitter, Instagram, Linkedin, Github } from "lucide-react";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 
 export default function Footer() {
   return (

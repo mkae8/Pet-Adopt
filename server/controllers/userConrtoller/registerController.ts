@@ -10,10 +10,10 @@ export const registerController = async (req: any, res: any) => {
   if (!isUserExisted) {
     try {
       await UserModel.create({
-        firstname: firstName,
+        firstName,
         authId: id,
         username,
-        lastname: lastName,
+        lastName,
         email,
       });
       res.status(201).send({ message: "User created successfully" });

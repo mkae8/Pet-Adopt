@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaX } from "react-icons/fa6";
 import axios from "axios";
