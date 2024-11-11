@@ -1,11 +1,11 @@
-"use client";
-
-// import AddPetForm from "@/components/petAddPage/AddPetForm";
+import PetAddPage from "@/components/petAddAdoption/PetAddPage";
 
 const PetAddAdoption = () => {
   return (
     <>
-      <div>{/* <AddPetForm /> */}</div>
+      <div>
+        <PetAddPage />
+      </div>
     </>
   );
 };
