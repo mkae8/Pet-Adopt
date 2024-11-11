@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 
 import { ToastAction } from "@/components/ui/toast";
-import { Heart, Home, Search, Menu } from "lucide-react";
+import { Heart, Home, Search, Menu, PawPrint } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -18,7 +18,6 @@ import { useRouter } from "next/navigation";
 export default function HomePage() {
   const { toast } = useToast();
   const data = useUser();
-  console.log(data);
   const { push } = useRouter();
   return (
     <div className="flex flex-col items-center min-h-screen">
@@ -154,32 +153,34 @@ export default function HomePage() {
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8">
-              Why Adopt?
+              Яагаад тэжээвэр амьтан үрчлэх вэ?
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="flex flex-col items-center text-center">
                 <Heart className="h-12 w-12 mb-4 text-primary" />
-                <h3 className="text-xl font-bold mb-2">Save a Life</h3>
+                <h3 className="text-xl font-bold mb-2">Амьдрал аврах</h3>
                 <p className="text-gray-500 dark:text-gray-400">
-                  By adopting, you're giving a deserving animal a second chance
-                  at a happy life.
+                  Үрчилж авснаар та амьтадад аз жаргалтай хоёр дахь боломжийг
+                  олгоно.
                 </p>
               </div>
               <div className="flex flex-col items-center text-center">
                 <Home className="h-12 w-12 mb-4 text-primary" />
-                <h3 className="text-xl font-bold mb-2">Gain a Companion</h3>
+                <h3 className="text-xl font-bold mb-2">
+                  Үнэнч хамтрагчтай болох
+                </h3>
                 <p className="text-gray-500 dark:text-gray-400">
-                  Adopted pets make wonderful, loving companions and lifelong
-                  friends.
+                  Үрчлэгдсэн тэжээвэр амьтад нь хайраар дүүрэн хамтрагч болж,
+                  насан туршийн амьдралын найзууд болдог.
                 </p>
               </div>
               <div className="flex flex-col items-center text-center">
+                <PawPrint className="h-12 w-12 mb-4 text-primary " />
                 <h3 className="text-xl font-bold mb-2">
-                  Support Animal Welfare
+                  Амьтны халамжийг дэмжинэ
                 </h3>
                 <p className="text-gray-500 dark:text-gray-400">
-                  Your adoption supports our efforts to rescue and care for
-                  animals in need.
+                  Тусламж хэрэгтэй амьтдыг аврах, халамжлах.
                 </p>
               </div>
             </div>
@@ -190,16 +191,16 @@ export default function HomePage() {
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Make a Difference
+                  Өөрчлөлт хийх
                 </h2>
                 <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Can't adopt right now? Consider volunteering or making a
-                  donation to support our mission.
+                  Одоо үрчилж авах боломжгүй байна бол тусламж хэрэгтэй амьтдад
+                  сайн дурын ажил хийх эсвэл хандив өгөх талаар бодож үзээрэй.
                 </p>
               </div>
               <div className="space-x-4">
-                <Button>Volunteer</Button>
-                <Button variant="outline">Donate</Button>
+                <Button>Сайн дурын ажилтан</Button>
+                <Button variant="outline">Хандив</Button>
               </div>
             </div>
           </div>
