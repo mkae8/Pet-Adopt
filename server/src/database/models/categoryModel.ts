@@ -7,6 +7,7 @@ export type CategoryModelType = {
   updatedAt: Date;
 };
 
+
 const CategorySchema = new Schema<CategoryModelType>(
   {
     categoryName: { type: String, unique: true, sparse: true },

@@ -2,7 +2,7 @@ import { ApplicationModel } from "../../src/database/models/answerModel";
 import { Request, Response } from "express";
 
 export const applicationForm = async (req: Request, res: Response) => {
-  const { id } = req.body;
+  const { petId, userId } = req.body;
 
   const {
     question1,
@@ -16,7 +16,7 @@ export const applicationForm = async (req: Request, res: Response) => {
   } = req.body;
   try {
     await ApplicationModel.create(
-      { authId: id },
+      {},
       {
         question1,
         question2,
