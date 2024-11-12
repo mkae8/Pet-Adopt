@@ -54,4 +54,76 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* styles.css or your global stylesheet */
+  .scale-enter {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  .scale-enter-active {
+    transform: scale(1);
+    opacity: 1;
+    transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+  }
+
+  .scale-exit {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .scale-exit-active {
+    transform: scale(0);
+    opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  }
+  .nav_link {
+    z-index: 500;
+    opacity: 0.7;
+    color: orange;
+    text-transform: uppercase;
+    padding: 0;
+    text-decoration: none;
+    transition: opacity 0.6s, transform 0.6s, color 0.6s;
+  }
+
+  .nhome_link {
+    text-decoration: none;
+    transition: color 0.6s;
+    position: static;
+  }
+
+  .btn_text {
+    z-index: 1;
+    color: black;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    position: relative;
+  }
+
+  .btn_color {
+    z-index: 0;
+    background-color: var(--orange);
+    position: absolute;
+    inset: 0%;
+  }
+  .style {
+    transform: translate3d(0px, 100%, 0px) scale3d(1, 1, 1) rotateX(0deg)
+      rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);
+    transform-style: preserve-3d;
+  }
+
+  .w-inline-block {
+    max-width: 100%;
+    display: inline-block;
+  }
+
+  .btn_main {
+    border: var(--border-width) solid var(--orange);
+    border-radius: var(--border-radius);
+    padding: 0.75rem 2rem;
+    position: relative;
+    overflow: hidden;
+  }
 }
