@@ -5,18 +5,16 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="flex min-h-screen">
-      <div className="hidden w-1/2 bg-primary bg-center lg:flex flex-col items-center gap-32 justify-between">
+    <div className="flex h-screen w-screen p-0 m-0 ">
+      <div className="hidden w-1/2 bg-primary bg-center lg:flex flex-col items-center gap-28 ">
         <div className="flex justify-start items-center gap-4 w-4/5 h-[100px]">
           <Link href={"/"}>
             <img className="w-[50px] h-[50px]" src="/logo.png" alt="" />
           </Link>
-          <Link href={"/"}>
-            <img src="/pet-adopt.png" alt="" />
-          </Link>
+          <Link href={"/"}>{/* <img src="/pet-adopt.png" alt="" /> */}</Link>
         </div>
-        <h2 className="mt-6 text-center text-8xl text-wrap font-extrabold text-gray-900">
-          Sign up to your account
+        <h2 className=" text-center text-8xl text-wrap font-extrabold text-[#FFDDD2]">
+          Бүртгүүлэх
         </h2>
         <Image
           src="/bg-1.png"
