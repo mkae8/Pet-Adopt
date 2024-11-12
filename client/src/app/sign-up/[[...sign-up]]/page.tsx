@@ -9,7 +9,7 @@ export default function Page() {
       <div className="hidden w-1/2 bg-primary bg-center lg:flex flex-col items-center gap-28 ">
         <div className="flex justify-start items-center gap-4 w-4/5 h-[100px]">
           <Link href={"/"}>
-            <img className="w-[50px] h-[50px]" src="/logo.png" alt="" />
+            <img className="w-[60px] h-[60px]  " src="/logo.png" alt="" />
           </Link>
           <Link href={"/"}>{/* <img src="/pet-adopt.png" alt="" /> */}</Link>
         </div>
