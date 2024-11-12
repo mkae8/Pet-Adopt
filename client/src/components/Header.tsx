@@ -43,7 +43,10 @@ export default function Header() {
     pathname === "/sign-up" ||
     pathname === "/sign-up/verify-email-address" ||
     pathname === "/application" ||
-    pathname === "/sign-in/factor-one"
+    pathname === "/sign-in/factor-one" ||
+    pathname === "/sign-in/factor-one" ||
+    pathname === "/sign-up/continue" ||
+    pathname === "/sign-in/sso-callback"
   ) {
     return null;
   }
