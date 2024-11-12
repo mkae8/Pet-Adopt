@@ -7,5 +7,4 @@ const userRouter = Router();
 
 userRouter.route("/user/register").post(registerController);
 userRouter.route("/user/update").post(authMiddleware, updateUserData);
-
 export default userRouter;
