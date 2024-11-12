@@ -51,7 +51,7 @@ const PetAddModal = () => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const missingFields = Object.entries(formData).filter(
       ([key, value]) => !value
     );
@@ -59,9 +59,40 @@ const PetAddModal = () => {
       alert("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
       return;
     }
-    alert("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
-    // Мэдээллийг серверт илгээх эсвэл бусад шаардлагатай үйлдлийг энд хийнэ.
+
+    // Серверт илгээх
+    try {
+      const response = await fetch("/api/pet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData), // Мэдээллийг JSON байдлаар илгээж байна
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        alert(data.message); // Серверээс хариу авна
+      } else {
+        alert("Амьтны мэдээлэл хадгалахад алдаа гарлаа.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Алдаа гарлаа. Дахин оролдож үзээрэй.");
+    }
   };
+
+  // const handleSubmit = () => {
+  //   const missingFields = Object.entries(formData).filter(
+  //     ([key, value]) => !value
+  //   );
+  //   if (missingFields.length > 0) {
+  //     alert("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
+  //     return;
+  //   }
+  //   alert("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
+  //   // Мэдээллийг серверт илгээх эсвэл бусад шаардлагатай үйлдлийг энд хийнэ.
+  // };
 
   return (
     <Dialog>
@@ -211,9 +242,7 @@ const PetAddModal = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="">
-            <FileUpload />
-          </div>
+          <div className="">{/* <FileUpload /> */}</div>
         </div>
         <DialogFooter>
           <Button type="button" onClick={handleSubmit}>
