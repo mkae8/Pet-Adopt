@@ -42,6 +42,7 @@ export default function Header() {
     pathname === "/sign-in" ||
     pathname === "/sign-up" ||
     pathname === "/sign-up/verify-email-address" ||
+    pathname === "/application" ||
     pathname === "/sign-in/factor-one"
   ) {
     return null;

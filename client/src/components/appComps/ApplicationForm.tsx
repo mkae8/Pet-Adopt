@@ -2,8 +2,16 @@
 
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
-import { Checkbox } from "../ui/checkbox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useUser } from "@clerk/nextjs";
 
 interface Question {
   id: number;
@@ -34,17 +42,21 @@ export default function ApplicationForm() {
     },
   ];
 
-  const [isChildPresent, setIsChildPresent] = useState<boolean>(false);
+  const user = useUser();
+  console.log(user);
+  useEffect(() => {}, [user]);
+
   const [inputValues, setInputValues] = useState<{
-    [id: number]: string | boolean;
+    [id: number]: string | undefined;
   }>({});
   const [errorMessage, setErrorMessage] = useState<string>("");
+  const [selectedValue, setSelectedValue] = useState<string>("");
 
-  const handleCheckboxChange = () => {
-    setIsChildPresent(!isChildPresent);
+  const handleSelectChange = (value: string) => {
+    setSelectedValue(value);
     setInputValues((prev) => ({
       ...prev,
-      8: !isChildPresent,
+      8: value,
     }));
   };
 
@@ -61,7 +73,7 @@ export default function ApplicationForm() {
 
       if (
         question.id !== 8 &&
-        (inputValue === "" || inputValue === undefined)
+        (inputValue === "" || inputValue === undefined || selectedValue === "")
       ) {
         setErrorMessage("Бүх асуултад хариулт бичнэ үү!");
         return;
@@ -80,16 +92,25 @@ export default function ApplicationForm() {
             return (
               <div
                 key={index}
-                className="flex justify-center items-center gap-5"
+                className="flex justify-start items-center gap-5"
               >
                 <label>
                   {question.id}.{question.text}
                 </label>
-                <Checkbox
-                  checked={isChildPresent}
-                  onClick={handleCheckboxChange}
-                  className="w-5 h-5 rounded-[5px]"
-                />
+                <Select
+                  value={selectedValue}
+                  onValueChange={handleSelectChange}
+                >
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Сонгох" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="Тийм">Тийм</SelectItem>
+                      <SelectItem value="Үгүй">Үгүй</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
             );
           }
