@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaX } from "react-icons/fa6";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import {
   ClerkProvider,
   SignInButton,
@@ -46,19 +47,39 @@ export default function Header() {
   ) {
     return null;
   }
+
+  const router = useRouter();
+
   return (
     <>
       <header className="bg-background shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4 md:justify-start md:space-x-10">
-            <div className="flex justify-start lg:w-0 lg:flex-1">
-              <Link href="/" className="flex items-center">
-                <img
-                  src="logo.png"
-                  alt=""
-                  className="w-[35px] h-[35px] rounded-xl"
-                />
-              </Link>
+          <div className="flex justify-between  items-center py-4 md:justify-start md:space-x-10">
+            <Link href="/" className="flex items-center">
+              <img
+                src="logo.png"
+                alt=""
+                className="w-[35px] h-[35px] rounded-xl"
+              />
+            </Link>
+            <div className="flex justify-start lg:w-0 lg:flex-1 items-center">
+              <nav className="hidden md:flex space-x-10">
+                <Link href="/" className=" hover:nav_link nhome_link btn_text">
+                  Нүүр
+                </Link>
+                <Link
+                  href="/petcard"
+                  className=" hover:nav_link nhome_link btn_text"
+                >
+                  Үрчлэх
+                </Link>
+                <Link
+                  href="/contact"
+                  className=" hover:nav_link nhome_link btn_text"
+                >
+                  Холбоо барих
+                </Link>
+              </nav>
             </div>
             <div className="-mr-2 -my-2 md:hidden">
               <Button
@@ -70,26 +91,7 @@ export default function Header() {
                 {isMenuOpen ? <FaX /> : <GiHamburgerMenu />}
               </Button>
             </div>
-            <nav className="hidden md:flex space-x-10">
-              <Link
-                href="/"
-                className="text-base font-medium text-foreground hover:text-primary"
-              >
-                Нүүр
-              </Link>
-              <Link
-                href="/petcard"
-                className="text-base font-medium text-foreground hover:text-primary"
-              >
-                Үрчлэх
-              </Link>
-              <Link
-                href="/contact"
-                className="text-base font-medium text-foreground hover:text-primary"
-              >
-                Холбоо барих
-              </Link>
-            </nav>
+
             <div className="hidden md:flex items-center gap-3 justify-end md:flex-1 lg:w-0">
               {user.isLoaded ? (
                 <div className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
@@ -137,7 +139,7 @@ export default function Header() {
                 Нүүр
               </Link>
               <Link
-                href="/about"
+                href="/petcard"
                 className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
               >
                 Үрчлэх
