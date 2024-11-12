@@ -123,7 +123,7 @@ export default function RootLayout({
           <Header />
 
           {children}
-          <div className="pt-20">
+          <div className="">
             <Footer />
           </div>
         </body>

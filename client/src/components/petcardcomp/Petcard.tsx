@@ -70,130 +70,49 @@ const pets: Pet[] = [
       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
   },
   {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
+    id: 5,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
     imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
   },
   {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
+    id: 6,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
     imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
   },
   {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
+    id: 7,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
     imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
   },
   {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
+    id: 8,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
     imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
   },
   {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
+    id: 9,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
     imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
   },
 ];
 
@@ -238,77 +157,86 @@ export default function Petcard() {
   const [sliceCount, setSliceCount] = useState(8);
 
   return (
-    <div className="container mx-auto p-4 bg-light-pink">
-      <h1 className="text-2xl font-bold mb-4">Pet Adoption</h1>
-      <div className="mb-4 flex gap-4 ">
-        {types.map((type, index) => (
-          <div
-            key={index}
-            className="w-[95px] h-[52px] border rounded-full flex items-center justify-center gap-2 bg-white hover:bg-regal-blue transition ease-in-out duration-300"
-          >
-            <img
-              className="h-[32px] w-[32px] rounded-full "
-              src={type.imageUrl}
-              alt=""
-            />
-            <div>{type.names}</div>
-          </div>
-        ))}
-      </div>
-      <div className="flex flex-col items-center">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {pets.slice(0, sliceCount).map((pet) => (
-            <div
-              key={pet.id}
-              className="cursor-pointer h-[380px] bg-white rounded-lg blur-[10]"
-              onClick={() => openModal(pet)}
-            >
-              <img
-                src={pet.imageUrl}
-                alt={pet.name}
-                className="w-full h-[250px] rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-              />
-              <div className="ml-4 mt-2">
-                <div className="text-2xl font-semibold">{pet.name}</div>
-                <div className="text-xl font-normal ">{pet.breed}</div>
-                <div className="text-lg">{pet.age}</div>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="container mx-auto p-4">
+        <div className="flex flex-col md:flex-row justify-between items-center mt-3">
+          <h1 className="text-2xl font-bold mb-4 md:mb-0">Meet Our Friends</h1>
+          <div className="flex gap-4 overflow-x-auto">
+            {types.map((type, index) => (
+              <div
+                key={index}
+                className="min-w-[80px] md:min-w-[100px] h-[45px] rounded-full flex items-center justify-center gap-2 cursor-pointer bg-white border hover:bg-[#F97316] transition ease-in-out duration-300 hover:text-white"
+              >
+                <img
+                  className="h-[32px] w-[32px] rounded-full"
+                  src={type.imageUrl}
+                  alt=""
+                />
+                <div>{type.names}</div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-        <Button
-          className="flex flex-col self-center h-[68px] w-[175px] rounded-full mt-3"
-          onClick={() => setSliceCount((prev) => prev + 8)}
-        >
-          See more
-        </Button>
-      </div>
-      <Dialog open={selectedPet !== null} onOpenChange={closeModal}>
-        {selectedPet && (
-          <DialogContent className="sm:max-w-[651px] ">
-            <div className="flex">
-              <img
-                src={selectedPet.imageUrl}
-                alt={selectedPet.name}
-                className="w-[392px] h-[300px] rounded-lg shadow-md"
-              />
-              <div className="flex flex-col ml-3 justify-between">
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <p className="col-span-3">{selectedPet.description}</p>
+
+        <div className="flex flex-col items-center gap-8 mt-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {pets.slice(0, sliceCount).map((pet) => (
+              <div
+                key={pet.id}
+                className="cursor-pointer h-[380px] bg-white rounded-lg flex flex-col justify-between "
+                onClick={() => openModal(pet)}
+              >
+                <img
+                  src={pet.imageUrl}
+                  alt={pet.name}
+                  className="w-full h-[200px] md:h-[250px] object-cover rounded-[16px] shadow-md hover:shadow-lg transition-shadow duration-300"
+                />
+                <div className="mt-2 p-4">
+                  <div className="text-xl md:text-2xl font-semibold">
+                    {pet.name}
                   </div>
-                  <DialogHeader>
-                    <DialogTitle>{selectedPet.name}</DialogTitle>
-                    <DialogDescription>
-                      {selectedPet.breed} • {selectedPet.age}
-                    </DialogDescription>
-                  </DialogHeader>
+                  <div className="text-lg md:text-xl font-normal">
+                    {pet.breed}
+                  </div>
+                  <div className="text-md md:text-lg">{pet.age}</div>
                 </div>
-                <div>
-                  <DialogFooter>
+              </div>
+            ))}
+          </div>
+          <Button
+            className="h-12 w-40 md:h-16 md:w-48 rounded-full mt-3 text-lg md:text-xl"
+            onClick={() => setSliceCount((prev) => prev + 8)}
+          >
+            See more
+          </Button>
+        </div>
+
+        <Dialog open={selectedPet !== null} onOpenChange={closeModal}>
+          {selectedPet && (
+            <DialogContent className="sm:max-w-[90%] md:max-w-[700px] h-[430px] p-0 md: rounded-[32px]">
+              <div className="flex flex-col  md:flex-row">
+                <img
+                  src={selectedPet.imageUrl}
+                  alt={selectedPet.name}
+                  className="w-full  md:w-[50%] h-[250px] md:h-auto  rounded-lg shadow-md object-cover  "
+                />
+                <div className="flex flex-col mt-4 md:mt-0 md:ml-4 justify-between items-center md:items-start">
+                  <div className="text-center md:text-left border mt-6">
+                    <DialogTitle className="text-2xl md:text-3xl font-bold">
+                      {selectedPet.name}
+                    </DialogTitle>
+                    <DialogHeader>
+                      <p className="text-lg md:text-xl mt-2">
+                        {selectedPet.description}
+                      </p>
+                      <DialogDescription className="text-md md:text-lg mt-1">
+                        {selectedPet.breed} • {selectedPet.age}
+                      </DialogDescription>
+                    </DialogHeader>
+                  </div>
+                  <DialogFooter className="mt-4 md:mt-8 w-full">
                     <Button
-                      className="flex flex-col justify-end"
-                      type="submit"
+                      className="w-full md:w-auto px-8 py-3 text-lg md:text-xl"
                       onClick={closeModal}
                     >
                       Adopt {selectedPet.name}
@@ -316,10 +244,10 @@ export default function Petcard() {
                   </DialogFooter>
                 </div>
               </div>
-            </div>
-          </DialogContent>
-        )}
-      </Dialog>
+            </DialogContent>
+          )}
+        </Dialog>
+      </div>
     </div>
   );
 }
