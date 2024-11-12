@@ -12,17 +12,15 @@ export default function Page() {
   const { push } = useRouter();
   if (!user) {
     return (
-      <div className="flex min-h-screen">
+      <div className="flex h-screen w-screen p-0 m-0 ">
         <div className="hidden w-1/2 bg-primary bg-center lg:flex flex-col items-center gap-32 justify-between">
           <div className="flex justify-start items-center gap-4 w-4/5 h-[100px]">
             <Link href={"/"}>
-              <img className="" src="/logo.png" alt="" />
+              <img className="w-[60px] h-[60px] mt-5" src="/logo.png" alt="" />
             </Link>
-            <Link href={"/"}>
-              <img src="/pet-adopt.png" alt="" />
-            </Link>
+            <Link href={"/"}>{/* <img src="/pet-adopt.png" alt="" /> */}</Link>
           </div>
-          <h2 className=" text-center text-8xl text-wrap font-extrabold text-gray-900">
+          <h2 className=" text-center text-8xl text-wrap font-extrabold text-[#FFDDD2]">
             Нэвтрэх
           </h2>
           <Image

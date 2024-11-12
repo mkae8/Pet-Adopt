@@ -2272,6 +2272,7 @@ framer-motion@^11.11.11:
   dependencies:
     tslib "^2.4.0"
 
+
 framer@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/framer/-/framer-2.4.1.tgz#4cee197e7a6a50f111ce552c4b93cf940976f90f"
@@ -2282,6 +2283,7 @@ framer@^2.4.1:
     fontfaceobserver "^2.1.0"
     hoist-non-react-statics "^3.3.2"
     hsluv "^0.0.3"
+
 
 fresh@0.5.2:
   version "0.5.2"
