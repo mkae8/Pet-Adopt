@@ -533,7 +533,7 @@ etag@~1.8.1:
 
 express@^4.21.1:
   version "4.21.1"
-  resolved "https://registry.npmjs.org/express/-/express-4.21.1.tgz"
+  resolved "https://registry.yarnpkg.com/express/-/express-4.21.1.tgz#9dae5dda832f16b4eec941a4e44aa89ec481b281"
   integrity sha512-YSFlK1Ee0/GC8QaO91tHcDxJiE/X4FbpAyQWkxAvG6AXCuR65YzK8ua6D9hvi/TzUfZMpc+BwuM1IPw8fmQBiQ==
   dependencies:
     accepts "~1.3.8"
