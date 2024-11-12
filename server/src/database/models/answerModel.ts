@@ -11,7 +11,7 @@ export type ApplicationModelType = {
   question5: string;
   question6: string;
   question7: string;
-  question8: boolean;
+  question8: string;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -28,14 +28,14 @@ const ApplicationSchema = new Schema<ApplicationModelType>({
     ref: "User",
   },
 
-  question1: { type: String, required: true },
-  question2: { type: String, required: true },
-  question3: { type: String, required: true },
-  question4: { type: String, required: true },
-  question5: { type: String, required: true },
-  question6: { type: String, required: true },
-  question7: { type: String, required: true },
-  question8: { type: Boolean, required: true },
+  question1: { type: String, required: false },
+  question2: { type: String, required: false },
+  question3: { type: String, required: false },
+  question4: { type: String, required: false },
+  question5: { type: String, required: false },
+  question6: { type: String, required: false },
+  question7: { type: String, required: false },
+  question8: { type: String, required: false },
 
   createdAt: {
     type: Date,

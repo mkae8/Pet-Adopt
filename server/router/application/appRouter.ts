@@ -1,11 +1,9 @@
 import { Router } from "express";
 import { applicationForm } from "../../controllers/applicationController/applicationForm";
-import { authMiddleware } from "../../middleware/auth";
+// import { authMiddleware } from "../../middleware/auth";
 
 const appRouter = Router();
 
-
-appRouter.route("/applicationForm").post(authMiddleware, applicationForm);
-
+appRouter.route("/applicationForm").post( applicationForm);
 
 export default appRouter;
