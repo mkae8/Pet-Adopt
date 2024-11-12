@@ -1,6 +1,5 @@
 "use client";
 
-
 import Link from "next/link";
 import { FaFacebook } from "react-icons/fa";
 import { GrInstagram } from "react-icons/gr";
@@ -10,12 +9,12 @@ import { usePathname } from "next/navigation";
 import { Facebook, Twitter, Instagram, Linkedin, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-
 export default function Footer() {
   const pathname = usePathname();
   if (
     pathname === "/sign-in" ||
     pathname === "/sign-up" ||
+    pathname === "/application" ||
     pathname === "/sign-up/verify-email-address" ||
     pathname === "/sign-in//factor-one"
   ) {
