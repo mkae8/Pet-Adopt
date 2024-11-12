@@ -12,7 +12,7 @@ const Home = () => {
     if (user.isLoaded) {
       const registerUser = async () => {
         try {
-          const res = await axios.post("http://localhost:8000/user/register", {
+          await axios.post("http://localhost:8000/user/register", {
             firstName: user.user?.firstName,
             username: user.user?.username,
             lastName: user.user?.lastName,
@@ -28,16 +28,13 @@ const Home = () => {
     }
     const userDataUpdate = async () => {
       try {
-        const updateData = await axios.post(
-          "http://localhost:8000/user/update",
-          {
-            firstName: user.user?.firstName,
-            username: user.user?.username,
-            lastName: user.user?.lastName,
-            id: user.user?.id,
-            email: user.user?.emailAddresses[0].emailAddress,
-          }
-        );
+        await axios.post("http://localhost:8000/user/update", {
+          firstName: user.user?.firstName,
+          username: user.user?.username,
+          lastName: user.user?.lastName,
+          id: user.user?.id,
+          email: user.user?.emailAddresses[0].emailAddress,
+        });
       } catch (error) {
         console.log("Error updating user:", error);
       }
