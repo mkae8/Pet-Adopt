@@ -107,18 +107,18 @@ export default function Header() {
                     <UserButton>
                       <UserButton.MenuItems>
                         <UserButton.Action
-                          label="Help"
+                          label="Хүсэлтүүд"
                           labelIcon={<DotIcon />}
-                          open="help"
+                          open="Хүсэлтүүд"
                         />
                       </UserButton.MenuItems>
                       <UserButton.UserProfilePage
-                        label="Help"
+                        label="Хүсэлтүүд"
                         labelIcon={<DotIcon />}
                         url="/help"
                       >
                         <div>
-                          <h1>Help Page</h1>
+                          <h1>Хүсэлтүүд</h1>
                           <p>This is the custom help page</p>
                         </div>
                       </UserButton.UserProfilePage>

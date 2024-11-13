@@ -68,9 +68,21 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center min-h-screen">
       <main className="flex-1 w-screen justify-center">
-        <section className="w-full  py-12 md:py-24 lg:py-32 xl:py-48 bg-[url('/headerbanner-1.jpg')]">
-          <div className="container px-4 md:pl-10">
-            <div className="flex flex-col items-center  md:items-start space-y-4 text-center">
+        <section className="w-full h-screen mt-[-72px] flex justify-center py-12 md:py-24 lg:py-32 xl:py-48 bg-[url('/headerbanner-1.jpg')]">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 z-0 h-full bg-black w-full object-cover"
+          >
+            <source
+              src="https://videos.pexels.com/video-files/7546824/7546824-hd_1920_1080_30fps.mp4"
+              type="video/mp4"
+            />
+          </video>
+          <div className="container px-4 z-10 flex  md:pl-10">
+            <div className="flex flex-col items-center justify-center  md:items-start space-y-4 text-center">
               <motion.div
                 ref={ref2}
                 initial={{ opacity: 0, x: 50 }}
@@ -81,10 +93,10 @@ export default function HomePage() {
                 className=""
               >
                 <div className="space-y-2">
-                  <h1 className="text-3xl font-bold text-center tracking-tighter sm:text-4xl  md:text-start md:text-5xl lg:text-6xl/none">
+                  <h1 className="text-3xl font-bold text-center text-primary tracking-tighter sm:text-4xl  md:text-start md:text-5xl lg:text-6xl/none">
                     төгс хамтрагчаа олоорой
                   </h1>
-                  <p className="mx-auto max-w-[700px] text-xs text-gray-500  md:text-start md:text-base dark:text-gray-400">
+                  <p className="mx-auto max-w-[700px] text-xs text-white  md:text-start md:text-base dark:text-gray-400">
                     тэжээвэр амьтанд хайраар дүүрэн гэр бүл бэлэглээрэй. Манай
                     үрчлэгдэх өхөөрдөм тэжээвэр амьтдыг үзэж, өнөөдрөөс эхлэн
                     тэжээвэр амьтдын эцэг эх болох аялалаа эхлүүлээрэй.
@@ -128,7 +140,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+        <section className="w-full flex justify-center py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8">
               Онцлох тэжээвэр амьтад
@@ -150,7 +162,7 @@ export default function HomePage() {
                   <CardContent>
                     <img
                       alt="Buddy the dog"
-                      className="w-full h-60 object-cover rounded-md"
+                      className="w-full h-60 sm:h-48 object-cover rounded-md"
                       height="300"
                       src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s"
                       style={{
@@ -183,7 +195,7 @@ export default function HomePage() {
                   <CardContent>
                     <img
                       alt="Whiskers the cat"
-                      className="w-full h-60 object-cover rounded-md"
+                      className="w-full h-60 sm:h-48 object-cover rounded-md"
                       height="300"
                       src="https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_640.jpg"
                       style={{
@@ -216,7 +228,7 @@ export default function HomePage() {
                   <CardContent>
                     <img
                       alt="Hoppy the rabbit"
-                      className="w-full h-60 object-cover rounded-md"
+                      className="w-full h-60 sm:h-48 object-cover rounded-md"
                       height="300"
                       src="https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg"
                       style={{
@@ -236,7 +248,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32">
+        <section className="w-full flex justify-center py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
             <motion.div
               ref={ref1}
@@ -311,7 +323,7 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+        <section className="w-full flex justify-center py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-2">
