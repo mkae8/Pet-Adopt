@@ -237,7 +237,7 @@ const PetAddModal = () => {
 
         <DialogFooter>
           <Button type="button" onClick={handleSubmit}>
-            Мэдээлэл илгээх
+            Мэдээлэл илгээх TEST 72branch
           </Button>
         </DialogFooter>
       </DialogContent>
