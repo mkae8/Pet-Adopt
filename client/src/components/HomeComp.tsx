@@ -77,12 +77,12 @@ export default function HomePage() {
             className="absolute inset-0 z-0 h-full bg-black w-full object-cover"
           >
             <source
-              src="https://cdn.prod.website-files.com/660ec32bbacc0061824a8104/664295fa0468ba64ee2b4259_Video%20landing%20hd%20Loop-transcode.mp4"
+              src="https://videos.pexels.com/video-files/7546824/7546824-hd_1920_1080_30fps.mp4"
               type="video/mp4"
             />
           </video>
-          <div className="container px-4 z-10  md:pl-10">
-            <div className="flex flex-col items-center  md:items-start space-y-4 text-center">
+          <div className="container px-4 z-10 flex  md:pl-10">
+            <div className="flex flex-col items-center justify-center  md:items-start space-y-4 text-center">
               <motion.div
                 ref={ref2}
                 initial={{ opacity: 0, x: 50 }}
@@ -93,10 +93,10 @@ export default function HomePage() {
                 className=""
               >
                 <div className="space-y-2">
-                  <h1 className="text-3xl font-bold text-center tracking-tighter sm:text-4xl  md:text-start md:text-5xl lg:text-6xl/none">
+                  <h1 className="text-3xl font-bold text-center text-primary tracking-tighter sm:text-4xl  md:text-start md:text-5xl lg:text-6xl/none">
                     төгс хамтрагчаа олоорой
                   </h1>
-                  <p className="mx-auto max-w-[700px] text-xs text-gray-500  md:text-start md:text-base dark:text-gray-400">
+                  <p className="mx-auto max-w-[700px] text-xs text-white  md:text-start md:text-base dark:text-gray-400">
                     тэжээвэр амьтанд хайраар дүүрэн гэр бүл бэлэглээрэй. Манай
                     үрчлэгдэх өхөөрдөм тэжээвэр амьтдыг үзэж, өнөөдрөөс эхлэн
                     тэжээвэр амьтдын эцэг эх болох аялалаа эхлүүлээрэй.
