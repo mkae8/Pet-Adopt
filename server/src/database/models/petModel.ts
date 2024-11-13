@@ -45,7 +45,12 @@ const PetSchema = new Schema<PetsModelType>({
   size: { type: String, enum: Object.values(Size), required: true },
   weight: { type: String, required: true },
   location: { type: String, required: true },
-  status: { type: String, enum: Object.values(Status), required: true },
+  status: {
+    type: String,
+    enum: Object.values(Status),
+    required: true,
+    default: Status.Pending,
+  },
 });
 
 export const PetModel: Model<PetsModelType> =

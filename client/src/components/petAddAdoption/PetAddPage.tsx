@@ -19,26 +19,26 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import FileUpload from "./FileUpload";
+import { useUser } from "@clerk/nextjs";
 
 // Амьтны мэдээлэл нэмэх Modal
 const PetAddModal = () => {
   const [formData, setFormData] = useState({
-    petName: "",
-    image: "",
-    description: "",
-    age: "",
-    sex: "",
-    size: "",
-    weight: "",
-    location: "",
-    status: "",
-    file: null,
+    petName: "d",
+    // image: "",
+    description: "d",
+    age: "18",
+    sex: "Male",
+    size: "Small",
+    weight: "d",
+    location: "d",
+    // file: null,
   });
+
+  const { user } = useUser();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -51,7 +51,7 @@ const PetAddModal = () => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const missingFields = Object.entries(formData).filter(
       ([key, value]) => !value
     );
@@ -59,15 +59,35 @@ const PetAddModal = () => {
       alert("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
       return;
     }
-    alert("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
-    // Мэдээллийг серверт илгээх эсвэл бусад шаардлагатай үйлдлийг энд хийнэ.
+
+    try {
+      const response = await fetch("http://localhost:8000/create/pet", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...formData, id: user?.id }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Алдаа:", errorData);
+        alert(`Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`);
+        return;
+      }
+
+      alert("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Алдаа гарлаа.");
+    }
   };
 
   return (
     <Dialog>
       {/* Dialog-г идэвхжүүлэх товч */}
       <DialogTrigger asChild>
-        <Button className="bg-transparent border-2 border-current ">
+        <Button className="bg-transparent border-2 border-current">
           Үрчлүүлэх амьтны мэдээлэл оруулах
         </Button>
       </DialogTrigger>
@@ -81,7 +101,9 @@ const PetAddModal = () => {
 
         <div className="grid gap-4 py-4">
           <div className="pl-[142px]">
-            <Select>
+            <Select
+              onValueChange={(value) => handleSelectChange("type", value)}
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Амьтны төрөл" />
               </SelectTrigger>
@@ -201,7 +223,7 @@ const PetAddModal = () => {
               onValueChange={(value) => handleSelectChange("status", value)}
             >
               <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="" />
+                <SelectValue placeholder="Статус сонгоно уу" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Available">Үрчлүүлэх боломжтой</SelectItem>
@@ -211,10 +233,8 @@ const PetAddModal = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="">
-            <FileUpload />
-          </div>
         </div>
+
         <DialogFooter>
           <Button type="button" onClick={handleSubmit}>
             Мэдээлэл илгээх
@@ -234,7 +254,6 @@ const PetAddPage = () => {
         alt="Pet Background"
         className="w-full h-full object-cover"
       />
-
       <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 mb-10">
         <PetAddModal />
       </div>
