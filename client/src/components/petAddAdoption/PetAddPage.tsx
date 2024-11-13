@@ -71,7 +71,7 @@ const PetAddModal = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Алдаа:", errorData);
+        console.log("Алдаа:", errorData);
         alert(`Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`);
 
         return;

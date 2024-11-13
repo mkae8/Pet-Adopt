@@ -58,11 +58,10 @@ export const Test = () => {
       });
       return;
     }
-
     console.log(process.env.BACKEND_URL);
 
     try {
-      await axios.post(`http://localhost:8000/create/pet`, newPetItem);
+      await axios.post(`http://localhost:8000/create/pet`);
 
       toast({
         title: "amjilttai yvuullaa zaaaa",
@@ -75,7 +74,6 @@ export const Test = () => {
       });
       console.error(error);
     }
-    console.log(newPetItem);
   };
 
   return (
