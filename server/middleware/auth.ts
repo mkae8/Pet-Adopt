@@ -15,6 +15,7 @@ export const authMiddleware = async (req: any, res: any, next: any) => {
     if (!user) {
       return res.status(401).send({ message: "User not found" });
     }
+    res.locals.userId = user._id;
     next();
   } catch (error) {
     console.log(error);
