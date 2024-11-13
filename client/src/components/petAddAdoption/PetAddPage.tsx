@@ -1,7 +1,9 @@
 "use client";
 
+
 import { motion } from "framer-motion";
 import PetAddModal from "./PetAddModal";
+
 
 // Хуудсын үндсэн хэсэг
 const PetAddPage = () => {

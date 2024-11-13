@@ -1,10 +1,10 @@
+import { Request, Response } from "express";
 import { PetModel } from "../../src/database/models/petModel";
 
-export const fetchPets = async (req: any, res: any): Promise<void> => {
+export const fetchPets = async (req: Request, res: Response): Promise<void> => {
   try {
     const pets = await PetModel.find().populate("petCategory");
     console.log(pets);
-
     res.status(200).send(pets);
   } catch (error) {
     console.log(error);

@@ -43,7 +43,6 @@ export default function ApplicationForm() {
   ];
 
   const user = useUser();
-  console.log(user);
   useEffect(() => {}, [user]);
 
   const [inputValues, setInputValues] = useState<{
