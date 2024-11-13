@@ -11,7 +11,6 @@ enum Size {
 }
 enum Status {
   Adopted = "Adopted",
-  Canceled = "Canceled",
   Pending = "Pending",
 }
 
@@ -31,10 +30,10 @@ export type PetsModelType = {
 };
 
 const PetSchema = new Schema<PetsModelType>({
-  userId: { type: Schema.Types.ObjectId, required: true, ref: "Users" },
+  userId: { type: Schema.Types.ObjectId, required: false, ref: "Users" },
   petCategory: {
     type: [Schema.Types.ObjectId],
-    required: true,
+    required: false,
     ref: "Category",
   },
   petName: { type: String, required: true },
