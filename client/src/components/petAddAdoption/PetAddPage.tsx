@@ -27,14 +27,14 @@ import { useUser } from "@clerk/nextjs";
 // Амьтны мэдээлэл нэмэх Modal
 const PetAddModal = () => {
   const [formData, setFormData] = useState({
-    petName: "d",
+    petName: "",
     // image: "",
-    description: "d",
-    age: "18",
-    sex: "Male",
-    size: "Small",
-    weight: "d",
-    location: "d",
+    description: "",
+    age: "",
+    sex: "",
+    size: "",
+    weight: "",
+    location: "",
     // file: null,
   });
 
@@ -71,7 +71,7 @@ const PetAddModal = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.error("Алдаа:", errorData);
+        console.log("Алдаа:", errorData);
         alert(`Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`);
         return;
       }
