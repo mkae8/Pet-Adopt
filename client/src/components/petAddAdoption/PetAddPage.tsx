@@ -257,7 +257,6 @@ const PetAddModal = () => {
   );
 };
 
-// Хуудсын үндсэн хэсэг
 const PetAddPage = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full h-full bg-gray-100 relative">

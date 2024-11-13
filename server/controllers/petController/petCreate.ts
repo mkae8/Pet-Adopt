@@ -48,6 +48,6 @@ export const petCreate = async (req: any, res: any) => {
   } catch (error) {
     console.log(error);
 
-    res.status(500).send({ message: "Failed to create pet" });
+    res.status(500).send({ message: "Failed to create pet", error });
   }
 };
