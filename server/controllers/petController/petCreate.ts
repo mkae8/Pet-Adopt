@@ -7,8 +7,8 @@ export const petCreate = async (req: any, res: any) => {
 
   const {
     petName,
-    // petCategory,
-    // image,
+    petCategory,
+    image,
     age,
     sex,
     size,
@@ -19,8 +19,8 @@ export const petCreate = async (req: any, res: any) => {
 
   if (
     !petName ||
-    // !petCategory ||
-    // !image ||
+    !petCategory ||
+    !image ||
     !description ||
     !age ||
     !sex ||
@@ -35,8 +35,8 @@ export const petCreate = async (req: any, res: any) => {
     const newPet = await PetModel.create({
       userId,
       petName,
-      //   petCategory,
-      // image,
+      petCategory,
+      image,
       age,
       sex,
       size,
