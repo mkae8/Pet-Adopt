@@ -8,14 +8,20 @@ const Test = () => {
   const [accessUrl, setAccessUrl] = useState<string | null>(null);
 
   const getPresignedURL = async () => {
-    const { data } = await axios.get("http://localhost:8000/image");
-    return data as { uploadUrl: string; accessUrls: string };
+    try {
+      const { data } = await axios.get("http://localhost:8000/image");
+      console.log("Presigned URL data:", data);
+      return data as { uploadUrl: string; accessUrls: string };
+    } catch (error) {
+      console.log("Error fetching presigned URL:", error);
+      throw error;
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      setImage(files[0]);
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(file);
     }
   };
 
@@ -23,9 +29,13 @@ const Test = () => {
     if (image) {
       try {
         const { uploadUrl, accessUrls } = await getPresignedURL();
+        console.log("Uploading to:", uploadUrl);
+
         await axios.put(uploadUrl, image, {
           headers: { "Content-Type": image.type },
         });
+        console.log("Image successfully uploaded");
+
         setAccessUrl(accessUrls);
       } catch (error) {
         console.log("Upload failed:", error);
@@ -50,7 +60,9 @@ const Test = () => {
           </div>
         )}
         {image && !accessUrl && (
-          <button onClick={uploadImage} className="btn"></button>
+          <button onClick={uploadImage} className="btn border">
+            Upload
+          </button>
         )}
       </div>
     </div>

@@ -1,5 +1,5 @@
 "use client";
-import type { Metadata } from "next";
+
 import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -7,8 +7,7 @@ import { ClerkProvider, useUser } from "@clerk/nextjs";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
 import { localization } from "./util/localization";
-import { useEffect } from "react";
-import axios from "axios";
+
 import UserControl from "@/components/userData/UserControl";
 
 const geistSans = localFont({

@@ -14,7 +14,7 @@ const UserControl = ({
     if (user.isLoaded) {
       const registerUser = async () => {
         try {
-          await axios.post("http://localhost:8000/user/register", {
+          await axios.post(`${process.env.BACKEND_URL}/user/register`, {
             firstName: user.user?.firstName,
             username: user.user?.username,
             lastName: user.user?.lastName,
@@ -30,7 +30,7 @@ const UserControl = ({
     }
     const userDataUpdate = async () => {
       try {
-        await axios.post("http://localhost:8000/user/update", {
+        await axios.post(`${process.env.BACKEND_URL}/user/update`, {
           firstName: user.user?.firstName,
           username: user.user?.username,
           lastName: user.user?.lastName,
