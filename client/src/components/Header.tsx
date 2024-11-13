@@ -54,7 +54,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-background shadow-sm sticky top-0 z-50">
+      <header className="bg-primary shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between  items-center py-4 md:justify-start md:space-x-10">
             <Link href="/" className="flex items-center">
@@ -96,30 +96,23 @@ export default function Header() {
 
             <div className="hidden md:flex items-center gap-3 justify-end md:flex-1 lg:w-0">
               {user.isLoaded ? (
-                <div className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
+                <div className="bg-black cursor-pointer text-primary-foreground hover:bg-slate-800 h-10 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0">
                   <SignedOut>
                     <SignInButton>нэвтрэх</SignInButton>
                   </SignedOut>
                   <SignedIn>
                     {user.user?.username}
+
                     <UserButton>
                       <UserButton.MenuItems>
                         <UserButton.Action
                           label="Хүсэлтүүд"
                           labelIcon={<DotIcon />}
-                          open="Хүсэлтүүд"
+                          onClick={() => {
+                            router.push("/requests");
+                          }}
                         />
                       </UserButton.MenuItems>
-                      <UserButton.UserProfilePage
-                        label="Хүсэлтүүд"
-                        labelIcon={<DotIcon />}
-                        url="/help"
-                      >
-                        <div>
-                          <h1>Хүсэлтүүд</h1>
-                          <p>This is the custom help page</p>
-                        </div>
-                      </UserButton.UserProfilePage>
                     </UserButton>
                   </SignedIn>
                 </div>
@@ -165,18 +158,18 @@ export default function Header() {
                       <UserButton>
                         <UserButton.MenuItems>
                           <UserButton.Action
-                            label="Help"
+                            label="Хүсэлтүүд"
                             labelIcon={<DotIcon />}
-                            open="help"
+                            open="Хүсэлтүүд"
                           />
                         </UserButton.MenuItems>
                         <UserButton.UserProfilePage
-                          label="Help"
+                          label="Хүсэлтүүд"
                           labelIcon={<DotIcon />}
                           url="/help"
                         >
                           <div>
-                            <h1>Help Page</h1>
+                            <h1>Хүсэлтүүд</h1>
                             <p>This is the custom help page</p>
                           </div>
                         </UserButton.UserProfilePage>

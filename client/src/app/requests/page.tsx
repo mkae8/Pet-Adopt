@@ -62,9 +62,14 @@ const Requests = () => {
     },
   ]);
   const userid = useUser();
+
   useEffect(() => {
-    const { data }: any = axios.get(`http/localhost:8000/pet-get/:${userid}`);
-    setRequests;
+    console.log(userid);
+
+    // const { data }: any = axios.get(
+    //   `http/localhost:8000/applicationForm/:${userid}`
+    // );
+    // setRequests;
   });
 
   const closeModal = () => {
