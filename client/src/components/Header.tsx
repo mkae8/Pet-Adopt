@@ -68,7 +68,7 @@ export default function Header() {
             </Link>
             <div className="flex justify-start lg:w-0 lg:flex-1 items-center">
               <nav className="hidden md:flex space-x-10">
-                <Link href="/" className=" hover:nav_link nhome_link btn_text">
+                <Link href="/" className=" hover:nav_link nhome_link btn_text ">
                   Нүүр
                 </Link>
                 <Link
