@@ -15,6 +15,7 @@ export const petCreate = async (req: any, res: any) => {
     weight,
     description,
     location,
+    status,
   } = req.body;
 
   if (
@@ -43,6 +44,7 @@ export const petCreate = async (req: any, res: any) => {
       weight,
       description,
       location,
+      status,
     });
     res.status(201).send({ message: "Pet created successfully", newPet });
   } catch (error) {

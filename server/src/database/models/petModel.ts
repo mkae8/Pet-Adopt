@@ -10,15 +10,14 @@ enum Size {
   Large = "Large",
 }
 enum Status {
-  Adopted = "Adopted",
-  Canceled = "Canceled",
-  Pending = "Pending",
+  Available = "Үрчлүүлэх боломжтой",
+  Pending = "  Одоогоор хүлээгдэж байгаа",
 }
 
 export type PetsModelType = {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
-  petCategoryId: Types.ObjectId[]; 
+  petCategoryId: Types.ObjectId[];
   petName: string;
   image: string[];
   description: string;
@@ -49,7 +48,6 @@ const PetSchema = new Schema<PetsModelType>({
     type: String,
     enum: Object.values(Status),
     required: true,
-    default: Status.Pending,
   },
 });
 
