@@ -5,7 +5,7 @@ import { v4 } from "uuid";
 
 const S3 = new S3Client({
   endpoint:
-    "https://d1e63a97bd9bdf37484760e242740173.r2.cloudflarestorage.com/pet",
+    "https://d1e63a97bd9bdf37484760e242740173.r2.cloudflarestorage.com/",
   credentials: {
     accessKeyId: "1343dcde52f9ced06a783ea586cdcced",
     secretAccessKey:

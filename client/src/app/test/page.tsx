@@ -9,19 +9,11 @@ const Test = () => {
 
   const getPresignedURL = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/image");
-      console.log("Presigned URL data:", data);
+      const { data } = await axios.get(`${process.env.BACKEND_URL}/image`);
       return data as { uploadUrl: string; accessUrls: string };
     } catch (error) {
-      console.log("Error fetching presigned URL:", error);
+      console.log(error);
       throw error;
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
     }
   };
 
@@ -29,8 +21,6 @@ const Test = () => {
     if (image) {
       try {
         const { uploadUrl, accessUrls } = await getPresignedURL();
-        console.log("Uploading to:", uploadUrl);
-
         await axios.put(uploadUrl, image, {
           headers: { "Content-Type": image.type },
         });
@@ -38,8 +28,15 @@ const Test = () => {
 
         setAccessUrl(accessUrls);
       } catch (error) {
-        console.log("Upload failed:", error);
+        console.log(error);
       }
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(file);
     }
   };
 

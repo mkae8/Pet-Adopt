@@ -1,5 +1,5 @@
-import { PetModel } from "../../src/database/models/petModel";
 import env from "dotenv";
+import { PetModel } from "../../src/database/models/petModel";
 env.config();
 
 export const petCreate = async (req: any, res: any) => {
@@ -7,7 +7,7 @@ export const petCreate = async (req: any, res: any) => {
 
   const {
     petName,
-    petCategory,
+    petCategoryId,
     image,
     age,
     sex,
@@ -19,7 +19,7 @@ export const petCreate = async (req: any, res: any) => {
 
   if (
     !petName ||
-    !petCategory ||
+    !petCategoryId ||
     !image ||
     !description ||
     !age ||
@@ -35,7 +35,7 @@ export const petCreate = async (req: any, res: any) => {
     const newPet = await PetModel.create({
       userId,
       petName,
-      petCategory,
+      petCategoryId,
       image,
       age,
       sex,
@@ -47,7 +47,6 @@ export const petCreate = async (req: any, res: any) => {
     res.status(201).send({ message: "Pet created successfully", newPet });
   } catch (error) {
     console.log(error);
-
-    res.status(500).send({ message: "Failed to create pet" });
+    res.status(500).send({ message: "Failed to create pet", error });
   }
 };
