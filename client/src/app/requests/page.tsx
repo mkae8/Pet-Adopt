@@ -14,51 +14,187 @@ import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+
+interface Question {
+  id: number;
+  text: string;
+}
 
 interface Request {
   id: number;
-  title: string;
-  status: "pending" | "completed";
+  name: string;
+  userName: string;
+  breed: string;
+  age: string;
   description: string;
+  imageUrl: string;
+  status: "pending" | "completed";
+  applicationForm: Question[];
 }
 
 const Requests = () => {
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
 
-  const openModal = (request: Request) => {
-    setSelectedRequest(request);
+  const openModal = (requests: Request) => {
+    setSelectedRequest(requests);
   };
+
+  const questions: Question[] = [
+    { id: 1, text: "Танд яагаад амьтан үрчлэн авах сонирхол төрсөн бэ?" },
+    { id: 2, text: "Таны амьдрах орчин ямар вэ?" },
+    { id: 3, text: "Танд өөр амьтад бий юу?" },
+    {
+      id: 4,
+      text: "Өмнө нь амьтан тэжээж байсан уу? Хэрэв тийм бол юу болсон бэ?",
+    },
+    { id: 5, text: "Өдөр бүр амьтанд хэр их цаг зарцуулах боломжтой вэ?" },
+    {
+      id: 6,
+      text: "Хэрэв та аялалд гарах эсвэл удаан хугацаагаар хол байх шаардлага гарвал амьтандаа хэрхэн анхаарал тавих төлөвлөгөөтэй вэ?",
+    },
+    {
+      id: 7,
+      text: "Амьтны хоол, малын эмчид үзүүлэх, яаралтай тусламж зэрэг зардлуудад санхүүгийн хувьд бэлтгэлтэй юу?",
+    },
+    {
+      id: 8,
+      text: "Танай өрхөд хүүхэд эсвэл бусад хараат хүн байгаа уу?",
+    },
+  ];
 
   const [requests, setRequests] = useState<Request[]>([
     {
       id: 1,
-      title: "New Feature Request",
+      name: "Buddy",
+      userName: "temkaa",
+      breed: "Golden Retriever",
+      age: "3 years",
+      description: "Friendly and energetic, loves to play fetch!",
+      imageUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
       status: "pending",
-      description: "Add dark mode to the application",
+      applicationForm: [
+        { id: 1, text: "Танд яагаад амьтан үрчлэн авах сонирхол төрсөн бэ?" },
+        { id: 2, text: "Таны амьдрах орчин ямар вэ?" },
+        { id: 3, text: "Танд өөр амьтад бий юу?" },
+        {
+          id: 4,
+          text: "Өмнө нь амьтан тэжээж байсан уу? Хэрэв тийм бол юу болсон бэ?",
+        },
+        { id: 5, text: "Өдөр бүр амьтанд хэр их цаг зарцуулах боломжтой вэ?" },
+        {
+          id: 6,
+          text: "Хэрэв та аялалд гарах эсвэл удаан хугацаагаар хол байх шаардлага гарвал амьтандаа хэрхэн анхаарал тавих төлөвлөгөөтэй вэ?",
+        },
+        {
+          id: 7,
+          text: "Амьтны хоол, малын эмчид үзүүлэх, яаралтай тусламж зэрэг зардлуудад санхүүгийн хувьд бэлтгэлтэй юу?",
+        },
+        {
+          id: 8,
+          text: "Танай өрхөд хүүхэд эсвэл бусад хараат хүн байгаа уу?",
+        },
+      ],
     },
     {
       id: 2,
-      title: "Bug Report",
+      name: "Rex",
+      breed: "German Shepherd",
+      userName: "norov",
+      age: "4 years",
+      description: "Loyal and protective, great with families.",
+      imageUrl:
+        "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
       status: "pending",
-      description: "Fix login issue on mobile devices",
+      applicationForm: [
+        { id: 1, text: "Танд яагаад амьтан үрчлэн авах сонирхол төрсөн бэ?" },
+        { id: 2, text: "Таны амьдрах орчин ямар вэ?" },
+        { id: 3, text: "Танд өөр амьтад бий юу?" },
+        {
+          id: 4,
+          text: "Өмнө нь амьтан тэжээж байсан уу? Хэрэв тийм бол юу болсон бэ?",
+        },
+        { id: 5, text: "Өдөр бүр амьтанд хэр их цаг зарцуулах боломжтой вэ?" },
+        {
+          id: 6,
+          text: "Хэрэв та аялалд гарах эсвэл удаан хугацаагаар хол байх шаардлага гарвал амьтандаа хэрхэн анхаарал тавих төлөвлөгөөтэй вэ?",
+        },
+        {
+          id: 7,
+          text: "Амьтны хоол, малын эмчид үзүүлэх, яаралтай тусламж зэрэг зардлуудад санхүүгийн хувьд бэлтгэлтэй юу?",
+        },
+        {
+          id: 8,
+          text: "Танай өрхөд хүүхэд эсвэл бусад хараат хүн байгаа ууӨмнө нь амьтан тэжээж байсан уу? Хэрэв тийм бол юу болсон бэ??",
+        },
+      ],
     },
     {
       id: 3,
-      title: "Performance Improvement",
-      status: "completed",
-      description: "Optimize database queries for faster load times",
+      name: "Rex",
+      breed: "German Shepherd",
+      userName: "temkaa",
+      age: "4 years",
+      description: "Loyal and protective, great with families.",
+      imageUrl:
+        "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
+      status: "pending",
+      applicationForm: [
+        { id: 1, text: "Танд яагаад амьтан үрчлэн авах сонирхол төрсөн бэ?" },
+        { id: 2, text: "Таны амьдрах орчин ямар вэ?" },
+        { id: 3, text: "Танд өөр амьтад бий юу?" },
+        {
+          id: 4,
+          text: "Өмнө нь амьтан тэжээж байсан уу? Хэрэв тийм бол юу болсон бэ?",
+        },
+        { id: 5, text: "Өдөр бүр амьтанд хэр их цаг зарцуулах боломжтой вэ?" },
+        {
+          id: 6,
+          text: "Хэрэв та аялалд гарах эсвэл удаан хугацаагаар хол байх шаардлага гарвал амьтандаа хэрхэн анхаарал тавих төлөвлөгөөтэй вэ?",
+        },
+        {
+          id: 7,
+          text: "Амьтны хоол, малын эмчид үзүүлэх, яаралтай тусламж зэрэг зардлуудад санхүүгийн хувьд бэлтгэлтэй юу?",
+        },
+        {
+          id: 8,
+          text: "Танай өрхөд хүүхэд эсвэл бусад хараат хүн байгаа ууӨмнө нь амьтан тэжээж байсан уу? Хэрэв тийм бол юу болсон бэ??",
+        },
+      ],
     },
     {
       id: 4,
-      title: "UI Enhancement",
-      status: "pending",
-      description: "Redesign the dashboard for better user experience",
-    },
-    {
-      id: 5,
-      title: "Security Update",
-      status: "pending",
-      description: "Implement two-factor authentication",
+      name: "Fluffy",
+      breed: "Persian Cat",
+      userName: "temkaa",
+      age: "5 years",
+      description: "Gentle and quiet, loves to be groomed.",
+      imageUrl:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
+      status: "completed",
+      applicationForm: [
+        { id: 1, text: "pigland uzeed" },
+        { id: 2, text: "Pigland" },
+        { id: 3, text: "Pig" },
+        {
+          id: 4,
+          text: "Norovoo",
+        },
+        { id: 5, text: "3tsag" },
+        {
+          id: 6,
+          text: "zarna",
+        },
+        {
+          id: 7,
+          text: "uzuulkue",
+        },
+        {
+          id: 8,
+          text: "baigaa",
+        },
+      ],
     },
   ]);
   const userid = useUser();
@@ -108,7 +244,12 @@ const Requests = () => {
                 >
                   <CardHeader>
                     <CardTitle className="flex justify-between items-center">
-                      <div className="truncate">{request.title}</div>
+                      <div className="truncate flex items-center gap-2">
+                        <Avatar>
+                          <AvatarImage src={request.imageUrl} alt="@petadopt" />
+                        </Avatar>
+                        {request.name}
+                      </div>
                       <Badge
                         className={`${getStatusColor(
                           request.status
@@ -120,16 +261,17 @@ const Requests = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-sm text-gray-500 truncate">
-                      {request.description}
+                      {request.userName}
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
             <Dialog open={selectedRequest !== null} onOpenChange={closeModal}>
-              <DialogContent className="sm:max-w-[425px] z-[100]">
+              {/* max-w-l */}
+              <DialogContent className=" z-[100] min-w-[1500px]">
                 <DialogHeader>
-                  <DialogTitle>{selectedRequest?.title}</DialogTitle>
+                  <DialogTitle>{selectedRequest?.userName}</DialogTitle>
                   <div>
                     <Badge
                       className={`${getStatusColor(
@@ -140,9 +282,20 @@ const Requests = () => {
                     </Badge>
                   </div>
                 </DialogHeader>
-                <ScrollArea className="mt-2 max-h-[60vh]">
-                  <div>{selectedRequest?.description}</div>
-                </ScrollArea>
+                <div className="mt-2 flex">
+                  <div className="flex flex-col gap-1">
+                    {selectedRequest?.applicationForm.map((el, index) => {
+                      return (
+                        <div key={el.id} className="border rounded-sm px-1">
+                          <h1 className="font-bold">Асуулт {index + 1}</h1>
+                          <div className="">{questions[index].text}</div>
+                          <h1 className="font-bold">Хариулт</h1>
+                          <div className="text-slate-600"> {el.text}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
                 <div className="mt-4 flex justify-end">
                   <Button onClick={closeModal}>Close</Button>
                 </div>
