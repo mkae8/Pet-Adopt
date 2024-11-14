@@ -23,20 +23,56 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useUser } from "@clerk/nextjs";
+import axios from "axios";
 
 // Амьтны мэдээлэл нэмэх Modal
 const PetAddModal = () => {
   const [formData, setFormData] = useState({
     petName: "",
-    // image: "",
+    petCategoryId: "",
     description: "",
     age: "",
     sex: "",
     size: "",
     weight: "",
     location: "",
-    // file: null,
   });
+
+  const [image, setImage] = useState<File | null>(null);
+  const [accessUrl, setAccessUrl] = useState<string | null>(null);
+
+  const getPresignedURL = async () => {
+    try {
+      const { data } = await axios.get(`${process.env.BACKEND_URL}/image`);
+      return data as { uploadUrl: string; accessUrls: string };
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const uploadImage = async () => {
+    if (image) {
+      try {
+        const { uploadUrl, accessUrls } = await getPresignedURL();
+        await axios.put(uploadUrl, image, {
+          headers: { "Content-Type": image.type },
+        });
+        console.log("Image successfully uploaded");
+
+        setAccessUrl(accessUrls);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImage(file);
+    }
+  };
 
   const { user } = useUser();
 
@@ -52,31 +88,36 @@ const PetAddModal = () => {
   };
 
   const handleSubmit = async () => {
+    if (image) await uploadImage();
+    console.log(formData);
+
     const missingFields = Object.entries(formData).filter(
-      ([key, value]) => !value
+      ([_, value]) => !value
     );
+
     if (missingFields.length > 0) {
       alert("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:8000/create/pet", {
+      const response = await fetch(`${process.env.BACKEND_URL}/create/pet`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ ...formData, id: user?.id }),
+        body: JSON.stringify({
+          ...formData,
+          image: [accessUrl],
+          id: user?.id,
+        }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        console.log("Алдаа:", errorData);
         alert(`Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`);
-
         return;
       }
-
       alert("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
     } catch (error) {
       console.error("Error:", error);
@@ -114,21 +155,37 @@ const PetAddModal = () => {
         <div className="grid gap-4 py-4">
           <div className="pl-[142px]">
             <Select
-              onValueChange={(value) => handleSelectChange("type", value)}
+              onValueChange={(value) =>
+                handleSelectChange("petCategoryId", value)
+              }
             >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Амьтны төрөл" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="dog">Нохой 🐕</SelectItem>
-                  <SelectItem value="cat">Муур 🐈</SelectItem>
-                  <SelectItem value="bird">Шувуу 🦜</SelectItem>
-                  <SelectItem value="rabbit">Туулай 🐇</SelectItem>
-                  <SelectItem value="hamster">Мэрэгч 🐹</SelectItem>
-                  <SelectItem value="fish">Загас 🐠</SelectItem>
-                  <SelectItem value="reptile">Мөлхөгч 🐢</SelectItem>
-                  <SelectItem value="more">Бусад</SelectItem>
+                  <SelectItem value="67318ef682933a1de42fa5d9">
+                    Нохой 🐕
+                  </SelectItem>
+                  <SelectItem value="67318f2082933a1de42fa5db">
+                    Муур 🐈
+                  </SelectItem>
+                  <SelectItem value="673575da1ecf70ca44174ba2">
+                    Шувуу 🦜
+                  </SelectItem>
+                  <SelectItem value="67318fc782933a1de42fa5dd">
+                    Туулай 🐇
+                  </SelectItem>
+                  <SelectItem value="67318fcc82933a1de42fa5df">
+                    Мэрэгч 🐹
+                  </SelectItem>
+                  <SelectItem value="6735760a1ecf70ca44174ba6">
+                    Загас 🐠
+                  </SelectItem>
+                  <SelectItem value="673576141ecf70ca44174ba8">
+                    Мөлхөгч 🐢
+                  </SelectItem>
+                  {/* <SelectItem value="more">Бусад</SelectItem> */}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -238,18 +295,30 @@ const PetAddModal = () => {
                 <SelectValue placeholder="Статус сонгоно уу" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Available">Үрчлүүлэх боломжтой</SelectItem>
-                <SelectItem value="Pending">
+                <SelectItem value="Үрчлүүлэх боломжтой">
+                  Үрчлүүлэх боломжтой
+                </SelectItem>
+                <SelectItem value="  Одоогоор хүлээгдэж байгаа">
                   Одоогоор хүлээгдэж байгаа
                 </SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="picture">Зураг хадгалагдах</Label>
+          <Input id="picture" onChange={handleFileChange} type="file" />
+        </div>
 
         <DialogFooter>
-          <Button type="button" onClick={handleSubmit}>
-            Мэдээлэл илгээх TEST 72branch
+          <Button
+            type="button"
+            onClick={() => {
+              handleSubmit();
+              uploadImage();
+            }}
+          >
+            Мэдээлэл илгээх
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -257,7 +326,6 @@ const PetAddModal = () => {
   );
 };
 
-// Хуудсын үндсэн хэсэг
 const PetAddPage = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full h-full bg-gray-100 relative">
