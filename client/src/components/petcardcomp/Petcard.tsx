@@ -80,9 +80,28 @@ const types: PetCategory[] = [
 ];
 
 const Petcard = () => {
-  const [pets, setPets] = useState<Pet[]>([]);
+  const router = useRouter();
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [sliceCount, setSliceCount] = useState(8);
+  const [selectedId, setSelectedId] = useState(null);
+  const [pets, setPets] = useState<Pet[]>([]);
+
+  const fetchPet = async () => {
+    try {
+      const response = await axios.get<Pet[]>(
+        `${process.env.BACKEND_URL}/get/pet`
+      );
+      console.log(response.data);
+      setPets(response.data);
+    } catch (error) {
+      console.log(`Error fetching data: ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchPet();
+  }, []);
 
   const openModal = (pet: Pet) => {
     setSelectedPet(pet);
@@ -91,14 +110,9 @@ const Petcard = () => {
     setSelectedPet(null);
   };
 
-  const [sliceCount, setSliceCount] = useState(8);
-  const [selectedId, setSelectedId] = useState(null);
-
-  const router = useRouter();
-
-  const handleAdoptClick = () => {
+  const handleAdoptClick = (petId: string) => {
     if (selectedPet) {
-      router.push(`/application`);
+      router.push(`/application?petId=${petId}`);
       closeModal();
     }
   };
@@ -279,7 +293,7 @@ const Petcard = () => {
                           <div
                             className="relative h-12 w-40 md:h-16 md:w-48 rounded-sm mt-3 text-lg md:text-xl 
                  border border-orange-500 flex justify-center items-center overflow-hidden transition duration-300"
-                            onClick={handleAdoptClick}
+                            onClick={() => handleAdoptClick(selectedPet._id)}
                           >
                             <span className="relative  z-10 btn_text sm:flex self-center ">
                               adopt {selectedPet.name}

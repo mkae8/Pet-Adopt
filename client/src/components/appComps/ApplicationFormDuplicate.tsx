@@ -55,17 +55,11 @@ export default function ApplicationForm() {
   ];
 
   const { user } = useUser();
-
-  console.log(user);
   const { toast } = useToast();
 
   const [inputValues, setInputValues] = useState<{
     [id: string]: string | null | undefined;
-  }>({
-    petId: petId,
-    userId: user?.id,
-  });
-
+  }>({});
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<string>("");
 
@@ -77,7 +71,7 @@ export default function ApplicationForm() {
     }));
   };
 
-  const handleInputChange = (id: string, value: any) => {
+  const handleInputChange = (id: string, value: string) => {
     setInputValues((prev) => ({
       ...prev,
       [id]: value,
@@ -85,40 +79,47 @@ export default function ApplicationForm() {
   };
 
   const submit = async () => {
+    // Validate inputs before submission
+    let formValid = true;
     for (const question of questions) {
       const inputValue = inputValues[question.id];
 
-      setInputValues((prev) => ({
-        ...prev,
-      }));
-
+      // Check if any of the required questions are empty
       if (
         question.id !== "question8" &&
-        (inputValue === "" || inputValue === undefined || selectedValue === "")
+        (!inputValue || inputValue.trim() === "")
       ) {
         setErrorMessage("Бүх асуултад хариулт бичнэ үү!");
-        return;
+        formValid = false;
+        break;
       }
     }
-    setErrorMessage("");
-    console.log("Form Data: ", inputValues);
+
+    // If form is invalid, return early
+    if (!formValid) return;
+
+    setErrorMessage(""); // Reset any previous error messages
+
+    // Include petId and userId
+    const formData = {
+      ...inputValues,
+      petId: petId || undefined, // Avoid null values
+      userId: user?.id,
+    };
 
     try {
-      const result = await axios.post("http://localhost:8000/applicationForm", {
-        inputValues,
-      });
-
-      console.log(result);
+      await axios.post("https://localhost:8000/applicationForm", formData);
 
       toast({
-        title: "Success",
-        description: "Success",
+        title: "Амжилттай илгээгдлээ",
+        description: "Таны хүсэлт амжилттай илгээгдлээ!",
       });
     } catch (error) {
       toast({
-        title: "aldaa zaalaa",
-        description: "dahin oroldnu ",
+        title: "Алдаа гарлаа",
+        description: "Дахин оролдож үзнэ үү.",
       });
+      console.error(error);
     }
   };
 
@@ -126,14 +127,14 @@ export default function ApplicationForm() {
     <div className="flex flex-col items-center gap-4 bg-orange-300 border-solid border-2 rounded-2xl p-3 ">
       <div className="flex flex-col gap-5 ">
         {questions.map((question, index) => {
-          if (question.id == "question8") {
+          if (question.id === "question8") {
             return (
               <div
                 key={index}
                 className="flex justify-start items-center gap-5"
               >
                 <label>
-                  {question.id}.{question.text}
+                  {question.id}. {question.text}
                 </label>
                 <Select
                   value={selectedValue}
@@ -168,6 +169,7 @@ export default function ApplicationForm() {
           );
         })}
       </div>
+
       {errorMessage && (
         <div className="text-red-500 mt-2">
           <p>{errorMessage}</p>
