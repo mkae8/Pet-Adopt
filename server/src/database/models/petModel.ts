@@ -17,7 +17,7 @@ enum Status {
 export type PetsModelType = {
   _id: Types.ObjectId;
   userId: Types.ObjectId;
-  petCategoryId: Types.ObjectId[];
+  petCategoryId: Types.ObjectId;
   petName: string;
   image: string[];
   description: string;
@@ -32,7 +32,7 @@ export type PetsModelType = {
 const PetSchema = new Schema<PetsModelType>({
   userId: { type: Schema.Types.ObjectId, required: true, ref: "Users" },
   petCategoryId: {
-    type: [Schema.Types.ObjectId],
+    type: Schema.Types.ObjectId,
     required: false,
     ref: "Category",
   },
@@ -47,7 +47,7 @@ const PetSchema = new Schema<PetsModelType>({
   status: {
     type: String,
     enum: Object.values(Status),
-    required: true,
+    required: false,
   },
 });
 
