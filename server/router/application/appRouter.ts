@@ -4,6 +4,6 @@ import { applicationForm } from "../../controllers/applicationController/applica
 
 const appRouter = Router();
 
-appRouter.route("/applicationForm").post( applicationForm);
+appRouter.route("/applicationForm").post(applicationForm);
 
 export default appRouter;
