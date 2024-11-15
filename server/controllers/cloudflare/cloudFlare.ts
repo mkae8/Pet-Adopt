@@ -22,7 +22,6 @@ export async function getPresignedUrl() {
   );
   return {
     uploadUrl: url,
-    accessUrls:
-      "https://pub-050e63764f9e43f3af6873e3befa1b28.r2.dev/pet%2F" + id,
+    accessUrls: "https://pub-050e63764f9e43f3af6873e3befa1b28.r2.dev/" + id,
   };
 }

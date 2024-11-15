@@ -102,6 +102,15 @@
     position: relative;
   }
 
+  .btn_textt {
+    z-index: 1;
+    color: white;
+    letter-spacing: 0.1rem;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    position: relative;
+  }
+
   .btn_color {
     z-index: 0;
     background-color: var(--orange);

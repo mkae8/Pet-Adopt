@@ -11,3 +11,6 @@ petRouter.route("/get/pet").get(fetchPets);
 petRouter.route("/pet-get/:id").get(fetchpet);
 
 export default petRouter;
+
+// 8000 / get / pet
+// >post huselt

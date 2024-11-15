@@ -27,104 +27,21 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { Dog, Cat, Bird, Fish, Rabbit, Search } from "lucide-react";
+import { Dog, Cat, Bird, Fish, Rabbit, Search, Fullscreen } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 type Pet = {
-  id: number;
+  _id: string;
   name: string;
   breed: string;
   age: string;
   description: string;
   imageUrl: string;
 };
-
-const pets: Pet[] = [
-  {
-    id: 1,
-    name: "Buddy",
-    breed: "Golden Retriever",
-    age: "3 years",
-    description: "Friendly and energetic, loves to play fetch!",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 2,
-    name: "Whiskers",
-    breed: "Siamese Cat",
-    age: "2 years",
-    description: "Calm and affectionate, enjoys lounging in the sun.",
-    imageUrl:
-      "https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_640.jpg",
-  },
-  {
-    id: 3,
-    name: "Rex",
-    breed: "German Shepherd",
-    age: "4 years",
-    description: "Loyal and protective, great with families.",
-    imageUrl:
-      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
-  },
-  {
-    id: 4,
-    name: "Fluffy",
-    breed: "Persian Cat",
-    age: "5 years",
-    description: "Gentle and quiet, loves to be groomed.",
-    imageUrl:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
-  },
-  {
-    id: 5,
-    name: "Rex",
-    breed: "German Shepherd",
-    age: "4 years",
-    description: "Loyal and protective, great with families.",
-    imageUrl:
-      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
-  },
-  {
-    id: 6,
-    name: "Rex",
-    breed: "German Shepherd",
-    age: "4 years",
-    description: "Loyal and protective, great with families.",
-    imageUrl:
-      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
-  },
-  {
-    id: 7,
-    name: "Rex",
-    breed: "German Shepherd",
-    age: "4 years",
-    description: "Loyal and protective, great with families.",
-    imageUrl:
-      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
-  },
-  {
-    id: 8,
-    name: "Rex",
-    breed: "German Shepherd",
-    age: "4 years",
-    description: "Loyal and protective, great with families.",
-    imageUrl:
-      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
-  },
-  {
-    id: 9,
-    name: "Rex",
-    breed: "German Shepherd",
-    age: "4 years",
-    description: "Loyal and protective, great with families.",
-    imageUrl:
-      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
-  },
-];
 
 type PetCategory = {
   names: string;
@@ -160,12 +77,10 @@ const types: PetCategory[] = [
     names: "загас",
     imageUrl: "fish.jpeg",
   },
-  {
-    names: "мөлхөгч",
-    imageUrl: "lizard.jpeg",
-  },
 ];
+
 const Petcard = () => {
+  const [pets, setPets] = useState<Pet[]>([]);
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -222,6 +137,21 @@ const Petcard = () => {
     y.set(0);
   };
 
+  const fetchPets = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/get/pet");
+      console.log(response);
+
+      setPets(response.data);
+    } catch (error) {
+      console.error("Error fetching pets:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPets();
+  }, []);
+
   return (
     <div
       className="min-h-screen flex items-center justify-center
@@ -240,21 +170,23 @@ const Petcard = () => {
         >
           <div className="container mx-auto p-4">
             <div className="flex flex-col md:flex-row justify-between items-center mt-3">
-              <h1 className="text-2xl font-bold mb-4 md:mb-0">
+              <h1 className="text-2xl text-black font-bold mb-4 md:mb-0">
                 Бидний найзуудтай танилц
               </h1>
               <div className="flex gap-4 overflow-x-auto md:overflow-visible flex-wrap md:flex-wrap">
                 {types.map((type, index) => (
                   <div
                     key={index}
-                    className="min-w-[80px] md:min-w-[100px] h-[45px] rounded-full flex items-center justify-center gap-2 cursor-pointer bg-white border hover:bg-[#F97316] transition ease-in-out duration-300 hover:text-white mb-4 md:mb-0"
+                    className="min-w-[80px] md:min-w-[110px] h-[45px] rounded-full flex items-center justify-center gap-2 cursor-pointer transition ease-in-out duration-300 mb-4 md:mb-0"
                   >
                     <img
                       className="h-[32px] w-[32px] rounded-full"
                       src={type.imageUrl}
                       alt=""
                     />
-                    <div className="text-sm md:text-base">{type.names}</div>
+                    <div className="text-black text-sm md:text-base  hover:nav_link nhome_link btn_text">
+                      {type.names}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -267,7 +199,7 @@ const Petcard = () => {
                     onMouseLeave={handleMouseLeave}
                     ref={ref}
                     style={{ transform, transformStyle: "preserve-3d" }}
-                    key={pet.id}
+                    key={pet._id}
                     className="cursor-pointer h-[380px] bg-white rounded-lg flex flex-col justify-between relative"
                     onClick={() => openModal(pet)}
                   >
@@ -315,7 +247,7 @@ const Petcard = () => {
 
             <Dialog open={selectedPet !== null} onOpenChange={closeModal}>
               {selectedPet && (
-                <DialogContent className="sm:max-w-[90%] md:max-w-[60%] h-[60%] p-0 md:rounded-[32px]">
+                <DialogContent className="sm:max-w-[90%] md:max-w-[60%] h-[60%]  md:rounded-[32px]">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -343,12 +275,18 @@ const Petcard = () => {
                         </DialogHeader>
                       </div>
                       <DialogFooter className="mt-4 md:mt-8 w-full">
-                        <Button
-                          className="w-full md:w-auto px-8 py-3 text-lg md:text-xl"
-                          onClick={handleAdoptClick}
-                        >
-                          Adopt {selectedPet.name}
-                        </Button>
+                        <div className="group">
+                          <div
+                            className="relative h-12 w-40 md:h-16 md:w-48 rounded-sm mt-3 text-lg md:text-xl 
+                 border border-orange-500 flex justify-center items-center overflow-hidden transition duration-300"
+                            onClick={handleAdoptClick}
+                          >
+                            <span className="relative  z-10 btn_text sm:flex self-center ">
+                              adopt {selectedPet.name}
+                            </span>
+                            <span className="absolute inset-0 bg-[#F97316] transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></span>
+                          </div>
+                        </div>
                       </DialogFooter>
                     </div>
                   </motion.div>
