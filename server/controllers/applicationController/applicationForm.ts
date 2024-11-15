@@ -1,6 +1,5 @@
 import { ApplicationModel } from "../../src/database/models/answerModel";
 import { Request, Response } from "express";
-import { PetModel } from "../../src/database/models/petModel";
 import { UserModel } from "../../src/database/models/userModel";
 
 export const applicationForm = async (req: Request, res: Response) => {
@@ -15,19 +14,19 @@ export const applicationForm = async (req: Request, res: Response) => {
     question6,
     question7,
     question8,
-  } = req.body;
+  } = req.body.inputValues;
 
-//   const petCard=PetModel.findById(petId)
-// console.log(petCard);
+  const user = await UserModel.findOne({ authId: userId });
 
-
-const user=UserModel.findOne({authId: userId})
-console.log(user);
+  if (!user) {
+    res.status(404).send({ message: "User not found" });
+    return;
+  }
 
   try {
     await ApplicationModel.create({
       petId,
-      userId,
+      userId: user._id,
       question1,
       question2,
       question3,
@@ -37,13 +36,11 @@ console.log(user);
       question7,
       question8,
     });
-    
     res
       .status(201)
       .send({ message: "Application form successfully submitted" });
   } catch (error) {
     res.status(400).send(error);
     console.log("ALDAA");
-    
   }
 };

@@ -40,7 +40,7 @@ type Pet = {
   breed: string;
   age: string;
   description: string;
-  imageUrl: string;
+  image: string[];
 };
 
 type PetCategory = {
@@ -82,9 +82,7 @@ const types: PetCategory[] = [
 const Petcard = () => {
   const router = useRouter();
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [sliceCount, setSliceCount] = useState(8);
-  const [selectedId, setSelectedId] = useState(null);
   const [pets, setPets] = useState<Pet[]>([]);
 
   const fetchPet = async () => {
@@ -92,7 +90,6 @@ const Petcard = () => {
       const response = await axios.get<Pet[]>(
         `${process.env.BACKEND_URL}/get/pet`
       );
-      console.log(response.data);
       setPets(response.data);
     } catch (error) {
       console.log(`Error fetching data: ${error}`);
@@ -222,7 +219,7 @@ const Petcard = () => {
                         style={{
                           transform: "translateZ(75px)",
                         }}
-                        src={pet.imageUrl}
+                        src={pet.image[0]}
                         alt={pet.name}
                         className="w-full h-[200px] md:h-[250px] object-cover rounded-[16px] shadow-md hover:shadow-lg transition-shadow duration-300"
                         initial={{ opacity: 0, y: 20, scale: 1 }}
@@ -270,7 +267,7 @@ const Petcard = () => {
                     className="flex flex-col md:flex-row"
                   >
                     <img
-                      src={selectedPet.imageUrl}
+                      src={selectedPet.image[0]}
                       alt={selectedPet.name}
                       className="w-full md:w-[50%] h-[250px] md:h-auto rounded-lg shadow-md object-cover"
                     />
