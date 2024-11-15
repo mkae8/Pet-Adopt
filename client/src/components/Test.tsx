@@ -343,3 +343,131 @@
 //     </>
 //   );
 // };
+type Pet = {
+  id: number;
+  name: string;
+  breed: string;
+  age: string;
+  description: string;
+  imageUrl: string;
+};
+
+const pets: Pet[] = [
+  {
+    id: 1,
+    name: "Buddy",
+    breed: "Golden Retriever",
+    age: "3 years",
+    description: "Friendly and energetic, loves to play fetch!",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
+  },
+  {
+    id: 2,
+    name: "Whiskers",
+    breed: "Siamese Cat",
+    age: "2 years",
+    description: "Calm and affectionate, enjoys lounging in the sun.",
+    imageUrl:
+      "https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_640.jpg",
+  },
+  {
+    id: 3,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
+    imageUrl:
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
+  },
+  {
+    id: 4,
+    name: "Fluffy",
+    breed: "Persian Cat",
+    age: "5 years",
+    description: "Gentle and quiet, loves to be groomed.",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s",
+  },
+  {
+    id: 5,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
+    imageUrl:
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
+  },
+  {
+    id: 6,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
+    imageUrl:
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
+  },
+  {
+    id: 7,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
+    imageUrl:
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
+  },
+  {
+    id: 8,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
+    imageUrl:
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
+  },
+  {
+    id: 9,
+    name: "Rex",
+    breed: "German Shepherd",
+    age: "4 years",
+    description: "Loyal and protective, great with families.",
+    imageUrl:
+      "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg",
+  },
+];
+
+type PetCategory = {
+  names: string;
+  imageUrl: string;
+};
+
+const types: PetCategory[] = [
+  {
+    names: "бүгд",
+    imageUrl: "tomjerry.png",
+  },
+  {
+    names: "нохой",
+    imageUrl: "dog.jpeg",
+  },
+  {
+    names: "муур",
+    imageUrl: "cat.jpeg",
+  },
+  {
+    names: "шувуу",
+    imageUrl: "bird.png",
+  },
+  {
+    names: "туулай",
+    imageUrl: "rabbit.jpeg",
+  },
+  {
+    names: "мэрэгч",
+    imageUrl: "chipmunks.jpeg",
+  },
+  {
+    names: "загас",
+    imageUrl: "fish.jpeg",
+  },
+];

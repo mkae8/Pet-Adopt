@@ -54,13 +54,16 @@ const PetAddModal = () => {
   const uploadImage = async () => {
     if (image) {
       try {
-        const { uploadUrl, accessUrls } = await getPresignedURL();
-        await axios.put(uploadUrl, image, {
+        const data = await getPresignedURL();
+        console.log(data.accessUrls, "okok");
+
+        await axios.put(data.uploadUrl, image, {
           headers: { "Content-Type": image.type },
         });
+
         console.log("Image successfully uploaded");
 
-        setAccessUrl(accessUrls);
+        setAccessUrl(data.accessUrls);
       } catch (error) {
         console.log(error);
       }
@@ -96,7 +99,7 @@ const PetAddModal = () => {
     );
 
     if (missingFields.length > 0) {
-      alert("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
+      // alert("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
       return;
     }
 
@@ -115,10 +118,10 @@ const PetAddModal = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        alert(`Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`);
+        // alert(`Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`);
         return;
       }
-      alert("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
+      // alert("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
     } catch (error) {
       console.error("Error:", error);
       alert("Алдаа гарлаа.");
