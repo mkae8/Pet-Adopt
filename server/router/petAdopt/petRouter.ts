@@ -7,7 +7,7 @@ import { authMiddleware } from "../../middleware/auth";
 
 const petRouter = Router();
 petRouter.route("/create/pet").post(authMiddleware, petCreate);
-petRouter.route("/get/pet").post(fetchPets);
+petRouter.route("/get/pet").get(fetchPets);
 petRouter.route("/pet-get/:id").get(fetchpet);
 
 export default petRouter;
