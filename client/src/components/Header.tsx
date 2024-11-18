@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { FaX } from "react-icons/fa6";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import {
   ClerkProvider,
@@ -23,6 +22,7 @@ export default function Header() {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+  const router = useRouter();
 
   const user = useUser();
   useEffect(() => {});
