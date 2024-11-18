@@ -148,6 +148,7 @@ const PetAddModal = () => {
     } catch (error) {
       console.error("Error:", error);
       toast.error("Алдаа гарлаа.");
+    } finally {
       setLoading(false);
     }
   };
