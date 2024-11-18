@@ -23,11 +23,10 @@ import axios from "axios";
 import { ToastAction } from "../ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import { useUser } from "@clerk/nextjs";
-import { Card } from "../ui/card";
 
 type Pet = {
   _id: string;
-  name: string;
+  petName: string;
   breed: string;
   age: string;
   description: string;
@@ -170,14 +169,14 @@ const Petcard = () => {
     "
     >
       <div
-      //   className=" mx-auto p-4
-      //  "
+        className=" mx-auto p-4
+       "
       >
         <div
           className="min-h-screen w-screen flex pt-52 bg-cover bg-center"
           style={{
-            // backgroundImage:
-            //   "url('https://i.pinimg.com/736x/4c/ca/35/4cca35ed0cbe01e1d861f971ab27fd8c.jpg')",
+            backgroundImage:
+              "url('https://i.pinimg.com/736x/4c/ca/35/4cca35ed0cbe01e1d861f971ab27fd8c.jpg')",
             zIndex: -1,
           }}
         >
@@ -205,65 +204,16 @@ const Petcard = () => {
               </div>
             </div>
             <div className="flex flex-col items-center gap-8 mt-5">
-              {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
                 {pets.slice(0, sliceCount).map((pet, index) => (
                   <motion.div
-                    onMouseMove={(e) => handleMouseMove(e, index)}
-                    onMouseLeave={handleMouseLeave}
-                    ref={ref}
                     style={{
                       transform,
                       transformStyle: "preserve-3d",
                       cursor: "pointer",
                     }}
                     key={pet._id}
-                    className="cursor-pointer h-[380px] bg-white rounded-lg flex flex-col justify-between relative border-solid border-black"
-                    onClick={() => openModal(pet)}
-                  >
-                    <div>
-                      <motion.img
-                        style={{
-                          transform: "translateZ(75px)",
-                        }}
-                        src={pet.image[0]}
-                        alt={pet.name}
-                        className="w-full h-[200px] md:h-[250px] object-cover rounded-[16px] shadow-md hover:shadow-lg transition-shadow duration-300"
-                        initial={{ opacity: 0, y: 20, scale: 1 }}
-                        animate={{ opacity: 1, y: 0, rotate: 0 }}
-                        exit={{ opacity: 0, y: -20, rotate: -5 }}
-                        transition={{
-                          duration: 0.5 + (index - 0.5),
-                          ease: "easeInOut",
-                        }}
-                      />
-
-                      <div className="mt-2 p-4">
-                        <div className="text-xl md:text-2xl font-semibold">
-                          {pet.name}
-                        </div>
-                        <div className="text-lg md:text-xl font-normal">
-                          {pet.breed}
-                        </div>
-                        <div className="text-md md:text-lg">{pet.age}</div>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div> */}
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {pets.slice(0, sliceCount).map((pet, index) => (
-                  <motion.div
-                    onMouseMove={(e) => handleMouseMove(e, index)}
-                    onMouseLeave={handleMouseLeave}
-                    ref={ref}
-                    style={{
-                      transform,
-                      transformStyle: "preserve-3d",
-                      cursor: "pointer",
-                    }}
-                    key={pet._id}
-                    className="cursor-pointer h-[380px] bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 relative group"
+                    className="cursor-pointer h-[460px] bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 relative group "
                     onClick={() => openModal(pet)}
                   >
                     <div className="relative">
@@ -272,7 +222,7 @@ const Petcard = () => {
                           transform: "translateZ(75px)",
                         }}
                         src={pet.image[0]}
-                        alt={pet.name}
+                        alt={pet.petName}
                         className="w-full h-[250px] md:h-[300px] object-cover rounded-t-xl transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:rotate-2"
                         initial={{ opacity: 0, y: 20, scale: 1 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -286,17 +236,21 @@ const Petcard = () => {
                       {/* Хил болон нөлөө */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-t-xl opacity-60 group-hover:opacity-40"></div>
                     </div>
-
-                    {/* Текстийн хэсэг */}
                     <div className="mt-4 p-4">
-                      <div className="text-xl md:text-2xl font-semibold text-gray-800 mb-1">
-                        {pet.name}
-                      </div>
-                      <div className="text-lg md:text-xl font-normal text-gray-600">
-                        {pet.breed}
+                      {/* <div className="text-xl md:text-2xl font-semibold text-gray-800 mb-1">
+                        Амьтаны нэр {pet.petName ?? "Нэр олдсонгүй"}
+                      </div> */}
+                      <div className="text-xl md:text-2xl font-semibold">
+                        Амьтаны нэр
+                        <span className="text-primary font-bold p-3">
+                          {pet.petName ?? "Нэр олдсонгүй"}
+                        </span>
                       </div>
                       <div className="text-md md:text-lg text-gray-500">
-                        {pet.age} нас
+                        Амьтаны Нас
+                        <span className="text-primary font-bold p-3">
+                          {pet.age ?? "Нас тодорхойгүй"}
+                        </span>
                       </div>
                     </div>
                   </motion.div>
@@ -393,177 +347,6 @@ const Petcard = () => {
         </div>
       </div>
     </div>
-    // <div className="min-h-screen flex items-center justify-center relative">
-    //   {/* Background Image */}
-    //   <div
-    //     className="absolute inset-0 bg-cover bg-center"
-    //     style={{
-    //       backgroundImage: "url('/pet.jpg')",
-    //       zIndex: -1,
-    //       backgroundAttachment: "fixed",
-    //       backgroundPosition: "center",
-    //       backgroundSize: "cover",
-    //     }}
-    //   ></div>
-
-    //   {/* Main Content */}
-    //   <div className="container mx-auto p-4 relative z-10">
-    //     {/* Header Section */}
-    //     <div className="flex flex-col md:flex-row justify-between items-center mt-5">
-    //       <h1 className="text-4xl md:text-5xl text-white font-bold leading-tight mb-4 md:mb-0">
-    //         Бидний найзуудтай танилц
-    //       </h1>
-    //       <div className="flex gap-4 overflow-x-auto md:overflow-visible flex-wrap md:flex-wrap">
-    //         {types.map((type, index) => (
-    //           <div
-    //             key={index}
-    //             className="min-w-[80px] md:min-w-[120px] h-[45px] rounded-full flex items-center justify-center gap-2 cursor-pointer transition ease-in-out duration-300 mb-4 md:mb-0 bg-white bg-opacity-60 hover:bg-opacity-80 shadow-md"
-    //           >
-    //             <img
-    //               className="h-[32px] w-[32px] rounded-full"
-    //               src={type.imageUrl}
-    //               alt=""
-    //             />
-    //             <div className="text-white text-sm md:text-base font-semibold hover:underline">
-    //               {type.names}
-    //             </div>
-    //           </div>
-    //         ))}
-    //       </div>
-    //     </div>
-
-    //     {/* Pet Cards Section */}
-    //     <div className="flex flex-col items-center gap-8 mt-8">
-    //       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    //         {pets.slice(0, sliceCount).map((pet, index) => (
-    //           <motion.div
-    //             onMouseMove={(e) => handleMouseMove(e, index)}
-    //             onMouseLeave={handleMouseLeave}
-    //             ref={ref}
-    //             style={{ transform, transformStyle: "preserve-3d" }}
-    //             key={pet._id}
-    //             className="cursor-pointer h-[380px] bg-white rounded-lg flex flex-col justify-between relative shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out"
-    //             onClick={() => openModal(pet)}
-    //           >
-    //             <div>
-    //               <motion.img
-    //                 style={{
-    //                   transform: "translateZ(75px)",
-    //                 }}
-    //                 src={pet.image[0]}
-    //                 alt={pet.name}
-    //                 className="w-full h-[200px] md:h-[250px] object-cover rounded-t-[16px] shadow-md hover:shadow-lg transition-shadow duration-300"
-    //                 initial={{ opacity: 0, y: 20, scale: 1 }}
-    //                 animate={{ opacity: 1, y: 0, rotate: 0 }}
-    //                 exit={{ opacity: 0, y: -20, rotate: -5 }}
-    //                 transition={{
-    //                   duration: 0.5 + (index - 0.5),
-    //                   ease: "easeInOut",
-    //                 }}
-    //               />
-    //               <div className="mt-3 p-4">
-    //                 <div className="text-xl md:text-2xl font-semibold text-gray-800">
-    //                   {pet.name}
-    //                 </div>
-    //                 <div className="text-lg md:text-xl font-normal text-gray-600">
-    //                   {pet.breed}
-    //                 </div>
-    //                 <div className="text-md md:text-lg text-gray-500">
-    //                   {pet.age}
-    //                 </div>
-    //               </div>
-    //             </div>
-    //           </motion.div>
-    //         ))}
-    //       </div>
-
-    //       {/* See More Button */}
-    //       <div className="group">
-    //         <div
-    //           className="relative h-12 w-40 md:h-16 md:w-48 rounded-full mt-6 text-lg md:text-xl
-    //         border border-orange-500 flex justify-center items-center overflow-hidden transition duration-300"
-    //           onClick={() => setSliceCount((prev) => prev + 8)}
-    //         >
-    //           <span className="relative z-10 text-white">See more</span>
-    //           <span className="absolute inset-0 bg-[#F97316] transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></span>
-    //         </div>
-    //       </div>
-    //     </div>
-
-    //     {/* Pet Detail Modal */}
-    //     <Dialog open={selectedPet !== null} onOpenChange={closeModal}>
-    //       {selectedPet && (
-    //         <DialogContent className="sm:max-w-[90%] md:max-w-[60%] h-[60%] md:rounded-[32px] bg-white shadow-lg">
-    //           <motion.div
-    //             initial={{ opacity: 0, scale: 0.8 }}
-    //             animate={{ opacity: 1, scale: 1 }}
-    //             exit={{ opacity: 0, scale: 0.8 }}
-    //             transition={{ duration: 0.3 }}
-    //             className="flex flex-col md:flex-row"
-    //           >
-    //             <img
-    //               src={selectedPet.image[0]}
-    //               alt={selectedPet.name}
-    //               className="w-full md:w-[50%] h-[250px] md:h-auto rounded-lg shadow-md object-cover"
-    //             />
-    //             <div className="p-4 flex flex-col mt-4 md:mt-0 md:ml-4 justify-between items-center md:items-start">
-    //               <div className="text-center md:text-left mt-6">
-    //                 <DialogTitle className="text-2xl md:text-3xl font-bold text-black">
-    //                   {selectedPet.name}
-    //                 </DialogTitle>
-    //                 <DialogHeader>
-    //                   <p className="text-lg md:text-xl mt-2 text-gray-600">
-    //                     {selectedPet.description}
-    //                   </p>
-    //                   <DialogDescription className="text-md md:text-lg mt-1 text-gray-500">
-    //                     {selectedPet.breed} • {selectedPet.age}
-    //                   </DialogDescription>
-    //                 </DialogHeader>
-    //               </div>
-    //               <DialogFooter className="mt-4 md:mt-8 w-full">
-    //                 <div className="group">
-    //                   <div
-    //                     className="relative h-12 w-40 md:h-16 md:w-48 rounded-sm mt-3 text-lg md:text-xl
-    //                   border border-orange-500 flex justify-center items-center overflow-hidden transition duration-300"
-    //                   >
-    //                     <span className="relative z-10 text-white sm:flex self-center">
-    //                       <Button
-    //                         onClick={() => {
-    //                           if (!data.isSignedIn) {
-    //                             toast({
-    //                               title: "Нэвтэрч орно уу",
-    //                               description: "Бүртгэлгүй бол бүртгүүлнэ үү",
-    //                               action: (
-    //                                 <ToastAction
-    //                                   onClick={() => {
-    //                                     push("/sign-in");
-    //                                   }}
-    //                                   altText="Goto schedule to undo"
-    //                                 >
-    //                                   нэвтрэх
-    //                                 </ToastAction>
-    //                               ),
-    //                             });
-    //                             return;
-    //                           } else {
-    //                             handleAdoptClick(selectedPet._id);
-    //                           }
-    //                         }}
-    //                       >
-    //                         adopt {selectedPet.name}
-    //                       </Button>
-    //                     </span>
-    //                     <span className="absolute inset-0 bg-[#F97316] transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></span>
-    //                   </div>
-    //                 </div>
-    //               </DialogFooter>
-    //             </div>
-    //           </motion.div>
-    //         </DialogContent>
-    //       )}
-    //     </Dialog>
-    //   </div>
-    // </div>
   );
 };
 
