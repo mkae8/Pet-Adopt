@@ -28,15 +28,21 @@ export default function Header() {
   const user = useUser();
 
   useEffect(() => {});
+
   const DotIcon = () => {
     return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 512 512"
-        fill="currentColor"
-      >
-        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z" />
-      </svg>
+      <img
+        src="https://www.svgrepo.com/show/408711/sent-send-mail-message-envelope.svg"
+        alt=""
+      />
+    );
+  };
+  const DotIcon1 = () => {
+    return (
+      <img
+        src="https://www.svgrepo.com/show/308787/pet-care-service-pet-grooming-service.svg"
+        alt=""
+      />
     );
   };
 
@@ -81,10 +87,10 @@ export default function Header() {
                   Үрчлэх
                 </Link>
                 <Link
-                  href="/contact"
-                  className=" hover:nav_link nhome_link btn_text  font-bold"
+                  href="/adoptedpet"
+                  className=" hover:nav_link nhome_link btn_text"
                 >
-                  Холбоо барих
+                  Үрчлэгдсэн амьтад
                 </Link>
               </nav>
             </div>
@@ -107,14 +113,21 @@ export default function Header() {
                   </SignedOut>
                   <SignedIn>
                     {user.user?.username}
-
                     <UserButton>
                       <UserButton.MenuItems>
                         <UserButton.Action
-                          label="Хүсэлтүүд"
+                          label="Танд ирсэн хүсэлтүүд"
                           labelIcon={<DotIcon />}
                           onClick={() => {
                             router.push("/requests");
+                          }}
+                        />
+
+                        <UserButton.Action
+                          label="Таны үрчлүүлэх амьтад"
+                          labelIcon={<DotIcon1 />}
+                          onClick={() => {
+                            router.push("/adoptpet");
                           }}
                         />
                       </UserButton.MenuItems>
@@ -145,10 +158,10 @@ export default function Header() {
                 Үрчлэх
               </Link>
               <Link
-                href="/contact"
+                href="/adoptedpet"
                 className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
               >
-                Холбоо барих
+                Үрчлэгдсэн амьтад
               </Link>
             </div>
             <div className="pt-4 pb-3 border-t border-muted">
@@ -163,21 +176,21 @@ export default function Header() {
                       <UserButton>
                         <UserButton.MenuItems>
                           <UserButton.Action
-                            label="Хүсэлтүүд"
+                            label="Танд ирсэн хүсэлтүүд"
                             labelIcon={<DotIcon />}
-                            open="Хүсэлтүүд"
+                            onClick={() => {
+                              router.push("/requests");
+                            }}
+                          />
+
+                          <UserButton.Action
+                            label="Таны үрчлүүлэх амьтад"
+                            labelIcon={<DotIcon />}
+                            onClick={() => {
+                              router.push("/adoptedpet");
+                            }}
                           />
                         </UserButton.MenuItems>
-                        <UserButton.UserProfilePage
-                          label="Хүсэлтүүд"
-                          labelIcon={<DotIcon />}
-                          url="/help"
-                        >
-                          <div>
-                            <h1>Хүсэлтүүд</h1>
-                            <p>This is the custom help page</p>
-                          </div>
-                        </UserButton.UserProfilePage>
                       </UserButton>
                     </SignedIn>
                   </div>
