@@ -11,7 +11,8 @@ enum Size {
 }
 enum Status {
   Available = "Үрчлүүлэх боломжтой",
-  Pending = "  Одоогоор хүлээгдэж байгаа",
+  Pending = " Одоогоор хүлээгдэж байгаа",
+  Adopted = "Үрчилэгдсэн",
 }
 
 export type PetsModelType = {
