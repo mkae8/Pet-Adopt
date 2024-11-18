@@ -52,8 +52,6 @@ export default function Header() {
     return null;
   }
 
-  const router = useRouter();
-
   return (
     <>
       <header className="bg-background shadow-sm sticky top-0 z-50">
