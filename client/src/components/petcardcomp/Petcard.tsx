@@ -9,7 +9,6 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import { FiMousePointer } from "react-icons/fi";
 import {
   Dialog,
   DialogContent,
@@ -18,21 +17,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
-import { Dog, Cat, Bird, Fish, Rabbit, Search, Fullscreen } from "lucide-react";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { ToastAction } from "../ui/toast";
+import { useToast } from "@/hooks/use-toast";
+import { useUser } from "@clerk/nextjs";
 
 type Pet = {
   _id: string;
@@ -80,6 +70,9 @@ const types: PetCategory[] = [
 ];
 
 const Petcard = () => {
+  const { toast } = useToast();
+  const data = useUser();
+  const { push } = useRouter();
   const router = useRouter();
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
   const [sliceCount, setSliceCount] = useState(8);
@@ -290,10 +283,36 @@ const Petcard = () => {
                           <div
                             className="relative h-12 w-40 md:h-16 md:w-48 rounded-sm mt-3 text-lg md:text-xl 
                  border border-orange-500 flex justify-center items-center overflow-hidden transition duration-300"
-                            onClick={() => handleAdoptClick(selectedPet._id)}
                           >
                             <span className="relative  z-10 btn_text sm:flex self-center ">
-                              adopt {selectedPet.name}
+                              <Button
+                                onClick={() => {
+                                  if (!data.isSignedIn) {
+                                    console.log(data.isSignedIn);
+
+                                    toast({
+                                      title: "Нэвтэрч орно уу",
+                                      description:
+                                        "Бүртгэлгүй бол бүртгүүлнэ үү",
+                                      action: (
+                                        <ToastAction
+                                          onClick={() => {
+                                            push("/sign-in");
+                                          }}
+                                          altText="Goto schedule to undo"
+                                        >
+                                          нэвтрэх
+                                        </ToastAction>
+                                      ),
+                                    });
+                                    return;
+                                  } else {
+                                    handleAdoptClick(selectedPet._id);
+                                  }
+                                }}
+                              >
+                                adopt {selectedPet.name}
+                              </Button>
                             </span>
                             <span className="absolute inset-0 bg-[#F97316] transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></span>
                           </div>
