@@ -30,6 +30,7 @@ const PetAddModal = () => {
   const [formData, setFormData] = useState({
     petName: "",
     petCategoryId: "",
+    // image: [],
     description: "",
     age: "",
     sex: "",
@@ -39,7 +40,7 @@ const PetAddModal = () => {
   });
 
   const [image, setImage] = useState<File | null>(null);
-  const [accessUrl, setAccessUrl] = useState<string | null>(null);
+  // const [accessUrl, setAccessUrl] = useState<string | null>(null);
 
   const getPresignedURL = async () => {
     try {
@@ -55,15 +56,16 @@ const PetAddModal = () => {
     if (image) {
       try {
         const data = await getPresignedURL();
-        console.log(data.accessUrls, "okok");
+        console.log(data.accessUrls);
 
         await axios.put(data.uploadUrl, image, {
           headers: { "Content-Type": image.type },
         });
 
-        console.log("Image successfully uploaded");
+        return data;
 
-        setAccessUrl(data.accessUrls);
+        console.log("Image successfully uploaded");
+        // setAccessUrl(data.accessUrls);
       } catch (error) {
         console.log(error);
       }
@@ -91,7 +93,7 @@ const PetAddModal = () => {
   };
 
   const handleSubmit = async () => {
-    if (image) await uploadImage();
+    const data = await uploadImage();
     console.log(formData);
 
     const missingFields = Object.entries(formData).filter(
@@ -99,7 +101,7 @@ const PetAddModal = () => {
     );
 
     if (missingFields.length > 0) {
-      // alert("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
+      alert("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
       return;
     }
 
@@ -111,17 +113,17 @@ const PetAddModal = () => {
         },
         body: JSON.stringify({
           ...formData,
-          image: [accessUrl],
+          image: [data?.accessUrls],
           id: user?.id,
         }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        // alert(`Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`);
+        alert(`Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`);
         return;
       }
-      // alert("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
+      alert("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
     } catch (error) {
       console.error("Error:", error);
       alert("Алдаа гарлаа.");
