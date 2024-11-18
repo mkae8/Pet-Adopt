@@ -32,10 +32,11 @@ export default function RootLayout({
     <ClerkProvider localization={localization}>
       <html lang="en">
         <title>Pet Adoption</title>
+        <link rel="icon" type="image/png" href="/logo.png" />
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <ToastContainer />
+          <ToastContainer  />
           <UserControl>
             <Toaster />
             <Header />

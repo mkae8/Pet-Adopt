@@ -65,19 +65,22 @@ export default function Header() {
               />
             </Link>
             <div className="flex justify-start lg:w-0 lg:flex-1 items-center">
-              <nav className="hidden md:flex space-x-10">
-                <Link href="/" className=" hover:nav_link nhome_link btn_text ">
+              <nav className="hidden  md:flex space-x-10 ">
+                <Link
+                  href="/"
+                  className=" hover:nav_link nhome_link btn_text font-bold "
+                >
                   Нүүр
                 </Link>
                 <Link
                   href="/petcard"
-                  className=" hover:nav_link nhome_link btn_text"
+                  className=" hover:nav_link nhome_link btn_text  font-bold"
                 >
                   Үрчлэх
                 </Link>
                 <Link
                   href="/contact"
-                  className=" hover:nav_link nhome_link btn_text"
+                  className=" hover:nav_link nhome_link btn_text  font-bold"
                 >
                   Холбоо барих
                 </Link>
