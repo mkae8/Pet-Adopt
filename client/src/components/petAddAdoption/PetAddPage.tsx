@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -25,12 +26,10 @@ import {
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 
-// Амьтны мэдээлэл нэмэх Modal
 const PetAddModal = () => {
   const [formData, setFormData] = useState({
     petName: "",
     petCategoryId: "",
-    // image: [],
     description: "",
     age: "",
     sex: "",
@@ -92,16 +91,34 @@ const PetAddModal = () => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleClear = () => {
+    setFormData({
+      petName: "",
+      petCategoryId: "",
+      description: "",
+      age: "",
+      sex: "",
+      size: "",
+      weight: "",
+      location: "",
+    });
+    setImage(null);
+    setIsOpen(false);
+  };
   const handleSubmit = async () => {
+    setLoading(true);
     const data = await uploadImage();
-    console.log(formData);
 
     const missingFields = Object.entries(formData).filter(
       ([_, value]) => !value
     );
 
     if (missingFields.length > 0) {
-      alert("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
+      toast.error("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
+      setLoading(false);
       return;
     }
 
@@ -120,24 +137,28 @@ const PetAddModal = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        alert(`Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`);
+        toast.error(
+          `Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`
+        );
+        setLoading(false);
         return;
       }
-      alert("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
+      toast.success("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
+      handleClear();
     } catch (error) {
       console.error("Error:", error);
-      alert("Алдаа гарлаа.");
+      toast.error("Алдаа гарлаа.");
+      setLoading(false);
     }
   };
 
   return (
-    <Dialog>
-      {/* Dialog-г идэвхжүүлэх товч */}
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <Button
-          className="
-    relative overflow-hidden bg-gradient-to-r from-black via-yellow-600 to-black text-white font-semibold py-3 px-10
-    transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-400 focus:ring-opacity-50
+          onClick={() => setIsOpen(true)}
+          className="relative overflow-hidden bg-gradient-to-r bg-inherit text-white font-semibold py-3 px-10 
+    transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl hover:focus:outline-none focus:ring-4  focus:ring-opacity-50
     group"
         >
           <span className="relative z-10 text-lg">
@@ -145,7 +166,7 @@ const PetAddModal = () => {
           </span>
           <span
             className="
-      absolute inset-0 bg-black opacity-20 transform scale-x-0 transition-transform duration-300 ease-out group-hover:scale-x-100 origin-left"
+      absolute inset-0 bg-[#F97316] opacity-20 transform scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-50 origin-left"
           ></span>
         </Button>
       </DialogTrigger>
@@ -190,7 +211,6 @@ const PetAddModal = () => {
                   <SelectItem value="673576141ecf70ca44174ba8">
                     Мөлхөгч 🐢
                   </SelectItem>
-                  {/* <SelectItem value="more">Бусад</SelectItem> */}
                 </SelectGroup>
               </SelectContent>
             </Select>
@@ -322,8 +342,38 @@ const PetAddModal = () => {
               handleSubmit();
               uploadImage();
             }}
+            disabled={loading}
+            className={`relative ${
+              loading ? "cursor-not-allowed opacity-50" : ""
+            }`}
           >
-            Мэдээлэл илгээх
+            {loading ? (
+              <span className="flex items-center">
+                <svg
+                  className="animate-spin h-5 w-5 text-white mr-2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                Илгээж байна...
+              </span>
+            ) : (
+              "Мэдээлэл илгээх"
+            )}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -339,7 +389,7 @@ const PetAddPage = () => {
         alt="Pet Background"
         className="w-full h-full object-cover"
       />
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 mb-10">
+      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 mb-10 bg-ora">
         <PetAddModal />
       </div>
     </div>
