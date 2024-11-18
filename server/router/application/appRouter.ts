@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { applicationForm } from "../../controllers/applicationController/applicationForm";
-// import { authMiddleware } from "../../middleware/auth";
 import { applicationFetch } from "../../controllers/applicationController/applicationFetch";
+import { authMiddleware } from "../../middleware/auth";
 
 const appRouter = Router();
 

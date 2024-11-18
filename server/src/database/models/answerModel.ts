@@ -4,6 +4,8 @@ export type ApplicationModelType = {
   _id: Types.ObjectId;
   petId: Types.ObjectId;
   userId: Types.ObjectId;
+  ownerId: Types.ObjectId;
+  questions: string[];
   question1: string;
   question2: string;
   question3: string;
@@ -20,14 +22,18 @@ const ApplicationSchema = new Schema<ApplicationModelType>({
   petId: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "Pet",
+    ref: "Pets",
   },
   userId: {
     type: Schema.Types.ObjectId,
     required: true,
-    ref: "User",
+    ref: "Users",
   },
-
+  ownerId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "Users",
+  },
   question1: { type: String, required: false },
   question2: { type: String, required: false },
   question3: { type: String, required: false },
