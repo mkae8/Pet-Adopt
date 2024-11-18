@@ -158,11 +158,11 @@ const PetAddModal = () => {
       <DialogTrigger asChild>
         <Button
           onClick={() => setIsOpen(true)}
-          className="relative overflow-hidden bg-gradient-to-r bg-inherit text-white font-semibold py-3 px-10 
+          className="relative overflow-hidden bg-gradient-to-r bg-inherit text-white font-semibold py-7 px-10 bottom-[480px] right-[580px]
     transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl hover:focus:outline-none focus:ring-4  focus:ring-opacity-50
     group"
         >
-          <span className="relative z-10 text-lg">
+          <span className="relative z-10 text-lg text-[20px] font-bold ">
             Үрчлүүлэх амьтны мэдээлэл оруулах
           </span>
           <span
@@ -386,9 +386,9 @@ const PetAddPage = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full h-full bg-gray-100 relative">
       <img
-        src="/PetPage.png"
+        src="/PetPage.jpg"
         alt="Pet Background"
-        className="w-full h-full object-cover"
+        className="w-screen h-screen object-full "
       />
       <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 mb-10 bg-ora">
         <PetAddModal />
