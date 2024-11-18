@@ -19,12 +19,14 @@ import { usePathname } from "next/navigation";
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const router = useRouter();
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  const router = useRouter();
 
   const user = useUser();
+
   useEffect(() => {});
   const DotIcon = () => {
     return (
