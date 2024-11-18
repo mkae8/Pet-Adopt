@@ -1,5 +1,5 @@
 "use client";
-
+import { PawPrintIcon as Paw } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
@@ -39,8 +39,6 @@ const PetAddModal = () => {
   });
 
   const [image, setImage] = useState<File | null>(null);
-  // const [accessUrl, setAccessUrl] = useState<string | null>(null);
-
   const getPresignedURL = async () => {
     try {
       const { data } = await axios.get(`${process.env.BACKEND_URL}/image`);
@@ -143,7 +141,17 @@ const PetAddModal = () => {
         setLoading(false);
         return;
       }
-      toast.success("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
+
+      toast.success("Амьтны мэдээлэл амжилттай хадгалагдлаа!", {
+        position: "top-right",
+        autoClose: 2800,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       handleClear();
     } catch (error) {
       console.error("Error:", error);
@@ -158,13 +166,17 @@ const PetAddModal = () => {
       <DialogTrigger asChild>
         <Button
           onClick={() => setIsOpen(true)}
-          className="relative overflow-hidden bg-gradient-to-r bg-inherit text-white font-semibold py-7 px-10 bottom-[480px] right-[580px]
+          className="relative border overflow-hidden bg-gradient-to-r bg-inherit font-semibold py-7 px-10 bottom-[480px] right-[450px]
     transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl hover:focus:outline-none focus:ring-4  focus:ring-opacity-50
     group"
         >
-          <span className="relative z-10 text-lg text-[20px] font-bold ">
-            Үрчлүүлэх амьтны мэдээлэл оруулах
-          </span>
+          <div className="flex items-center gap-2 ">
+            <Paw className="h-6 w-6 text-black" />
+            <span className="relative z-10 text-[20px] font-bold text-black hover:text-white ">
+              Үрчлүүлэх амьтны мэдээлэл оруулах
+            </span>
+          </div>
+
           <span
             className="
       absolute inset-0 bg-[#F97316] opacity-20 transform scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-50 origin-left"
@@ -238,7 +250,7 @@ const PetAddModal = () => {
               id="description"
               value={formData.description}
               onChange={handleChange}
-              placeholder="Амьтныг тодорхойлно уу (жишээ нь: өнгө , онцгой шинж тэмдэг гэх мэт...)"
+              placeholder="Амьтныг тодорхойлно уу (Жишээ нь: Үүлдэр, өнгө , онцгой шинж тэмдэг гэх мэт...)"
               className="col-span-3"
             />
           </div>
@@ -345,7 +357,7 @@ const PetAddModal = () => {
             }}
             disabled={loading}
             className={`relative ${
-              loading ? "cursor-not-allowed opacity-50" : ""
+              loading ? "cursor-not-allowed opacity-100" : ""
             }`}
           >
             {loading ? (
@@ -357,7 +369,7 @@ const PetAddModal = () => {
                   viewBox="0 0 24 24"
                 >
                   <circle
-                    className="opacity-25"
+                    className="opacity-100"
                     cx="12"
                     cy="12"
                     r="10"
@@ -365,7 +377,7 @@ const PetAddModal = () => {
                     strokeWidth="4"
                   ></circle>
                   <path
-                    className="opacity-75"
+                    className="opacity-100"
                     fill="currentColor"
                     d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                   ></path>
@@ -388,9 +400,9 @@ const PetAddPage = () => {
       <img
         src="/PetPage.jpg"
         alt="Pet Background"
-        className="w-screen h-screen object-full "
+        className="w-screen h-screen object-fill"
       />
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 mb-10 bg-ora">
+      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 mb-10 px-4 sm:px-6">
         <PetAddModal />
       </div>
     </div>
