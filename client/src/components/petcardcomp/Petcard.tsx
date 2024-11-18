@@ -143,7 +143,7 @@ const Petcard = () => {
 
   const fetchPets = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/get/pet");
+      const response = await axios.get(`${process.env.BACKEND_URL}/get/pet`);
       console.log(response);
 
       setPets(response.data);

@@ -116,7 +116,7 @@ export default function ApplicationForm() {
     console.log("Form Data: ", inputValues);
 
     try {
-      await axios.post(`http://localhost:8000/applicationForm`, {
+      await axios.post(`${process.env.BACKEND_URL}/applicationForm`, {
         inputValues,
       });
 
