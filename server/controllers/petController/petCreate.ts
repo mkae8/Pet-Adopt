@@ -4,6 +4,7 @@ env.config();
 
 export const petCreate = async (req: any, res: any) => {
   const userId = res.locals.userId;
+  console.log(req.body);
 
   const {
     petName,
