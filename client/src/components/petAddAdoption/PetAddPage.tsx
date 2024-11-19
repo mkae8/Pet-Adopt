@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/select";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
-import { PetAddLoading } from "@/components/petAddAdoption/petAddLoading";
+import { PetAddLoading } from "./PetAddLoading";
 
 const Test = () => {
   const [formData, setFormData] = useState({

@@ -1,9 +1,0 @@
-{
-  "name": "rm",
-  "version": "rm -rf node_modules yarn.lock",
-  "description": "rm -rf node_modules yarn.lock",
-  "main": "rm -rf node_modules yarn.lock",
-  "repository": "https://github.com/mkae8/Pet-Adopt.git",
-  "author": "Bilguun <Bilguun040728@gmail.com>",
-  "license": "MIT"
-}
