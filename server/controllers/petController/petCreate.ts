@@ -17,6 +17,7 @@ export const petCreate = async (req: any, res: any) => {
     description,
     location,
     status,
+    isVaccined,
   } = req.body;
 
   if (
@@ -28,7 +29,8 @@ export const petCreate = async (req: any, res: any) => {
     !sex ||
     !size ||
     !weight ||
-    !location
+    !location ||
+    !isVaccined
   ) {
     return res.status(400).send({ message: "All fields are required" });
   }
@@ -46,6 +48,7 @@ export const petCreate = async (req: any, res: any) => {
       description,
       location,
       status,
+      isVaccined,
     });
     res.status(201).send({ message: "Pet created successfully", newPet });
   } catch (error) {
