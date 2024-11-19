@@ -29,7 +29,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "next.config.ts"
+    "next.config.ts",
+    "src/components/petcardcomp/Test.tsx"
   ],
   "exclude": ["node_modules"]
 }
