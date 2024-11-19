@@ -1,5 +1,5 @@
 "use client";
-import { PawPrintIcon as Paw } from "lucide-react";
+
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
@@ -37,8 +37,9 @@ const Test = () => {
     location: "",
     isVaccined: "",
   });
-
   const [image, setImage] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+  const { user } = useUser();
 
   const getPresignedURL = async () => {
     try {
@@ -71,8 +72,6 @@ const Test = () => {
     }
   };
 
-  const { user } = useUser();
-
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -83,8 +82,6 @@ const Test = () => {
   const handleSelectChange = (id: string, value: string) => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
-
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -290,8 +287,8 @@ const Test = () => {
               <SelectContent>
                 <SelectItem value="Тийм">Тийм</SelectItem>
                 <SelectItem value="Үгүй">Үгүй</SelectItem>
-                <SelectItem value="Одоогоор хүлээгдэж байгаа">
-                  Одоогоор хүлээгдэж байгаа
+                <SelectItem value="Хараахан хийлгэж амжаагүй">
+                  Хараахан хийлгэж амжаагүй
                 </SelectItem>
               </SelectContent>
             </Select>

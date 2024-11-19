@@ -153,4 +153,15 @@
   .border-orange {
     border-color: orange !important; /* Change to your desired color */
   }
+
+  .footer-bg::before {
+    position: absolute;
+    left: 0;
+    top: -13;
+    width: 100%;
+    height: 24px;
+    background-repeat: repeat;
+    background-position: center;
+    z-index: -1;
+  }
 }

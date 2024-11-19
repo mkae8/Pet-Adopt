@@ -17,7 +17,7 @@ enum Status {
 enum IsVaccined {
   True = "Тийм",
   False = "Үгүй",
-  Pending = "Одоогоор хүлээгдэж байгаа",
+  Pending = "Хараахан хийлгэж амжаагүй",
 }
 
 export type PetsModelType = {
