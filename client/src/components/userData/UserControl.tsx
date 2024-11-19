@@ -3,6 +3,7 @@
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { useEffect } from "react";
+import { Loader } from "../Loader";
 
 const UserControl = ({
   children,
