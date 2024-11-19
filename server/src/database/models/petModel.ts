@@ -27,6 +27,7 @@ export type PetsModelType = {
   size: Size;
   weight: string;
   location: string;
+  isVaccined: boolean;
   status: Status;
 };
 
@@ -38,6 +39,7 @@ const PetSchema = new Schema<PetsModelType>({
     ref: "Category",
   },
   petName: { type: String, required: true },
+  isVaccined: { type: Boolean, required: true },
   image: { type: [String], required: true },
   description: { type: String, required: true },
   age: { type: Number, required: true },
