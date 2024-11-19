@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import React, { useRef } from "react";
 import {
   motion,
@@ -9,7 +8,6 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
-import { FiMousePointer } from "react-icons/fi";
 import {
   Dialog,
   DialogContent,
@@ -18,18 +16,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
-import { Dog, Cat, Bird, Fish, Rabbit, Search, Fullscreen } from "lucide-react";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -41,40 +27,41 @@ type Pet = {
   age: string;
   description: string;
   image: string[];
+  petCategoryId: PetCategory;
 };
 
 type PetCategory = {
-  names: string;
+  categoryNames: string;
   imageUrl: string;
 };
 
 const types: PetCategory[] = [
   {
-    names: "бүгд",
+    categoryNames: "бүгд",
     imageUrl: "tomjerry.png",
   },
   {
-    names: "нохой",
+    categoryNames: "Dog",
     imageUrl: "dog.jpeg",
   },
   {
-    names: "муур",
+    categoryNames: "Cat",
     imageUrl: "cat.jpeg",
   },
   {
-    names: "шувуу",
+    categoryNames: "Bird",
     imageUrl: "bird.png",
   },
   {
-    names: "туулай",
+    categoryNames: "Rabbit",
     imageUrl: "rabbit.jpeg",
   },
   {
-    names: "мэрэгч",
+    categoryNames: "Hamster",
     imageUrl: "chipmunks.jpeg",
   },
   {
-    names: "загас",
+    categoryNames: "Fish",
     imageUrl: "fish.jpeg",
   },
 ];
@@ -84,6 +71,12 @@ const Petcard = () => {
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
   const [sliceCount, setSliceCount] = useState(8);
   const [pets, setPets] = useState<Pet[]>([]);
+
+  const [animalFilter, setAnimalFilter] = useState("");
+
+  const filterHandler = (categoryNames: string) => {
+    setAnimalFilter(categoryNames);
+  };
 
   const fetchPet = async () => {
     try {
@@ -186,7 +179,8 @@ const Petcard = () => {
               </h1>
               <div className="flex gap-4 overflow-x-auto md:overflow-visible flex-wrap md:flex-wrap">
                 {types.map((type, index) => (
-                  <div
+                  <button
+                    onClick={() => filterHandler(type.categoryNames)}
                     key={index}
                     className="min-w-[80px] md:min-w-[110px] h-[45px] rounded-full flex items-center justify-center gap-2 cursor-pointer transition ease-in-out duration-300 mb-4 md:mb-0"
                   >
@@ -196,53 +190,56 @@ const Petcard = () => {
                       alt=""
                     />
                     <div className="text-black text-sm md:text-base  hover:nav_link nhome_link btn_text">
-                      {type.names}
+                      {type.categoryNames}
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
             <div className="flex flex-col items-center gap-8 mt-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {pets.slice(0, sliceCount).map((pet, index) => (
-                  <motion.div
-                    onMouseMove={(e) => handleMouseMove(e, index)}
-                    onMouseLeave={handleMouseLeave}
-                    ref={ref}
-                    style={{ transform, transformStyle: "preserve-3d" }}
-                    key={pet._id}
-                    className="cursor-pointer h-[380px] bg-white rounded-lg flex flex-col justify-between relative"
-                    onClick={() => openModal(pet)}
-                  >
-                    <div>
-                      <motion.img
-                        style={{
-                          transform: "translateZ(75px)",
-                        }}
-                        src={pet.image[0]}
-                        alt={pet.name}
-                        className="w-full h-[200px] md:h-[250px] object-cover rounded-[16px] shadow-md hover:shadow-lg transition-shadow duration-300"
-                        initial={{ opacity: 0, y: 20, scale: 1 }}
-                        animate={{ opacity: 1, y: 0, rotate: 0 }}
-                        exit={{ opacity: 0, y: -20, rotate: -5 }}
-                        transition={{
-                          duration: 0.5 + (index - 0.5),
-                          ease: "easeInOut",
-                        }}
-                      />
+                {pets
+                  .filter((pet) => pet.petCategoryId?.categoryNames)
+                  .slice(0, sliceCount)
+                  .map((pet, index) => (
+                    <motion.div
+                      onMouseMove={(e) => handleMouseMove(e, index)}
+                      onMouseLeave={handleMouseLeave}
+                      ref={ref}
+                      style={{ transform, transformStyle: "preserve-3d" }}
+                      key={pet._id}
+                      className="cursor-pointer h-[380px] bg-white rounded-lg flex flex-col justify-between relative"
+                      onClick={() => openModal(pet)}
+                    >
+                      <div>
+                        <motion.img
+                          style={{
+                            transform: "translateZ(75px)",
+                          }}
+                          src={pet.image[0]}
+                          alt={pet.name}
+                          className="w-full h-[200px] md:h-[250px] object-cover rounded-[16px] shadow-md hover:shadow-lg transition-shadow duration-300"
+                          initial={{ opacity: 0, y: 20, scale: 1 }}
+                          animate={{ opacity: 1, y: 0, rotate: 0 }}
+                          exit={{ opacity: 0, y: -20, rotate: -5 }}
+                          transition={{
+                            duration: 0.5 + (index - 0.5),
+                            ease: "easeInOut",
+                          }}
+                        />
 
-                      <div className="mt-2 p-4">
-                        <div className="text-xl md:text-2xl font-semibold">
-                          {pet.name}
+                        <div className="mt-2 p-4">
+                          <div className="text-xl md:text-2xl font-semibold">
+                            {pet.name}
+                          </div>
+                          <div className="text-lg md:text-xl font-normal">
+                            {pet.breed}
+                          </div>
+                          <div className="text-md md:text-lg">{pet.age}</div>
                         </div>
-                        <div className="text-lg md:text-xl font-normal">
-                          {pet.breed}
-                        </div>
-                        <div className="text-md md:text-lg">{pet.age}</div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  ))}
               </div>
               <div className="group">
                 <div
