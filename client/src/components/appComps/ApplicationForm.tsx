@@ -134,69 +134,86 @@ export default function ApplicationForm() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 bg-orange-300 border-solid border-2 rounded-2xl p-3 ">
-      <div className="flex flex-col gap-5 ">
-        {questions.map((question, index) => {
-          if (question.id == "question8") {
+    <div className="flex border-solid border-2 rounded-2xl ">
+      {/* <img
+        className="w-1/2 object-cover rounded-tl-2xl rounded-bl-2xl"
+        src=""
+        alt="app"
+      /> */}
+      <div className="flex flex-col items-center gap-4 rounded-2xl p-6 opacity-95 bg-white ">
+        <div className=" mt-5 text-3xl font-bold">Үрчлэгчийн мэдээлэл</div>
+        <div className="text-gray-500 ">
+          /Таны бөглөсөн мэдээллийг амьтны эзэн харах болно/
+        </div>
+        <div className="flex flex-col gap-5 ">
+          {questions.map((question, index) => {
+            if (question.id == "question8") {
+              return (
+                <div
+                  key={index}
+                  className="flex justify-start items-center gap-5"
+                >
+                  <label>
+                    {question.number}.{question.text}*
+                  </label>
+                  <Select
+                    value={selectedValue}
+                    onValueChange={handleSelectChange}
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Сонгох" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="Тийм">Тийм</SelectItem>
+                        <SelectItem value="Үгүй">Үгүй</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
+              );
+            }
             return (
               <div
                 key={index}
-                className="flex justify-start items-center gap-5"
+                className="w-100vw flex flex-col gap-2 bg-orange-200 rounded-sm p-1 "
               >
-                <label>
-                  {question.number}.{question.text}
-                </label>
-                <Select
-                  value={selectedValue}
-                  onValueChange={handleSelectChange}
-                >
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Сонгох" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="Тийм">Тийм</SelectItem>
-                      <SelectItem value="Үгүй">Үгүй</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
+                <p>
+                  {question.number}. {question.text}*
+                </p>
+                <Input
+                  className="border-0 bg-orange-100"
+                  id={`input-${question.text}`}
+                  value={String(inputValues[question.id] || "")}
+                  onChange={(e) =>
+                    handleInputChange(question.id, e.target.value)
+                  }
+                  required
+                  type="text"
+                />
               </div>
             );
-          }
-          return (
-            <div key={index} className="w-100vw ">
-              <p>
-                {question.number}. {question.text}
-              </p>
-              <Input
-                id={`input-${question.text}`}
-                value={String(inputValues[question.id] || "")}
-                onChange={(e) => handleInputChange(question.id, e.target.value)}
-                required
-                type="text"
-              />
-            </div>
-          );
-        })}
-      </div>
-      {errorMessage && (
-        <div className="text-red-500 mt-2">
-          <p>{errorMessage}</p>
+          })}
         </div>
-      )}
-      <div className=" flex justify-between w-full">
-        <Button
-          onClick={back}
-          className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
-        >
-          Буцах
-        </Button>
-        <Button
-          onClick={submit}
-          className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
-        >
-          Үргэлжлүүлэх
-        </Button>
+        {errorMessage && (
+          <div className="text-red-500 mt-2">
+            <p>{errorMessage}</p>
+          </div>
+        )}
+        <div className=" flex justify-between w-full">
+          <Button
+            onClick={back}
+            className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
+          >
+            Буцах
+          </Button>
+          <Button
+            onClick={submit}
+            className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
+          >
+            Үргэлжлүүлэх
+          </Button>
+        </div>
       </div>
     </div>
   );

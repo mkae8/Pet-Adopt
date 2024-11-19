@@ -26,6 +26,8 @@
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.2",
+    "@splinetool/react-spline": "^4.0.0",
+    "@splinetool/runtime": "^1.9.44",
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/nodemailer": "^6.4.16",
