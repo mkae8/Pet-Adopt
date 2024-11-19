@@ -18,7 +18,7 @@ export default function Page() {
             <Link href={"/"}>
               <img className="w-[60px] h-[60px] mt-5" src="/logo.png" alt="" />
             </Link>
-            <Link href={"/"}>{/* <img src="/pet-adopt.png" alt="" /> */}</Link>
+            <Link href={"/"}></Link>
           </div>
           <h2 className=" text-center text-8xl text-wrap font-extrabold text-[#FFDDD2]">
             Нэвтрэх

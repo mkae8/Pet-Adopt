@@ -4,14 +4,12 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,8 +23,9 @@ import {
 } from "@/components/ui/select";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
+import { PetAddLoading } from "@/components/petAddAdoption/petAddLoading";
 
-const PetAddModal = () => {
+const Test = () => {
   const [formData, setFormData] = useState({
     petName: "",
     petCategoryId: "",
@@ -36,9 +35,11 @@ const PetAddModal = () => {
     size: "",
     weight: "",
     location: "",
+    isVaccined: "",
   });
 
   const [image, setImage] = useState<File | null>(null);
+
   const getPresignedURL = async () => {
     try {
       const { data } = await axios.get(`${process.env.BACKEND_URL}/image`);
@@ -53,16 +54,10 @@ const PetAddModal = () => {
     if (image) {
       try {
         const data = await getPresignedURL();
-        console.log(data.accessUrls);
-
         await axios.put(data.uploadUrl, image, {
           headers: { "Content-Type": image.type },
         });
-
         return data;
-
-        console.log("Image successfully uploaded");
-        // setAccessUrl(data.accessUrls);
       } catch (error) {
         console.log(error);
       }
@@ -89,23 +84,8 @@ const PetAddModal = () => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const handleClear = () => {
-    setFormData({
-      petName: "",
-      petCategoryId: "",
-      description: "",
-      age: "",
-      sex: "",
-      size: "",
-      weight: "",
-      location: "",
-    });
-    setImage(null);
-    setIsOpen(false);
-  };
   const handleSubmit = async () => {
     setLoading(true);
     const data = await uploadImage();
@@ -142,17 +122,7 @@ const PetAddModal = () => {
         return;
       }
 
-      toast.success("Амьтны мэдээлэл амжилттай хадгалагдлаа!", {
-        position: "top-right",
-        autoClose: 2800,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-      handleClear();
+      toast.success("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
     } catch (error) {
       console.error("Error:", error);
       toast.error("Алдаа гарлаа.");
@@ -160,45 +130,26 @@ const PetAddModal = () => {
       setLoading(false);
     }
   };
+  console.log(formData);
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button
-          onClick={() => setIsOpen(true)}
-          className="relative border overflow-hidden bg-gradient-to-r bg-inherit font-semibold py-7 px-10 bottom-[480px] right-[450px]
-    transform transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-xl hover:focus:outline-none focus:ring-4  focus:ring-opacity-50
-    group"
-        >
-          <div className="flex items-center gap-2 ">
-            <Paw className="h-6 w-6 text-black" />
-            <span className="relative z-10 text-[20px] font-bold text-black hover:text-white ">
-              Үрчлүүлэх амьтны мэдээлэл оруулах
-            </span>
-          </div>
-
-          <span
-            className="
-      absolute inset-0 bg-[#F97316] opacity-20 transform scale-x-0 transition-transform duration-700 ease-out group-hover:scale-x-50 origin-left"
-          ></span>
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle>Амьтны мэдээлэл нэмэх</DialogTitle>
-          <DialogDescription>
-            Амьтны мэдээллийг оруулсаны дараа илгээх товчийг дараарай 😻
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="grid gap-4 py-4">
-          <div className="pl-[142px]">
+    <Card className="w-full h-full max-w-lg mx-auto p-4 ">
+      <CardHeader>
+        <CardTitle>Амьтны мэдээлэл нэмэх</CardTitle>
+        <CardDescription>
+          Амьтны мэдээллийг оруулсаны дараа илгээх товчийг дараарай 😻
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid gap-4">
+          <div>
+            <Label htmlFor="petCategory">Амьтны төрөл</Label>
             <Select
               onValueChange={(value) =>
                 handleSelectChange("petCategoryId", value)
               }
             >
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger>
                 <SelectValue placeholder="Амьтны төрөл" />
               </SelectTrigger>
               <SelectContent>
@@ -228,51 +179,39 @@ const PetAddModal = () => {
               </SelectContent>
             </Select>
           </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="petName" className="text-right">
-              Амьтны нэр
-            </Label>
+          <div>
+            <Label htmlFor="petName">Амьтны нэр</Label>
             <Input
               id="petName"
               value={formData.petName}
               onChange={handleChange}
               placeholder="Амьтны нэрийг оруулна уу"
-              className="col-span-3"
             />
           </div>
-
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">
-              Тайлбар
-            </Label>
+          <div>
+            <Label htmlFor="description">Тайлбар</Label>
             <Textarea
               id="description"
               value={formData.description}
               onChange={handleChange}
               placeholder="Амьтныг тодорхойлно уу (Жишээ нь: Үүлдэр, өнгө , онцгой шинж тэмдэг гэх мэт...)"
-              className="col-span-3"
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="age" className="text-right">
-              Нас
-            </Label>
+          <div>
+            <Label htmlFor="age">Нас</Label>
             <Input
               id="age"
               type="number"
               value={formData.age}
               onChange={handleChange}
               placeholder="Амьтны насыг жилээр оруулна уу"
-              className="col-span-3"
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="sex" className="text-right">
-              Хүйс
-            </Label>
+
+          <div>
+            <Label htmlFor="sex">Хүйс</Label>
             <Select onValueChange={(value) => handleSelectChange("sex", value)}>
-              <SelectTrigger className="col-span-3">
+              <SelectTrigger>
                 <SelectValue placeholder="Хүйс сонгоно уу" />
               </SelectTrigger>
               <SelectContent>
@@ -281,14 +220,13 @@ const PetAddModal = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="size" className="text-right">
-              Хэмжээ
-            </Label>
+
+          <div>
+            <Label htmlFor="size">Хэмжээ</Label>
             <Select
               onValueChange={(value) => handleSelectChange("size", value)}
             >
-              <SelectTrigger className="col-span-3">
+              <SelectTrigger>
                 <SelectValue placeholder="Хэмжээг сонгоно уу" />
               </SelectTrigger>
               <SelectContent>
@@ -298,57 +236,74 @@ const PetAddModal = () => {
               </SelectContent>
             </Select>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="weight" className="text-right">
-              Жин
-            </Label>
+
+          {/* Жин */}
+          <div>
+            <Label htmlFor="weight">Жин</Label>
             <Input
               id="weight"
               value={formData.weight}
               onChange={handleChange}
               placeholder="Жинг кг-аар оруулна уу"
-              className="col-span-3"
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="location" className="text-right">
-              Байршил
-            </Label>
+
+          {/* Байршил */}
+          <div>
+            <Label htmlFor="location">Байршил</Label>
             <Input
               id="location"
               value={formData.location}
               onChange={handleChange}
               placeholder="Байршлыг оруулна уу"
-              className="col-span-3"
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="status" className="text-right">
-              Статус
-            </Label>
+
+          {/* Статус */}
+          <div>
+            <Label htmlFor="status">Статус</Label>
             <Select
               onValueChange={(value) => handleSelectChange("status", value)}
             >
-              <SelectTrigger className="col-span-3">
+              <SelectTrigger>
                 <SelectValue placeholder="Статус сонгоно уу" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="Үрчлүүлэх боломжтой">
                   Үрчлүүлэх боломжтой
                 </SelectItem>
-                <SelectItem value="  Одоогоор хүлээгдэж байгаа">
+                <SelectItem value="Одоогоор хүлээгдэж байгаа">
                   Одоогоор хүлээгдэж байгаа
                 </SelectItem>
               </SelectContent>
             </Select>
           </div>
-        </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="picture">Зураг хадгалагдах</Label>
-          <Input id="picture" onChange={handleFileChange} type="file" />
-        </div>
+          {/* Вакцин */}
+          <div>
+            <Label htmlFor="isVaccined">Вакцинд хамрагдсан эсэх</Label>
+            <Select
+              onValueChange={(value) => handleSelectChange("isVaccined", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Статус сонгоно уу" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Тийм">Тийм</SelectItem>
+                <SelectItem value="Үгүй">Үгүй</SelectItem>
+                <SelectItem value="Одоогоор хүлээгдэж байгаа">
+                  Одоогоор хүлээгдэж байгаа
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-        <DialogFooter>
+          {/* Зураг */}
+          <div>
+            <Label htmlFor="picture">Зураг хадгалагдах</Label>
+            <Input id="picture" onChange={handleFileChange} type="file" />
+          </div>
+
+          {/* Илгээх товч */}
           <Button
             type="button"
             onClick={() => {
@@ -356,54 +311,25 @@ const PetAddModal = () => {
               uploadImage();
             }}
             disabled={loading}
-            className={`relative ${
-              loading ? "cursor-not-allowed opacity-100" : ""
-            }`}
+            className={`relative ${loading ? "cursor-not-allowed" : ""}`}
           >
-            {loading ? (
-              <span className="flex items-center">
-                <svg
-                  className="animate-spin h-5 w-5 text-white mr-2"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-100"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-100"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                  ></path>
-                </svg>
-                Илгээж байна...
-              </span>
-            ) : (
-              "Мэдээлэл илгээх"
-            )}
+            {loading ? <PetAddLoading /> : "Мэдээлэл илгээх"}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
-
 const PetAddPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full bg-gray-100 relative">
-      <img
-        src="/PetPage.jpg"
-        alt="Pet Background"
-        className="w-screen h-screen object-fill"
+    <div className="relative flex flex-col items-center justify-center w-full h-full bg-gray-100">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url('/PetPage.jpg')` }}
+        aria-hidden="true"
       />
-      <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 mb-10 px-4 sm:px-6">
-        <PetAddModal />
+      <div className="relative left-0 my-5  sm:px-6">
+        <Test />
       </div>
     </div>
   );

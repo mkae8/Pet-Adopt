@@ -3,7 +3,7 @@ import ApplicationForm from "../../components/appComps/ApplicationForm";
 
 const AppQeustions = () => {
   return (
-    <div className="h-screen flex flex-col items-center justify-around relative">
+    <div className="h-screen flex flex-col items-center justify-around relative bg-[url('https://i.pinimg.com/736x/f0/3d/f4/f03df4a95910ed3098b63c74a731fefa.jpg')]">
       <div
         className="absolute inset-0 bg-black opacity-30"
         style={{
@@ -11,8 +11,8 @@ const AppQeustions = () => {
           zIndex: -1,
         }}
       />
-      <div className=" mt-20 text-3xl font-bold">Үрчлэгчийн мэдээлэл</div>
-      <div className="sm:w-[500px] lg:w-[1000px] md:w-[600px] m-auto rounded-xl shadow-2xl relative z-10">
+
+      <div className="sm:w-[500px] lg:w-[1000px] md:w-[600px] m-auto rounded-xl shadow-2xl relative z-10 flex">
         <Suspense fallback={<div>Loading...</div>}>
           <ApplicationForm />
         </Suspense>
