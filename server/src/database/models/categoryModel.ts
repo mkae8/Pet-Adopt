@@ -3,7 +3,6 @@ import { Model, Schema, models, model, Types } from "mongoose";
 export type CategoryModelType = {
   _id: Schema.Types.ObjectId;
   categoryName?: string;
-  // petId: Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 };
@@ -11,7 +10,6 @@ export type CategoryModelType = {
 const CategorySchema = new Schema<CategoryModelType>(
   {
     categoryName: { type: String, unique: true, sparse: true },
-    // petId: { type: [Types.ObjectId], required: true },
     createdAt: {
       type: Date,
       default: Date.now,

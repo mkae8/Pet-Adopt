@@ -14,6 +14,11 @@ enum Status {
   Pending = " Одоогоор хүлээгдэж байгаа",
   Adopted = "Үрчилэгдсэн",
 }
+enum IsVaccined {
+  True = "Тийм",
+  False = "Үгүй",
+  Pending = "Одоогоор хүлээгдэж байгаа",
+}
 
 export type PetsModelType = {
   _id: Types.ObjectId;
@@ -27,7 +32,7 @@ export type PetsModelType = {
   size: Size;
   weight: string;
   location: string;
-  isVaccined: boolean;
+  isVaccined: IsVaccined;
   status: Status;
 };
 
@@ -39,7 +44,7 @@ const PetSchema = new Schema<PetsModelType>({
     ref: "Category",
   },
   petName: { type: String, required: true },
-  isVaccined: { type: Boolean, required: true },
+  isVaccined: { type: String, required: false },
   image: { type: [String], required: true },
   description: { type: String, required: true },
   age: { type: Number, required: true },
