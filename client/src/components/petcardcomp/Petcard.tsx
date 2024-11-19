@@ -127,20 +127,22 @@ const Petcard = () => {
   };
 
   return (
-    <div className="min-h-full flex items-center justify-center">
-      <div className="mx-auto p-4">
+    <div className=" flex items-center justify-center">
+      <div className="">
         <div
-          className="min-h-screen w-screen flex pt-52 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://i.pinimg.com/736x/4c/ca/35/4cca35ed0cbe01e1d861f971ab27fd8c.jpg')",
-            zIndex: -1,
-          }}
+          className="min-h-screen w-screen flex bg-cover bg-center"
+          style={
+            {
+              // backgroundImage:
+              //   "url('https://i.pinimg.com/736x/4c/ca/35/4cca35ed0cbe01e1d861f971ab27fd8c.jpg')",
+              // zIndex: -1,
+            }
+          }
         >
           <div className="container mx-auto p-12">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <h1 className="text-2xl text-black font-bold mb-4 md:mb-0 p-4 hover:text-slate-800">
-                Meet our friends
+                Бидний найзуудтай танилц
               </h1>
               <div className="flex gap-4 overflow-x-auto md:overflow-visible flex-wrap md:flex-wrap">
                 {types.map((type, index) => (
@@ -162,7 +164,7 @@ const Petcard = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5 ">
               {pets // CARD heseg
                 .filter((pet) =>
                   animalFilter
@@ -172,7 +174,7 @@ const Petcard = () => {
                 .slice(0, sliceCount)
                 .map((pet, index) => (
                   <motion.div
-                    className="cursor-pointer h-[380px] rounded-lg border border-solid bg-white shadow-2xl flex flex-col relative  transform hover:scale-105 hover:rotate-y-6 transition-all duration-500 ease-in-out"
+                    className="cursor-pointer  rounded-lg border border-solid sm:h-[250px] sm:w-[200px] md:h-[300px] md:w-[250px] lg:h-[350px] lg:w-[300px] xl:h-[350px] xl:w-[300px] 2xl:h-[400px] 2xl:w-[350px]  bg-white shadow-2xl flex flex-col relative  transform hover:scale-105 hover:rotate-y-6 transition-all duration-500 ease-in-out"
                     onClick={() => openModal(pet)}
                     style={{
                       perspective: "1000px",
@@ -213,12 +215,12 @@ const Petcard = () => {
                 ))}
             </div>
 
-            <div className="group mt-5">
+            <div className="group mt-5 flex justify-center items-center">
               <button
                 onClick={() => setSliceCount((prev) => prev + 8)}
-                className="relative h-12 w-40 md:h-16 md:w-48 rounded-full text-lg md:text-xl border border-orange-500 bg-primary flex justify-center items-center overflow-hidden transition duration-300"
+                className="relative h-12 w-48 md:h-12 md:w-48 rounded-full text-lg md:text-xl border border-orange-500 bg-primary flex justify-center items-center overflow-hidden transition duration-300 "
               >
-                <span className="font-medium text-xl">See more</span>
+                <span className="font-medium">See more</span>
               </button>
             </div>
 
@@ -240,7 +242,7 @@ const Petcard = () => {
                     <div className="p-4 flex flex-col mt-4 md:mt-0 md:ml-4 justify-between items-center md:items-start">
                       <div className="text-center md:text-left mt-6">
                         <DialogTitle className="text-2xl md:text-3xl font-bold">
-                          {selectedPet.petName}
+                          {selectedPet.description}
                         </DialogTitle>
                         <DialogHeader>
                           <p className="text-lg md:text-xl mt-2">
@@ -287,7 +289,9 @@ const Petcard = () => {
                                 adopt {selectedPet.petName}
                               </Button>
                             </span>
-                            <span className="absolute inset-0 bg-[#F97316] transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></span>
+                            <span className="absolute inset-0 bg-[#F97316] transform translate-y-full transition-transform duration-300 group-hover:translate-y-0">
+                              йййыбйыөй
+                            </span>
                           </div>
                         </div>
                       </DialogFooter>
