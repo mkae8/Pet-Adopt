@@ -285,6 +285,21 @@ const Test = () => {
               </SelectContent>
             </Select>
           </div>
+          {/* Вакцин */}
+          <div>
+            <Label htmlFor="status">Вакцинд хамрагдсан эсэх</Label>
+            <Select
+              onValueChange={(value) => handleSelectChange("status", value)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Статус сонгоно уу" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Тийм">Тийм</SelectItem>
+                <SelectItem value="Үгүй">Үгүй</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
           {/* Зураг */}
           <div>
@@ -317,7 +332,7 @@ const PetAddPage = () => {
         style={{ backgroundImage: `url('/PetPage.jpg')` }}
         aria-hidden="true"
       />
-      <div className="relative z-10 my-5  sm:px-6">
+      <div className="relative left-0 my-5  sm:px-6">
         <Test />
       </div>
     </div>
