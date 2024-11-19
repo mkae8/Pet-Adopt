@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import React, { useRef } from "react";
 import {
   motion,
@@ -32,15 +31,44 @@ type Pet = {
   age: string;
   description: string;
   image: string[];
+  petCategoryId: PetCategory;
 };
 
 type PetCategory = {
-  names: string;
+  categoryNames: string;
   imageUrl: string;
 };
 
 const types: PetCategory[] = [
   {
+
+    categoryNames: "бүгд",
+    imageUrl: "tomjerry.png",
+  },
+  {
+    categoryNames: "Dog",
+    imageUrl: "dog.jpeg",
+  },
+  {
+    categoryNames: "Cat",
+    imageUrl: "cat.jpeg",
+  },
+  {
+    categoryNames: "Bird",
+    imageUrl: "bird.png",
+  },
+  {
+    categoryNames: "Rabbit",
+    imageUrl: "rabbit.jpeg",
+  },
+  {
+    categoryNames: "Hamster",
+    imageUrl: "chipmunks.jpeg",
+  },
+  {
+    categoryNames: "Fish",
+    imageUrl: "fish.jpeg",
+
     names: "бүгд",
     imageUrl:
       "https://i.pinimg.com/474x/61/9a/57/619a57ac8d9f78f626ed52860de2310d.jpg",
@@ -73,7 +101,7 @@ const types: PetCategory[] = [
   {
     names: "загас",
     imageUrl:
-      "https://i.pinimg.com/736x/a6/7e/0e/a67e0ea6f63a62b910ca2838b1699283.jpg",
+
   },
 ];
 
@@ -85,6 +113,12 @@ const Petcard = () => {
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
   const [sliceCount, setSliceCount] = useState(8);
   const [pets, setPets] = useState<Pet[]>([]);
+
+  const [animalFilter, setAnimalFilter] = useState("");
+
+  const filterHandler = (categoryNames: string) => {
+    setAnimalFilter(categoryNames);
+  };
 
   const fetchPet = async () => {
     try {
@@ -188,7 +222,8 @@ const Petcard = () => {
               </h1>
               <div className="flex gap-4 overflow-x-auto md:overflow-visible flex-wrap md:flex-wrap">
                 {types.map((type, index) => (
-                  <div
+                  <button
+                    onClick={() => filterHandler(type.categoryNames)}
                     key={index}
                     className="min-w-[80px] md:min-w-[110px] h-[45px] rounded-full border border-primary-600 p-3 bg-primary hover:bg-slate-100 flex items-center justify-center gap-2 cursor-pointer transition ease-in-out duration-300 mb-4 md:mb-0 "
                   >
@@ -197,14 +232,51 @@ const Petcard = () => {
                       src={type.imageUrl}
                       alt=""
                     />
+
+                    <div className="text-black text-sm md:text-base  hover:nav_link nhome_link btn_text">
+                      {type.categoryNames}
+
                     <div className="text-black text-xl font-medium md:text-base  hover:nav_link nhome_link btn_text">
                       {type.names}
+
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
             <div className="flex flex-col items-center gap-8 mt-5">
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {pets
+                  .filter((pet) => pet.petCategoryId?.categoryNames)
+                  .slice(0, sliceCount)
+                  .map((pet, index) => (
+                    <motion.div
+                      onMouseMove={(e) => handleMouseMove(e, index)}
+                      onMouseLeave={handleMouseLeave}
+                      ref={ref}
+                      style={{ transform, transformStyle: "preserve-3d" }}
+                      key={pet._id}
+                      className="cursor-pointer h-[380px] bg-white rounded-lg flex flex-col justify-between relative"
+                      onClick={() => openModal(pet)}
+                    >
+                      <div>
+                        <motion.img
+                          style={{
+                            transform: "translateZ(75px)",
+                          }}
+                          src={pet.image[0]}
+                          alt={pet.name}
+                          className="w-full h-[200px] md:h-[250px] object-cover rounded-[16px] shadow-md hover:shadow-lg transition-shadow duration-300"
+                          initial={{ opacity: 0, y: 20, scale: 1 }}
+                          animate={{ opacity: 1, y: 0, rotate: 0 }}
+                          exit={{ opacity: 0, y: -20, rotate: -5 }}
+                          transition={{
+                            duration: 0.5 + (index - 0.5),
+                            ease: "easeInOut",
+                          }}
+                        />
+
               {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
                 {pets.slice(0, sliceCount).map((pet, index) => (
                   <motion.div
@@ -237,15 +309,21 @@ const Petcard = () => {
                         }}
                       />
 
-                      <div className="mt-2 p-4">
-                        <div className="text-xl md:text-2xl font-semibold">
-                          {pet.name}
+
+                        <div className="mt-2 p-4">
+                          <div className="text-xl md:text-2xl font-semibold">
+                            {pet.name}
+                          </div>
+                          <div className="text-lg md:text-xl font-normal">
+                            {pet.breed}
+                          </div>
+                          <div className="text-md md:text-lg">{pet.age}</div>
                         </div>
-                        <div className="text-lg md:text-xl font-normal">
-                          {pet.breed}
-                        </div>
-                        <div className="text-md md:text-lg">{pet.age}</div>
                       </div>
+
+                    </motion.div>
+                  ))}
+
                     </div>
                   </motion.div>
                 ))}
@@ -301,6 +379,7 @@ const Petcard = () => {
                     </div>
                   </motion.div>
                 ))}
+
               </div>
 
               <div className="group">
