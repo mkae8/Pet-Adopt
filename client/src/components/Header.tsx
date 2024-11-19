@@ -62,8 +62,8 @@ export default function Header() {
 
   return (
     <>
-      <header className="bg-white sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <header className="bg-white sticky  top-0 z-50">
+        <div className="max-w-7xl mx-auto  px-4 sm:px-6 lg:px-8 ">
           <div className="flex justify-between  items-center py-4 md:justify-start md:space-x-10">
             <Link href="/" className="flex items-center">
               <img
@@ -141,7 +141,7 @@ export default function Header() {
           </div>
           <img
             src="./test.png "
-            className="absolute left-0 bottom-[-40px] w-[100%] h-[24px] md:h-[52px] z-0 bg-repeat  bg-center"
+            className="absolute left-0 bottom-[-40px] w-[100%] h-[20px] md:h-[52px] z-0 bg-repeat  bg-center"
             alt=""
           />
         </div>
