@@ -9,6 +9,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { localization } from "./util/localization";
 
 import UserControl from "@/components/userData/UserControl";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,9 +32,11 @@ export default function RootLayout({
     <ClerkProvider localization={localization}>
       <html lang="en">
         <title>Pet Adoption</title>
+        <link rel="icon" type="image/png" href="/logo.png" />
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
+          <ToastContainer  />
           <UserControl>
             <Toaster />
             <Header />

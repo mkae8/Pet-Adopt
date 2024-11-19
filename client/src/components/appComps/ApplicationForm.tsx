@@ -27,6 +27,7 @@ export default function ApplicationForm() {
   const paramName = useSearchParams();
   const petId: string | null = paramName.get("petId");
   const router = useRouter();
+  const { push } = useRouter();
 
   const questions: Question[] = [
     {
@@ -92,7 +93,7 @@ export default function ApplicationForm() {
   };
 
   const back = () => {
-    router.push("/petCard");
+    router.push("/petcard");
   };
 
   const submit = async () => {
@@ -115,7 +116,7 @@ export default function ApplicationForm() {
     console.log("Form Data: ", inputValues);
 
     try {
-      await axios.post(`http://localhost:8000/applicationForm`, {
+      await axios.post(`${process.env.BACKEND_URL}/applicationForm`, {
         inputValues,
       });
 
@@ -123,6 +124,7 @@ export default function ApplicationForm() {
         title: "Success",
         description: "Success",
       });
+      push("/");
     } catch (error) {
       toast({
         title: "aldaa zaalaa",
@@ -182,19 +184,20 @@ export default function ApplicationForm() {
           <p>{errorMessage}</p>
         </div>
       )}
-
-      <Button
-        onClick={back}
-        className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
-      >
-        Буцах
-      </Button>
-      <Button
-        onClick={submit}
-        className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
-      >
-        Үргэлжлүүлэх
-      </Button>
+      <div className=" flex justify-between w-full">
+        <Button
+          onClick={back}
+          className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
+        >
+          Буцах
+        </Button>
+        <Button
+          onClick={submit}
+          className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
+        >
+          Үргэлжлүүлэх
+        </Button>
+      </div>
     </div>
   );
 }

@@ -49,7 +49,6 @@ export default function HomePage() {
         }
       };
     }, [ref, options]);
-    console.log(isInView);
 
     return isInView;
   }
@@ -85,19 +84,19 @@ export default function HomePage() {
             <div className="flex flex-col items-center justify-center  md:items-start space-y-4 text-center">
               <motion.div
                 ref={ref2}
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: -100 }}
                 animate={
-                  isInView2 ? { opacity: 0, x: 50 } : { opacity: 1, x: 0 }
+                  isInView2 ? { opacity: 0, x: -100 } : { opacity: 1, x: 0 }
                 }
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.7 }}
                 className=""
               >
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold text-center text-primary tracking-tighter sm:text-4xl  md:text-start md:text-5xl lg:text-6xl/none">
-                    төгс хамтрагчаа олоорой
+                    Төгс хамтрагчаа олоорой
                   </h1>
                   <p className="mx-auto max-w-[700px] text-xs text-white  md:text-start md:text-base dark:text-gray-400">
-                    тэжээвэр амьтанд хайраар дүүрэн гэр бүл бэлэглээрэй. Манай
+                    Тэжээвэр амьтанд хайраар дүүрэн гэр бүл бэлэглээрэй. Манай
                     үрчлэгдэх өхөөрдөм тэжээвэр амьтдыг үзэж, өнөөдрөөс эхлэн
                     тэжээвэр амьтдын эцэг эх болох аялалаа эхлүүлээрэй.
                   </p>
@@ -108,7 +107,7 @@ export default function HomePage() {
                       push("/petcard");
                     }}
                   >
-                    амьтан үрчлэх
+                    Амьтан үрчлэх
                   </Button>
                   <Button
                     onClick={() => {
@@ -133,7 +132,7 @@ export default function HomePage() {
                     }}
                     variant="outline"
                   >
-                    амьтан үрчлүүлэх
+                    Амьтан үрчлүүлэх
                   </Button>
                 </div>
               </motion.div>
@@ -174,7 +173,7 @@ export default function HomePage() {
                   </CardContent>
                   <CardFooter>
                     <Link href={"/buddy-list"}>
-                      <Button>Meet Buddy</Button>
+                      <Button>Нохой хайх</Button>
                     </Link>
                   </CardFooter>{" "}
                 </Card>
@@ -207,7 +206,7 @@ export default function HomePage() {
                   </CardContent>
                   <CardFooter>
                     <Link href={"/whiskers-list"}>
-                      <Button>Meet Whiskers</Button>
+                      <Button>Муур хайх</Button>
                     </Link>
                   </CardFooter>
                 </Card>
@@ -240,7 +239,7 @@ export default function HomePage() {
                   </CardContent>
                   <CardFooter>
                     <Link href={"/bunny-list"}>
-                      <Button>Meet Hoppy</Button>
+                      <Button>Туулай хайх</Button>
                     </Link>
                   </CardFooter>
                 </Card>
@@ -287,7 +286,7 @@ export default function HomePage() {
                 animate={
                   isInView1 ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
                 }
-                transition={{ duration: 2 }}
+                transition={{ duration: 1.2 }}
                 className=""
               >
                 <div className="flex flex-col items-center text-center">
@@ -307,7 +306,7 @@ export default function HomePage() {
                 animate={
                   isInView1 ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
                 }
-                transition={{ duration: 3 }}
+                transition={{ duration: 1.4 }}
                 className=""
               >
                 <div className="flex flex-col items-center text-center">
