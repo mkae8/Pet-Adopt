@@ -36,7 +36,7 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <ToastContainer  />
+          <ToastContainer />
           <UserControl>
             <Toaster />
             <Header />

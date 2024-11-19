@@ -135,4 +135,22 @@
     position: relative;
     overflow: hidden;
   }
+
+  .footer-input {
+    border-style: none none solid;
+    border-width: 1px;
+    border-color: var(--off-white) var(--off-white) var(--grey);
+    color: var(--off-white);
+    letter-spacing: 0.05rem;
+    text-transform: uppercase;
+    background-color: #fff0;
+    margin-bottom: 0;
+    padding: 1rem 0 1rem 1rem;
+    font-size: 0.65rem;
+    font-weight: 700;
+  }
+
+  .border-orange {
+    border-color: orange !important; /* Change to your desired color */
+  }
 }
