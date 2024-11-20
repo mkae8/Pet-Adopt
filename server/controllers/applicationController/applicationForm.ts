@@ -15,7 +15,8 @@ export const applicationForm = async (req: Request, res: Response) => {
     question6,
     question7,
     question8,
-  } = req.body.inputValues;
+  } = req.body;
+  console.log(req.body);
 
   const user = await UserModel.findOne({ authId: userId });
   const foundPet = await PetModel.findById(petId);
@@ -30,10 +31,12 @@ export const applicationForm = async (req: Request, res: Response) => {
     return;
   }
 
+  console.log(foundPet);
+
   try {
     await ApplicationModel.create({
       petId,
-      ownerId: foundPet._id,
+      ownerId: foundPet.userId,
       userId: user._id,
       question1,
       question2,
