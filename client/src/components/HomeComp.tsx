@@ -1,13 +1,7 @@
 "use client";
-import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import { motion } from "framer-motion";
 
 import { ToastAction } from "@/components/ui/toast";
@@ -16,6 +10,16 @@ import { useToast } from "@/hooks/use-toast";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+
+import { ChevronDown, Dog, Cat, Bird, MapPin } from "lucide-react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 
 export default function HomePage() {
   const { toast } = useToast();
@@ -140,115 +144,94 @@ export default function HomePage() {
           </div>
         </section>
         <section className="w-full flex justify-center py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-800">
+          <div className="flex flex-col md:flex-row gap-6">
+            <motion.div
+              ref={ref}
+              initial={{ opacity: 0, y: 50 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.5 }}
+              className="flex-1"
+            >
+              {/* <nav className="w-full bg-[#1D2B32] p-4">
+                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row gap-4 items-stretch">
+                  <div className="relative flex-1 min-w-[240px]">
+                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                      placeholder="Enter City, State, or Zip"
+                      className="pl-9 bg-white/10 border-0 text-white placeholder:text-white/70"
+                    />
+                  </div>
+                  <div className="grid sm:grid-cols-3 flex-[2] gap-2">
+                    <Button className="bg-[#E55C4D] hover:bg-[#E55C4D]/90 text-white h-full">
+                      <Dog className="mr-2 h-5 w-5" />
+                      Find Your Dog
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="bg-[#E55C4D] hover:bg-[#E55C4D]/90 text-white h-full"
+                    >
+                      <Cat className="mr-2 h-5 w-5" />
+                      Find Your Cat
+                    </Button>
+                    <Button className="bg-[#E55C4D] hover:bg-[#E55C4D]/90 text-white h-full">
+                      <Bird className="mr-2 h-5 w-5" />
+                      Find Your Birds
+                    </Button>
+                  </div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger>
+                      <button className="bg-[#1D2B32] text-white border border-white/20 hover:bg-white/10">
+                        Find Other Pets
+                        <ChevronDown className="ml-2 h-4 w-4" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem>Small & Furry</DropdownMenuItem>
+                      <DropdownMenuItem>Scales, Fins & Other</DropdownMenuItem>
+                      <DropdownMenuItem>Barnyard</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              </nav> */}
+            </motion.div>
+          </div>
+        </section>
+        <section className="w-full ">
+          <div>
+            <img
+              className="w-screen h-[780px]"
+              src="./footerbackground.png"
+              alt=""
+            />
+          </div>
+        </section>
+        <section className="w-full flex justify-center py-12 md:py-24 lg:py-32  dark:bg-gray-800">
           <div className="container px-4 md:px-6">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8">
-              Онцлох тэжээвэр амьтад
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <motion.div
-                ref={ref}
-                initial={{ opacity: 0, y: 50 }}
-                animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
-                }
-                transition={{ duration: 0.5 }}
-                className=""
-              >
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Нохой</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <img
-                      alt="Buddy the dog"
-                      className="w-full h-60 sm:h-48 object-cover rounded-md"
-                      height="300"
-                      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqxlDun0EWp8OiGTXoelcBkuM7BiifKAflkw&s"
-                      style={{
-                        aspectRatio: "400/300",
-                        objectFit: "cover",
-                      }}
-                      width="400"
-                    />
-                  </CardContent>
-                  <CardFooter>
-                    <Link href={"/buddy-list"}>
-                      <Button>Нохой хайх</Button>
-                    </Link>
-                  </CardFooter>{" "}
-                </Card>
-              </motion.div>
-              <motion.div
-                ref={ref}
-                initial={{ opacity: 0, y: 50 }}
-                animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
-                }
-                transition={{ duration: 1 }}
-                className=""
-              >
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Муур</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <img
-                      alt="Whiskers the cat"
-                      className="w-full h-60 sm:h-48 object-cover rounded-md"
-                      height="300"
-                      src="https://cdn.pixabay.com/photo/2024/02/28/07/42/european-shorthair-8601492_640.jpg"
-                      style={{
-                        aspectRatio: "400/300",
-                        objectFit: "cover",
-                      }}
-                      width="400"
-                    />
-                  </CardContent>
-                  <CardFooter>
-                    <Link href={"/whiskers-list"}>
-                      <Button>Муур хайх</Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
-              </motion.div>
-              <motion.div
-                ref={ref}
-                initial={{ opacity: 0, y: 50 }}
-                animate={
-                  isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }
-                }
-                transition={{ duration: 1.5 }}
-                className=""
-              >
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Туулай</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <img
-                      alt="Hoppy the rabbit"
-                      className="w-full h-60 sm:h-48 object-cover rounded-md"
-                      height="300"
-                      src="https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg"
-                      style={{
-                        aspectRatio: "400/300",
-                        objectFit: "cover",
-                      }}
-                      width="400"
-                    />
-                  </CardContent>
-                  <CardFooter>
-                    <Link href={"/bunny-list"}>
-                      <Button>Туулай хайх</Button>
-                    </Link>
-                  </CardFooter>
-                </Card>
-              </motion.div>
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Өөрчлөлт хийх
+                </h2>
+                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                  Одоо үрчилж авах боломжгүй байна бол тусламж хэрэгтэй амьтдад
+                  сайн дурын ажил хийх эсвэл хандив өгөх талаар бодож үзээрэй.
+                </p>
+              </div>
+              <div className="space-x-4">
+                <Button>Сайн дурын ажилтан</Button>
+                <Button variant="outline">Хандив</Button>
+              </div>
             </div>
           </div>
         </section>
-        <section className="w-full flex justify-center py-12 md:py-24 lg:py-32  bg-gray-100">
-          <div className="container px-4 md:px-6">
+      </main>
+    </div>
+  );
+}
+// a
+
+{
+  /* <div className="container px-4 md:px-6">
             <motion.div
               ref={ref1}
               initial={{ opacity: 0, x: 50 }}
@@ -320,29 +303,5 @@ export default function HomePage() {
                 </div>
               </motion.div>
             </div>
-          </div>
-        </section>
-        <section className="w-full flex justify-center py-12 md:py-24 lg:py-32  dark:bg-gray-800">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  Өөрчлөлт хийх
-                </h2>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Одоо үрчилж авах боломжгүй байна бол тусламж хэрэгтэй амьтдад
-                  сайн дурын ажил хийх эсвэл хандив өгөх талаар бодож үзээрэй.
-                </p>
-              </div>
-              <div className="space-x-4">
-                <Button>Сайн дурын ажилтан</Button>
-                <Button variant="outline">Хандив</Button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
-  );
+          </div> */
 }
-// a
