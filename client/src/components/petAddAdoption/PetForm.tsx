@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
-import { PawPrintIcon as Paw, Heart } from "lucide-react";
+import { PawPrintIcon as Paw } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+
 import {
   Select,
   SelectContent,
@@ -25,8 +25,7 @@ import {
 } from "@/components/ui/select";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
-import { PetAddLoading } from "@/components/petAddAdoption/PetAddLoading";
-import PreviewCard from "./PreviewCard";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -146,7 +145,7 @@ const PetForm = () => {
   return (
     <div className="w-screen h-screen ">
       <div className="grid grid-cols-1   lg:grid-cols-2 gap-8 ">
-        <Card className=" m-auto flex justify-center items-center flex-col bg-orange-50 border-orange-200 shadow-lg">
+        <Card className=" m-auto flex justify-center items-center flex-col bg-orange-50 border-orange-200 shadow-lg ">
           <CardHeader className="space-y-1">
             <CardTitle className="text-2xl font-bold text-orange-700 flex items-center justify-center">
               <Paw className="w-6 h-6 mr-2 text-orange-500" />

@@ -21,7 +21,7 @@ export const petSchema = z.object({
 
   weight: z
     .string()
-    .min(2, { message: "Weight must be at least 2 characters." })
+    .min(1, { message: "Weight must be at least 1 characters." })
     .max(50, { message: "Weight must be no more than 50 characters." }),
 
   location: z
