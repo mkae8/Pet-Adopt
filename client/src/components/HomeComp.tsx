@@ -28,6 +28,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { FaPaw } from "react-icons/fa";
+import { IoIosAttach } from "react-icons/io";
 
 import { ChevronDown, Dog, Cat, Bird, MapPin } from "lucide-react";
 import {
@@ -212,13 +214,96 @@ export default function HomePage() {
           </div>
         </section>
         <section className="w-full ">
-          <div>
+          <img src="./topfooter.png" alt="" className="w-full bg-[#f5f3eb]  " />
+          <div className="relative">
             <img
-              className="w-screen h-[780px]"
+              className="w-screen h-[700px] "
               src="./footerbackground.png"
               alt=""
             />
+            <div className="container absolute top-20 left-28 ">
+              <div className="w-full h-sreen mx-auto flex flex-col items-center justify-center">
+                <div className="flex flex-col justify-center items-center gap-10 w-[690px]">
+                  <FaPaw className="h-[40px] w-[40px] text-orange-500" />
+                  <p className="text-3xl font-bold tracking-tighter text-orange-500 ">
+                    Амьтан үрчилж авсан хүмүүсийн сэтгэгдэл
+                  </p>
+                  <p className="text-xl tracking-tighter font-medium text-center">
+                    The best overall dog DNA test is Embark Breed & Health Kit
+                    (view at Chewy), which provides you with a breed brwn and
+                    information Most dogs
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="container absolute top-96 left-40  ">
+              <div className="flex gap-32">
+                <div className="h-[280px] w-[500px] bg-white flex justify-center items-center">
+                  <div className="flex">
+                    <div className="w-[150px] h-[150px] flex justify-center ">
+                      <div className="bg-orange-500 h-[90px] w-[90px]  flex justify-center items-center rounded-full">
+                        <img
+                          className="h-[70px] w-[70px] rounded-full"
+                          src="./shagai.jpg"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div className="w-[270px] flex flex-col gap-6">
+                      <p className="text-base">
+                        “ The best overall dog DNA test Embark Breed Health Kit
+                        view at Chewy, which provides with a breed brwn and
+                        information."
+                      </p>
+                      <div className="flex gap-12">
+                        <div className="flex flex-col">
+                          <p className="text-xl font-bold tracking-tighter text-orange-500">
+                            Д.Алтаншагай
+                          </p>
+                          <p>Pinecone Student</p>
+                        </div>
+                        <IoIosAttach className="w-14 h-14 text-orange-500" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="h-[280px] w-[500px] bg-white flex justify-center items-center">
+                  <div className="flex">
+                    <div className="w-[150px] h-[150px] flex justify-center ">
+                      <div className="bg-orange-500 h-[90px] w-[90px]  flex justify-center items-center rounded-full">
+                        <img
+                          className="h-[70px] w-[70px] rounded-full"
+                          src="./tengis.jpg"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div className="w-[270px] flex flex-col gap-6">
+                      <p className="text-base">
+                        “ The best overall dog DNA test Embark Breed Health Kit
+                        view at Chewy, which provides with a breed brwn and
+                        information."
+                      </p>
+                      <div className="flex gap-12">
+                        <div className="flex flex-col">
+                          <p className="text-xl font-bold tracking-tighter text-orange-500">
+                            Х.Түвшинтэнгис
+                          </p>
+                          <p>Pinecone Student</p>
+                        </div>
+                        <IoIosAttach className="w-14 h-14 text-orange-500" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+          <img
+            src="./bottomshape.png"
+            alt=""
+            className="w-full bg-[#f5f3eb]  "
+          />
         </section>
         <section className="w-full flex justify-center py-12 md:py-24 lg:py-32  dark:bg-gray-800">
           <div className="container px-4 md:px-6">
@@ -239,84 +324,88 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+        <section className="w-full">
+          <img src="./topfooter.png" alt="" className="w-full bg-[#f5f3eb]  " />
+          <div className="relative">
+            <img
+              className="w-screen h-[700px] "
+              src="./footerbackground.png"
+              alt=""
+            />
+            <div className="container absolute top-20 left-28 ">
+              <div className="w-full h-sreen mx-auto flex flex-col items-center justify-center">
+                <div className="flex flex-col justify-center items-center gap-10 w-[690px]">
+                  <FaPaw className="h-[40px] w-[40px] text-orange-500" />
+                  <p className="text-3xl font-bold tracking-tighter text-orange-500 ">
+                    Амьтан тэжээх сонирхолтой хүмүүст
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="container"></div>
+          </div>
+          <img
+            src="./bottomshape.png"
+            alt=""
+            className="w-full bg-[#f5f3eb]  "
+          />
+        </section>
+        <section className="w-full h-[700px] mx-auto flex flex-col gap-10">
+          <div className="w-full mx-auto flex flex-col items-center justify-center">
+            <div className="flex flex-col justify-center items-center gap-10 w-[690px] mt-20">
+              <FaPaw className="h-[40px] w-[40px] text-orange-500" />
+              <p className="text-3xl font-bold tracking-tighter text-orange-500 ">
+                Амьтан тэжээх сонирхолтой хүмүүст
+              </p>
+            </div>
+          </div>
+          <div className="w-full flex max-w-[1200px] mx-auto gap-16 ">
+            <div className="flex flex-col gap-10">
+              <div className="h-[200px] w-[200px]">
+                <img src="./one.jpeg" alt="" />
+              </div>
+              <div className="flex flex-col gap-5">
+                <p className="text-xl font-bold tracking-tighter text-orange-500">
+                  Амьтнаа сонгох
+                </p>
+                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                  Одоо үрчилж авах боломжгүй байна бол тусламж хэрэгтэй амьтдад
+                  сайн дурын ажил хийх эсвэл хандив өгөх талаар бодож үзээрэй.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-10">
+              <div className="h-[200px] w-[200px]">
+                <img src="./two.jpeg" alt="" />
+              </div>
+              <div className="flex flex-col gap-5">
+                <p className="text-xl font-bold tracking-tighter text-orange-500">
+                  Амьтнаа таниж мэдэх
+                </p>
+                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                  Одоо үрчилж авах боломжгүй байна бол тусламж хэрэгтэй амьтдад
+                  сайн дурын ажил хийх эсвэл хандив өгөх талаар бодож үзээрэй.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col gap-10">
+              <div className="h-[200px] w-[200px]">
+                <img src="./three.jpeg" alt="" />
+              </div>
+              <div className="flex flex-col gap-5">
+                <p className="text-xl font-bold tracking-tighter text-orange-500">
+                  Гэртээ дасгах
+                </p>
+                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                  Одоо үрчилж авах боломжгүй байна бол тусламж хэрэгтэй амьтдад
+                  сайн дурын ажил хийх эсвэл хандив өгөх талаар бодож үзээрэй.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
   );
 }
 // a
-
-{
-  /* <div className="container px-4 md:px-6">
-            <motion.div
-              ref={ref1}
-              initial={{ opacity: 0, x: 50 }}
-              animate={isInView1 ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-              transition={{ duration: 0.5 }}
-              className=""
-            >
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-center mb-8">
-                Яагаад тэжээвэр амьтан үрчлэх вэ?
-              </h2>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.div
-                ref={ref1}
-                initial={{ opacity: 0, x: 50 }}
-                animate={
-                  isInView1 ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
-                }
-                transition={{ duration: 1 }}
-                className=""
-              >
-                <div className="flex flex-col items-center text-center">
-                  <Heart className="h-12 w-12 mb-4 text-primary" />
-                  <h3 className="text-xl font-bold mb-2">Амьдрал аврах</h3>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Үрчилж авснаар та амьтадад аз жаргалтай хоёр дахь боломжийг
-                    олгоно.
-                  </p>
-                </div>
-              </motion.div>
-              <motion.div
-                ref={ref1}
-                initial={{ opacity: 0, x: 50 }}
-                animate={
-                  isInView1 ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
-                }
-                transition={{ duration: 1.2 }}
-                className=""
-              >
-                <div className="flex flex-col items-center text-center">
-                  <Home className="h-12 w-12 mb-4 text-primary" />
-                  <h3 className="text-xl font-bold mb-2">
-                    Үнэнч хамтрагчтай болох
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Үрчлэгдсэн тэжээвэр амьтад нь хайраар дүүрэн хамтрагч болж,
-                    насан туршийн амьдралын найзууд болдог.
-                  </p>
-                </div>
-              </motion.div>
-              <motion.div
-                ref={ref1}
-                initial={{ opacity: 0, x: 50 }}
-                animate={
-                  isInView1 ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }
-                }
-                transition={{ duration: 1.4 }}
-                className=""
-              >
-                <div className="flex flex-col items-center text-center">
-                  <PawPrint className="h-12 w-12 mb-4 text-primary " />
-                  <h3 className="text-xl font-bold mb-2">
-                    Амьтны халамжийг дэмжинэ
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400">
-                    Тусламж хэрэгтэй амьтдыг аврах, халамжлах.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-          </div> */
-}
