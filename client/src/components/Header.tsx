@@ -16,6 +16,7 @@ import {
 } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -210,4 +211,3 @@ export default function Header() {
     </>
   );
 }
-// aa

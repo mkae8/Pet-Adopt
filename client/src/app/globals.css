@@ -24,6 +24,10 @@
     --ring: 24.6 95% 53.1%;
     --radius: 1rem;
   }
+
+  * {
+    font-family: var(--font-nunito);
+  }
   .dark {
     --background: 24.6 50% 10%;
     --foreground: 24.6 5% 100%;

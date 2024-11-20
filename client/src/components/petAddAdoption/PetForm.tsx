@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button";
 import { PawPrintIcon as Paw, Heart } from "lucide-react";
@@ -26,26 +27,30 @@ import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { PetAddLoading } from "@/components/petAddAdoption/PetAddLoading";
 import PreviewCard from "./PreviewCard";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { petSchema } from "@/lib/form-schema";
+import { Loading } from "../Loading";
+
+type Category = {
+  _id: string;
+  categoryName: string;
+  categoryLabel: string;
+};
 
 const PetForm = () => {
-  const [formData, setFormData] = useState({
-    petName: "",
-    petCategoryId: "",
-    description: "",
-    age: "",
-    sex: "",
-    size: "",
-    weight: "",
-    location: "",
-    status: "",
-    isVaccined: "",
-  });
-
-  console.log(formData);
-
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
+  const [categories, setCategories] = useState<Category[]>([]);
 
   const getPresignedURL = async () => {
     try {
@@ -53,14 +58,13 @@ const PetForm = () => {
       return data as { uploadUrl: string; accessUrls: string };
     } catch (error) {
       console.log(error);
-      throw error;
     }
   };
 
   const uploadImage = async () => {
     if (image) {
       try {
-        const data = await getPresignedURL();
+        const data: any = await getPresignedURL();
         await axios.put(data.uploadUrl, image, {
           headers: { "Content-Type": image.type },
         });
@@ -71,6 +75,20 @@ const PetForm = () => {
     }
   };
 
+  const getCategories = async () => {
+    try {
+      const res = await axios.get(`${process.env.BACKEND_URL}/get/categories`);
+      setCategories(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    if (user) {
+      getCategories();
+    }
+  }, [user]);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -78,30 +96,18 @@ const PetForm = () => {
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { id, value } = e.target;
-    setFormData((prev) => ({ ...prev, [id]: value }));
-  };
+  const form = useForm<z.infer<typeof petSchema>>({
+    resolver: zodResolver(petSchema),
+    defaultValues: {
+      petName: "",
+      age: "",
+    },
+  });
 
-  const handleSelectChange = (id: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [id]: value }));
-  };
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (data: z.infer<typeof petSchema>) => {
     setLoading(true);
-    const data = await uploadImage();
-
-    const missingFields = Object.entries(formData).filter(
-      ([_, value]) => !value
-    );
-
-    if (missingFields.length > 0) {
-      toast.error("Мэдээлэл дутуу байна. Бүх мэдээллийг бөглөнө үү.");
-      setLoading(false);
-      return;
-    }
+    const imgData = await uploadImage();
+    console.log(data);
 
     try {
       const response = await fetch(`${process.env.BACKEND_URL}/create/pet`, {
@@ -110,8 +116,8 @@ const PetForm = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
-          image: [data?.accessUrls],
+          ...data,
+          image: [imgData?.accessUrls],
           id: user?.id,
         }),
       });
@@ -124,8 +130,8 @@ const PetForm = () => {
         setLoading(false);
         return;
       }
-
       toast.success("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
+      form.reset();
     } catch (error) {
       console.error("Error:", error);
       toast.error("Алдаа гарлаа.");
@@ -133,220 +139,249 @@ const PetForm = () => {
       setLoading(false);
     }
   };
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <Card className="w-full bg-orange-50 border-orange-200 shadow-lg">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-orange-700 flex items-center justify-center">
-            <Paw className="w-6 h-6 mr-2 text-orange-500" />
-            Амьтны мэдээлэл нэмэх
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="petCategory" className="text-orange-700">
-                  Амьтны төрөл
-                </Label>
-                <Select
-                  onValueChange={(value) =>
-                    handleSelectChange("petCategoryId", value)
-                  }
-                >
-                  <SelectTrigger className="bg-white border-orange-300 focus:ring-orange-500">
-                    <SelectValue placeholder="Амьтны төрөл" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      <SelectItem value="Нохой">Нохой 🐕</SelectItem>
-                      <SelectItem value="Муур">Муур 🐈</SelectItem>
-                      <SelectItem value="Шувуу">Шувуу 🦜</SelectItem>
-                      <SelectItem value="Туулай">Туулай 🐇</SelectItem>
-                      <SelectItem value="Мэрэгч">Мэрэгч 🐹</SelectItem>
-                      <SelectItem value="Загас">Загас 🐠</SelectItem>
-                      <SelectItem value="Мөлхөгч">Мөлхөгч 🐢</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="petName" className="text-orange-700">
-                  Амьтны нэр
-                </Label>
-                <Input
-                  id="petName"
-                  value={formData.petName}
-                  onChange={handleChange}
-                  placeholder="Амьтны нэрийг оруулна уу"
-                  className="bg-white border-orange-300 focus:ring-orange-500"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="age" className="text-orange-700">
-                  Нас
-                </Label>
-                <Input
-                  id="age"
-                  type="number"
-                  value={formData.age}
-                  onChange={handleChange}
-                  placeholder="Амьтны насыг жилээр оруулна уу"
-                  className="bg-white border-orange-300 focus:ring-orange-500"
-                />
-              </div>
-              <div>
-                <Label htmlFor="sex" className="text-orange-700">
-                  Хүйс
-                </Label>
-                <Select
-                  onValueChange={(value) => handleSelectChange("sex", value)}
-                >
-                  <SelectTrigger className="bg-white border-orange-300 focus:ring-orange-500">
-                    <SelectValue placeholder="Хүйс сонгоно уу" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Male">Эр</SelectItem>
-                    <SelectItem value="Female">Эм</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="size" className="text-orange-700">
-                  Хэмжээ
-                </Label>
-                <Select
-                  onValueChange={(value) => handleSelectChange("size", value)}
-                >
-                  <SelectTrigger className="bg-white border-orange-300 focus:ring-orange-500">
-                    <SelectValue placeholder="Хэмжээг сонгоно уу" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Small">Жижиг</SelectItem>
-                    <SelectItem value="Medium">Дунд</SelectItem>
-                    <SelectItem value="Large">Том</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="weight" className="text-orange-700">
-                  Жин
-                </Label>
-                <Input
-                  id="weight"
-                  value={formData.weight}
-                  onChange={handleChange}
-                  placeholder="Жинг кг-аар оруулна уу"
-                  className="bg-white border-orange-300 focus:ring-orange-500"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="status" className="text-orange-700">
-                  Статус
-                </Label>
-                <Select
-                  onValueChange={(value) => handleSelectChange("status", value)}
-                >
-                  <SelectTrigger className="bg-white border-orange-300 focus:ring-orange-500">
-                    <SelectValue placeholder="Статус сонгоно уу" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Үрчлүүлэх боломжтой">
-                      Үрчлүүлэх боломжтой
-                    </SelectItem>
-                    <SelectItem value="Одоогоор хүлээгдэж байгаа">
-                      Одоогоор хүлээгдэж байгаа
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="isVaccined">Вакцинд хамрагдсан эсэх</Label>
-                <Select
-                  onValueChange={(value) =>
-                    handleSelectChange("isVaccined", value)
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Статус сонгоно уу" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Тийм">Тийм</SelectItem>
-                    <SelectItem value="Үгүй">Үгүй</SelectItem>
-                    <SelectItem value="Хараахан хийлгэж амжаагүй">
-                      Хараахан хийлгэж амжаагүй
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div>
-              <Label htmlFor="description" className="text-orange-700">
-                Тайлбар
-              </Label>
-              <Textarea
-                id="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Амьтныг тодорхойлно уу (Жишээ нь: Үүлдэр, өнгө , онцгой шинж тэмдэг гэх мэт...)"
-                className="bg-white border-orange-300 focus:ring-orange-500"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="location" className="text-orange-700">
-                Байршил
-              </Label>
-              <Input
-                id="location"
-                value={formData.location}
-                onChange={handleChange}
-                placeholder="Байршлыг оруулна уу"
-                className="bg-white border-orange-300 focus:ring-orange-500"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="picture" className="text-orange-700">
-                Зураг хадгалагдах
-              </Label>
-              <Input
-                id="picture"
-                onChange={handleFileChange}
-                type="file"
-                className="bg-white border-orange-300 focus:ring-orange-500 file:bg-orange-100 file:text-orange-700 file:border-orange-300"
-              />
-            </div>
-
-            <Button
-              type="button"
-              onClick={() => {
-                handleSubmit();
-                uploadImage();
-              }}
-              disabled={loading}
-              className={`relative bg-orange-500 hover:bg-orange-600 text-white ${
-                loading ? "cursor-not-allowed" : ""
-              }`}
+    <div className="w-screen h-screen ">
+      <div className="grid grid-cols-1   lg:grid-cols-2 gap-8 ">
+        <Card className=" m-auto flex justify-center items-center flex-col bg-orange-50 border-orange-200 shadow-lg">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl font-bold text-orange-700 flex items-center justify-center">
+              <Paw className="w-6 h-6 mr-2 text-orange-500" />
+              Амьтны мэдээлэл нэмэх
+            </CardTitle>
+          </CardHeader>
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleSubmit)}
+              className="w-2/3 space-y-6"
             >
-              {loading ? <PetAddLoading /> : "Мэдээлэл илгээх"}
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+              <FormField
+                control={form.control}
+                name="petCategoryId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Амьтны төрөл</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Амьтны төрөл" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.map((category) => (
+                          <SelectItem key={category._id} value={category._id}>
+                            {category.categoryLabel}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="petName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Амьтны нэр</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Амьтны нэрийг оруулна уу"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-      <PreviewCard pet={formData} />
+              <FormField
+                control={form.control}
+                name="age"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel> Нас</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Амьтны насыг жилээр оруулна уу"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="sex"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel> Хүйс</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Хүйс сонгоно уу" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Male">Эр</SelectItem>
+                        <SelectItem value="Female">Эм</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="size"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel> Хэмжээ</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Хэмжээг сонгоно уу" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Small">Жижиг</SelectItem>
+                        <SelectItem value="Medium">Дунд</SelectItem>
+                        <SelectItem value="Large">Том</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="weight"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel> Жин</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Жинг кг-аар оруулна уу" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel> Статус</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Статус сонгоно уу" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Үрчлүүлэх боломжтой">
+                          Үрчлүүлэх боломжтой
+                        </SelectItem>
+                        <SelectItem value="Одоогоор хүлээгдэж байгаа">
+                          Одоогоор хүлээгдэж байгаа
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="isVaccined"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel> Вакцинд хамрагдсан эсэх</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Статус сонгоно уу" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Тийм">Тийм</SelectItem>
+                        <SelectItem value="Үгүй">Үгүй</SelectItem>
+                        <SelectItem value="Хараахан хийлгэж амжаагүй">
+                          Хараахан хийлгэж амжаагүй
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Тайлбар</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Амьтны тодорхойлно уу (Жишээ нь: Үүлдэр, өнгө , онцгой шинж тэмдэг гэх мэт...)"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="location"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Байршил</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Байршлыг оруулна уу" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div>
+                <Label htmlFor="picture" className="text-orange-700">
+                  Зураг хадгалагдах
+                </Label>
+                <Input
+                  id="picture"
+                  onChange={handleFileChange}
+                  type="file"
+                  className="bg-white border-orange-300 focus:ring-orange-500 file:bg-orange-100 file:text-orange-700 file:border-orange-300"
+                />
+              </div>
+              <Button type="submit" disabled={loading}>
+                Мэдээлэл илгээх
+              </Button>
+            </form>
+          </Form>
+        </Card>
+      </div>
     </div>
   );
 };
