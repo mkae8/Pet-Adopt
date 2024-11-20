@@ -27,7 +27,7 @@ export type PetsModelType = {
   petName: string;
   image: string[];
   description: string;
-  age: number;
+  age: string;
   sex: Sex;
   size: Size;
   weight: string;
@@ -47,7 +47,7 @@ const PetSchema = new Schema<PetsModelType>({
   isVaccined: { type: String, required: false },
   image: { type: [String], required: true },
   description: { type: String, required: true },
-  age: { type: Number, required: true },
+  age: { type: String, required: true },
   sex: { type: String, enum: Object.values(Sex), required: true },
   size: { type: String, enum: Object.values(Size), required: true },
   weight: { type: String, required: true },
