@@ -171,8 +171,8 @@ export default function CardsStatusPage() {
   const [showPanel, setShowPanel] = useState<any>(false);
 
   return (
-    <div className="container h-screen mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Таны үрчлүүлэх амьтад</h1>
+    <div className="container bg-orange-50 h-screen mx-auto p-4">
+      <h1 className="text-3xl mt-10  font-bold mb-6">Таны үрчлүүлэх амьтад</h1>
       {loading ? (
         <Loader />
       ) : (
