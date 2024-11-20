@@ -29,7 +29,7 @@ export const petSchema = z.object({
     .min(2, { message: "Location must be at least 2 characters." })
     .max(50, { message: "Location must be no more than 50 characters." }),
 
-  isVaccined: z.enum(["Тийм", "Үгүй", "Хараахан хийлгэж амжаагүй"], {
+  isVaccined: z.enum(["Тийм", "Үгүй"], {
     message: "isVaccined must be one of the predefined values.",
   }),
 

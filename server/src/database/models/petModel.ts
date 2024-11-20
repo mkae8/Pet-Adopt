@@ -11,13 +11,12 @@ enum Size {
 }
 enum Status {
   Available = "Үрчлүүлэх боломжтой",
-  Pending = " Одоогоор хүлээгдэж байгаа",
+  Pending = "Одоогоор хүлээгдэж байгаа",
   Adopted = "Үрчилэгдсэн",
 }
 enum IsVaccined {
-  True = "Тийм",
-  False = "Үгүй",
-  Pending = "Хараахан хийлгэж амжаагүй",
+  Yes = "Тийм",
+  No = "Үгүй",
 }
 
 export type PetsModelType = {
