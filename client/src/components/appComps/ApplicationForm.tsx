@@ -16,6 +16,7 @@ import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { Loading } from "../Loading";
 
 interface Question {
   id: string;
@@ -28,6 +29,7 @@ export default function ApplicationForm() {
   const petId: string | null = paramName.get("petId");
   const router = useRouter();
   const { push } = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const questions: Question[] = [
     {
@@ -97,6 +99,7 @@ export default function ApplicationForm() {
   };
 
   const submit = async () => {
+    setLoading(true);
     for (const question of questions) {
       const inputValue = inputValues[question.id];
 
@@ -119,7 +122,7 @@ export default function ApplicationForm() {
       await axios.post(`${process.env.BACKEND_URL}/applicationForm`, {
         inputValues,
       });
-
+      setLoading(false);
       toast({
         title: "Success",
         description: "Success",
@@ -130,8 +133,12 @@ export default function ApplicationForm() {
         title: "aldaa zaalaa",
         description: "dahin oroldnu ",
       });
+      setLoading(false);
     }
   };
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex border-solid border-2 rounded-2xl ">

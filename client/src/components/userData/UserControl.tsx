@@ -2,48 +2,49 @@
 
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
-import { useEffect } from "react";
-import { Loader } from "../Loader";
+import { useEffect, useState, useCallback } from "react";
+import { Loading } from "../Loading";
 
 const UserControl = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const user = useUser();
-  useEffect(() => {
-    if (user.isLoaded) {
-      const registerUser = async () => {
-        try {
-          await axios.post(`${process.env.BACKEND_URL}/user/register`, {
-            firstName: user.user?.firstName,
-            username: user.user?.username,
-            lastName: user.user?.lastName,
-            id: user.user?.id,
-            email: user.user?.emailAddresses[0].emailAddress,
-          });
-          // console.log(user);
-        } catch (error) {
-          console.log("Error registering user:", error);
-        }
-      };
-      registerUser();
-    }
-    const userDataUpdate = async () => {
-      try {
-        await axios.post(`${process.env.BACKEND_URL}/user/update`, {
-          firstName: user.user?.firstName,
-          username: user.user?.username,
-          lastName: user.user?.lastName,
-          id: user.user?.id,
-          email: user.user?.emailAddresses[0].emailAddress,
-        });
-      } catch (error) {
-        console.log("Error updating user:", error);
-      }
+  const [loading, setLoading] = useState(false);
+  const { user, isLoaded } = useUser();
+
+  const handleUserSync = useCallback(async () => {
+    if (!isLoaded || !user) return;
+
+    setLoading(true);
+    const userData = {
+      firstName: user.firstName,
+      username: user.username,
+      lastName: user.lastName,
+      id: user.id,
+      email: user.emailAddresses[0]?.emailAddress,
     };
-    userDataUpdate();
-  }, [user]);
+
+    try {
+      const endpoint = userData.id ? "/user/update" : "/user/register";
+      await axios.post(`${process.env.BACKEND_URL}${endpoint}`, userData);
+    } catch (error) {
+      console.error(
+        `Error ${userData.id ? "updating" : "registering"} user:`,
+        error
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, [isLoaded, user]);
+
+  useEffect(() => {
+    handleUserSync();
+  }, [handleUserSync]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return <>{children}</>;
 };
