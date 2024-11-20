@@ -88,7 +88,7 @@ export default function Header() {
                 </Link>
                 <Link
                   href="/adoptedpet"
-                  className=" hover:nav_link nhome_link btn_text"
+                  className=" hover:nav_link nhome_link btn_text font-bold"
                 >
                   Үрчлэгдсэн амьтад
                 </Link>
@@ -141,7 +141,7 @@ export default function Header() {
           </div>
           <img
             src="./test.png "
-            className="absolute left-0 bottom-[-40px] w-[100%] h-[24px] md:h-[52px] z-0 bg-repeat  bg-center"
+            className="absolute left-0 bottom-[-13px] md:bottom-[-40px]  w-[100%] h-[24px] md:h-[52px] z-0 bg-repeat  bg-center"
             alt=""
           />
         </div>
