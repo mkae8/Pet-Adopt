@@ -16,6 +16,7 @@ import {
 } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 
+
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -88,7 +89,7 @@ export default function Header() {
                 </Link>
                 <Link
                   href="/adoptedpet"
-                  className=" hover:nav_link nhome_link btn_text"
+                  className=" hover:nav_link nhome_link btn_text font-bold"
                 >
                   Үрчлэгдсэн амьтад
                 </Link>
@@ -210,4 +211,3 @@ export default function Header() {
     </>
   );
 }
-// aa
