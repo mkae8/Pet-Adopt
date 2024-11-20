@@ -164,8 +164,8 @@ const Petcard = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5 ">
-              {pets // CARD heseg
+            <div className="grid justify-center grid-cols-3 gap-x-5 gap-y-20 mt-5 bg-white p-20">
+              {pets
                 .filter((pet) =>
                   animalFilter
                     ? pet.petCategoryId.categoryNames === animalFilter
@@ -174,48 +174,60 @@ const Petcard = () => {
                 .slice(0, sliceCount)
                 .map((pet, index) => (
                   <motion.div
-                    className="cursor-pointer  rounded-lg border border-solid sm:h-[250px] sm:w-[200px] md:h-[300px] md:w-[250px] lg:h-[350px] lg:w-[300px] xl:h-[350px] xl:w-[300px] 2xl:h-[400px] 2xl:w-[350px]  bg-white shadow-2xl flex flex-col relative  transform hover:scale-105 hover:rotate-y-6 transition-all duration-500 ease-in-out"
+                    key={index}
                     onClick={() => openModal(pet)}
                     style={{
                       perspective: "1000px",
                       cursor: "pointer",
                     }}
+                    className="relative group" // group class added for hover functionality
                   >
                     <motion.img
                       src={pet.image[0]}
                       alt={pet.petName}
-                      className=" h-[200px] md:h-[250px] object-cover rounded-lg "
+                      className="object-cover rounded-lg border hover:opacity-50 relative h-[380px] w-[380px]"
                       style={{
-                        transform: "rotateY(0deg)",
-                        padding: "15px",
                         transition: "transform 0.5s ease-in-out",
                       }}
                     />
-                    <div className="pl-3 flex flex-col ">
-                      <div className=" text-gray-500 h-10 flex items-center">
+
+                    <motion.div
+                      className="absolute top-[315px] w-[340px] left-5 p-4 bg-white rounded-lg z-10"
+                      style={{
+                        transition: "transform 0.5s ease-in-out",
+                      }}
+                    >
+                      <div className="text-gray-500 flex items-center">
                         Амьтаны нэр:
-                        <span className="text-black p-3 text-lg font-bold">
+                        <span className="text-primary p-3 text-lg font-bold">
                           {pet.petName}
                         </span>
                       </div>
-                      {/* <div className=" text-gray-500 h-10 flex  items-center">
-                        Амьтаны төрөл
-                        <span className="text-black p-3  text-2xl font-bold">
-                          {pet.petCategoryId.categoryName}
-                        </span>
-                      </div> */}
-                      <div className=" text-gray-500 h-10 flex items-center">
+                      <div className="text-gray-500 flex items-center">
                         Амьтаны нас:
-                        <span className="text-black p-3  text-lg font-bold">
-                          {pet.age}{" "}
+                        <span className="text-primary p-3 text-lg font-bold">
+                          {pet.age}
                         </span>
                       </div>
-                    </div>
+                    </motion.div>
+
+                    {/* Button that will appear on hover */}
+                    <motion.div className="absolute top-28 left-[200px] transform -translate-x-1/2 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent opening modal when clicking the button
+                          alert("Adopt this pet!");
+                        }}
+                        className="w-[168px] h-[55px] select-none bg-[#f04336] border-0 rounded-sm text-white cursor-pointer flex justify-center items-center text-[20px] font-extrabold tracking-normal leading-none mb-0 py-[17px] px-[25px] text-center capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-[Nunito] relative z-10 overflow-hidden"
+                      >
+                        Adopt pet
+                      </button>
+                    </motion.div>
                   </motion.div>
                 ))}
             </div>
 
-            <div className="group mt-5 flex justify-center items-center">
+            <div className="group mt-5 flex justify-center items-center pt-10">
               <button
                 onClick={() => setSliceCount((prev) => prev + 8)}
                 className="relative h-12 w-48 md:h-12 md:w-48 rounded-full text-lg md:text-xl border border-orange-500 bg-primary flex justify-center items-center overflow-hidden transition duration-300 "
