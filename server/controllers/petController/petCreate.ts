@@ -4,7 +4,6 @@ env.config();
 
 export const petCreate = async (req: any, res: any) => {
   const userId = res.locals.userId;
-  console.log(req.body);
 
   const {
     petName,
@@ -30,7 +29,8 @@ export const petCreate = async (req: any, res: any) => {
     !size ||
     !weight ||
     !location ||
-    !isVaccined
+    !isVaccined ||
+    !status
   ) {
     return res.status(400).send({ message: "All fields are required" });
   }
