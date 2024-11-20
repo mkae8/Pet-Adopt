@@ -1,11 +1,21 @@
 import { Request, Response } from "express";
 import { PetModel } from "../../src/database/models/petModel";
+import { UserModel } from "../../src/database/models/userModel";
 
 export const fetchpet = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
 
+  const user = await UserModel.findOne({ authId: id });
+
+  if (!user) {
+    res.status(404).send({ message: "User not found" });
+    return;
+  }
+
+  const userId = user._id;
+
   try {
-    const pet = await PetModel.findById(id);
+    const pet = await PetModel.find({ userId: userId });
     res.status(200).send(pet);
   } catch (error) {
     console.log(error);

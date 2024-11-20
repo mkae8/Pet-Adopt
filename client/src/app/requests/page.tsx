@@ -23,6 +23,7 @@ import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Loader } from "@/components/Loader";
 
 interface Question {
   id: number;
@@ -101,6 +102,8 @@ const Requests = () => {
 
   const [requests, setRequests] = useState<Request[]>([]);
 
+  const [loading, setLoading] = useState(true);
+
   const user = useUser();
 
   useEffect(() => {
@@ -114,6 +117,7 @@ const Requests = () => {
       } catch (error) {
         console.log(error);
       }
+      setLoading(false);
     };
     if (user.isLoaded) {
       fetchData();
@@ -136,7 +140,6 @@ const Requests = () => {
         return "bg-аgrey-500";
     }
   };
-
   return (
     <div className="h-[70vh] flex flex-col items-center relative">
       <div
@@ -150,60 +153,66 @@ const Requests = () => {
       <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-28 relative z-10">
         <div className="container mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4">Хүсэлтүүд</h1>
-
-          <div className="flex flex-col gap-4 ">
-            <Carousel
-              opts={{
-                align: "start",
-              }}
-              className="w-full max-w-5xl mx-auto"
-            >
-              <CarouselContent className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3">
-                {requests.map((request, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3"
-                  >
-                    <Card
-                      className="w-full cursor-pointer hover:shadow-lg"
-                      onClick={() => openModal(request)}
+          {loading ? (
+            <Loader />
+          ) : (
+            <div className="flex flex-col gap-4 ">
+              <Carousel
+                opts={{
+                  align: "start",
+                }}
+                className="w-full max-w-5xl mx-auto"
+              >
+                <CarouselContent className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3">
+                  {requests.map((request, index) => (
+                    <CarouselItem
+                      key={index}
+                      className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3"
                     >
-                      <CardHeader>
-                        <CardTitle className="flex justify-between items-center">
-                          <div className="truncate flex items-center gap-2">
-                            <Avatar>
-                              <AvatarImage
-                                src={request.petId.image[0]}
-                                alt={request.petId.petName}
-                              />
-                            </Avatar>
-                            {request.petId.petName}
-                          </div>
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <Badge
-                          className={`${getStatusColor(
-                            request.petId.status
-                          )} text-white text-xs h-14 text-center hover:${getStatusColor(
-                            request.petId.status
-                          )}`}
-                        >
-                          {request.petId.status}
-                        </Badge>
-                        <p className="text-sm text-gray-500 h-12 text-wrap truncate">
-                          {request.userId.username}-ээс хүсэлт ирлээ.
-                        </p>
-                        <Button className="mt-4 w-full">Хүсэлтийг харах</Button>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
-            </Carousel>
-          </div>
+                      <Card
+                        className="w-full cursor-pointer hover:shadow-lg"
+                        onClick={() => openModal(request)}
+                      >
+                        <CardHeader>
+                          <CardTitle className="flex justify-between items-center">
+                            <div className="truncate flex items-center gap-2">
+                              <Avatar>
+                                <AvatarImage
+                                  className="object-cover"
+                                  src={request.petId.image[0]}
+                                  alt={request.petId.petName}
+                                />
+                              </Avatar>
+                              {request.petId.petName}
+                            </div>
+                          </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <Badge
+                            className={`${getStatusColor(
+                              request.petId.status
+                            )} text-white text-xs h-14 text-center hover:${getStatusColor(
+                              request.petId.status
+                            )}`}
+                          >
+                            {request.petId.status}
+                          </Badge>
+                          <p className="text-sm text-gray-500 h-12 text-wrap truncate">
+                            {request.userId.username}-ээс хүсэлт ирлээ.
+                          </p>
+                          <Button className="mt-4 w-full">
+                            Хүсэлтийг харах
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                <CarouselPrevious />
+                <CarouselNext />
+              </Carousel>
+            </div>
+          )}
 
           <Dialog open={selectedRequest !== null} onOpenChange={closeModal}>
             {/* max-w-l */}
