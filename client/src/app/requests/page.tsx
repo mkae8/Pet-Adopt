@@ -112,6 +112,7 @@ const Requests = () => {
         const { data }: any = await axios.get(
           `http://localhost:8000/applicationForm/${user.user?.id}`
         );
+        console.log(data);
 
         setRequests(data);
       } catch (error) {
@@ -175,7 +176,7 @@ const Requests = () => {
                       >
                         <CardHeader>
                           <CardTitle className="flex justify-between items-center">
-                            <div className="truncate flex items-center gap-2">
+                            <div className="truncate flex items-center text-sm gap-2">
                               <Avatar>
                                 <AvatarImage
                                   className="object-cover"
@@ -215,7 +216,6 @@ const Requests = () => {
           )}
 
           <Dialog open={selectedRequest !== null} onOpenChange={closeModal}>
-            {/* max-w-l */}
             <DialogContent className="z-[100] w-full md:min-h-[800px] max-w-[400px] rounded-md sm:max-w-[600px] lg:max-w-[700px] min-w-[300px]">
               <DialogHeader>
                 <DialogTitle>{selectedRequest?.userId.username}</DialogTitle>
