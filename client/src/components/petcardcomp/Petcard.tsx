@@ -22,6 +22,7 @@ import { ToastAction } from "../ui/toast";
 import { useToast } from "@/hooks/use-toast";
 import { useUser } from "@clerk/nextjs";
 import { Button } from "../ui/button";
+import { Heart, PawPrint } from "lucide-react";
 
 type Pet = {
   _id: string;
@@ -36,6 +37,7 @@ type Pet = {
   image: string[];
   petCategoryId: PetCategory;
   location: string;
+  isVaccined: string;
 };
 
 type PetCategory = {
@@ -128,40 +130,43 @@ const Petcard = () => {
   return (
     <div className=" flex items-center justify-center">
       <div className="">
-        <div
-          className="min-h-screen w-screen flex bg-cover bg-center bg-slate-100"
-          // style={{
-          //   backgroundImage:
-          //     "url('https://i.pinimg.com/736x/4c/ca/35/4cca35ed0cbe01e1d861f971ab27fd8c.jpg')",
-          //   zIndex: -1,
-          // }}
-        >
+        <div className="bg-orange-50 min-h-screen p-8">
           <div className="container mx-auto p-12">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <h1 className="text-2xl text-black font-bold mb-4 md:mb-0 p-4 hover:text-slate-800">
-                Бидний найзуудтай танилц
+            <div className="container mx-auto">
+              <h1 className="text-[30px] font-bold text-orange-600 mb-5 text-center">
+                Meet the animals
               </h1>
-              <div className="flex gap-4 overflow-x-auto md:overflow-visible flex-wrap md:flex-wrap">
+              <h3 className="font-bold text-orange-600  text-center">
+                Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал
+                авчрахад бэлэн байна.
+              </h3>
+              <h3 className="font-bold text-orange-600 mb-8 text-center">
+                Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!{" "}
+              </h3>
+              <div className="flex flex-wrap justify-center gap-4 mb-8">
                 {types.map((type, index) => (
-                  <button
-                    onClick={() => filterHandler(type.categoryNames)}
+                  <motion.button
                     key={index}
-                    className="min-w-[80px] md:min-w-[110px] h-[45px] rounded-full border border-primary-600 p-3 bg-primary hover:bg-slate-100 hover:text-black flex items-center justify-center gap-2 cursor-pointer transition ease-in-out duration-300 mb-4 md:mb-0"
+                    onClick={() => filterHandler(type.categoryNames)}
+                    className={`min-w-[110px] h-[45px] rounded-full border border-orange-600 p-3 bg-white hover:bg-orange-100 text-orange-600 flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 ${
+                      animalFilter === type.categoryNames
+                        ? "ring-2 ring-orange-500"
+                        : ""
+                    }`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
                     <img
-                      className="h-[32px] w-[32px] rounded-full"
+                      className="h-[32px] w-[32px] rounded-full object-cover"
                       src={type.imageUrl}
                       alt={type.categoryNames}
                     />
-                    <div className="text-white hover:text-black font-medium hover:nav_link nhome_link btn_text">
-                      {type.categoryNames}
-                    </div>
-                  </button>
+                    <span className="font-medium">{type.categoryNames}</span>
+                  </motion.button>
                 ))}
               </div>
             </div>
-
-            <div className="grid justify-center grid-cols-3 gap-x-5 gap-y-28 mt-5 p-20">
+            <div className="grid justify-center grid-cols-3 gap-x-5 gap-y-28 mt-5 p-10">
               {pets
                 .filter((pet) =>
                   animalFilter
@@ -189,27 +194,35 @@ const Petcard = () => {
                     />
 
                     <motion.div
-                      className="absolute top-[375px] w-[340px] h-[158px] left-5 p-4 bg-[#fff] rounded-lg z-10"
+                      className="absolute top-[355px] w-[340px] h-[158px] left-5 p-4 bg-[#fff] rounded-sm z-10"
                       style={{
-                        transition: "transform 0.5s ease-in-out",
+                        transition: "transform 1s ease-in-out",
                       }}
                     >
-                      <div className="text-gray-500 flex items-center justify-center border-b border-gray-300 pb-5">
-                        <span className="text-[30px] tracking-normal leading-none font-bold text-[#f04336] capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono">
+                      <div className="text-gray-500 flex items-center justify-center border-b border-gray-300 pb-2">
+                        <span className="text-[26px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono">
                           {pet.petName}
                         </span>
                       </div>
                       <div className="flex flex-col p-3">
-                        <div className="text-gray-500 flex items-center font-serif gap-3">
-                          Амьтаны нас :
-                          <span className="text-primary  text-lg font-black font-mono text-[#f04336] tex-[20px]">
-                            {pet.age}
-                          </span>
+                        <div className="flex justify-between">
+                          <div className="text-[16px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono flex items-center  gap-3">
+                            Age :
+                            <span className="text-primary  text-lg font-black font-mono text-orange-600 text-[16px]">
+                              {pet.age}
+                            </span>
+                          </div>
+                          <div className="text-[16px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono flex items-center  gap-3">
+                            Sex :
+                            <span className="text-primary  text-lg font-black font-mono text-orange-600 text-[16px]">
+                              {pet.sex}
+                            </span>
+                          </div>
                         </div>
-                        <div className="text-gray-500 flex items-center font-serif gap-3">
-                          Амьтаны тухай :
-                          <span className="text-primary text-lg font-black font-mono text-[#f04336] tex-[20px]">
-                            {pet.description}
+                        <div className="text-[16px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono flex items-center  gap-3">
+                          Status :
+                          <span className="text-primary  text-lg font-black font-mono text-orange-600 text-[16px]">
+                            {pet.status}
                           </span>
                         </div>
                       </div>
@@ -218,16 +231,16 @@ const Petcard = () => {
                     {/* Button that will appear on hover */}
                     <motion.div
                       key={index}
-                      className="absolute top-36 left-[200px] transform -translate-x-1/2 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      className="absolute top-36 left-[200px] transform -translate-x-1/2  mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
                     >
                       <button
                         onClick={(e) => {
-                          e.stopPropagation(); // Prevent opening modal when clicking the button
-                          openModal(pet); // Open the modal when the button is clicked
+                          e.stopPropagation();
+                          openModal(pet);
                         }}
-                        className="w-[168px] h-[55px] select-none bg-[#f04336] border-0 rounded-sm text-white cursor-pointer flex justify-center items-center text-[20px] font-extrabold tracking-normal leading-none mb-0 py-[17px] px-[25px] text-center capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-[Nunito] relative z-10 overflow-hidden"
+                        className="w-[160px] h-[50px] bg-orange-500 hover:bg-orange-600 text-white text-[20px] px-6 py-2 rounded-full font-semibold transform translate-y-full group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center"
                       >
-                        Adopt pet
+                        <Heart className="w-5 h-5 mr-2" /> Adoption
                       </button>
                     </motion.div>
                   </motion.div>
@@ -264,7 +277,7 @@ const Petcard = () => {
 
                     {/* Pet Details Section */}
                     <div className="p-2 flex flex-col md:ml-6 gap-5 items-center md:items-start">
-                      <DialogTitle className="text-[40px] tracking-normal leading-none font-bold text-[#f04336] capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono">
+                      <DialogTitle className="text-[40px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono">
                         {selectedPet.petName}
                       </DialogTitle>
                       <DialogHeader>
