@@ -47,7 +47,6 @@ type PetCategory = {
   imageUrl: string;
 };
 
-
 const types = [
   {
     categoryNames: "бүгд",
@@ -84,6 +83,7 @@ const types = [
     imageUrl:
       "https://i.pinimg.com/736x/a1/72/8c/a1728c9efa993c656c734a77e6741718.jpg",
   },
+];
 
 const Petcard = () => {
   const searchParams = useSearchParams();
@@ -131,164 +131,136 @@ const Petcard = () => {
   };
 
   return (
-
-    <div className=" flex items-center justify-center">
-      <div className="">
-        <div className="bg-orange-50 min-h-screen p-8">
-          <div className="container mx-auto p-12">
-            <div className="container mx-auto">
-              <h1 className="text-[30px] font-bold text-orange-600 mb-5 text-center">
-                Meet the animals
-              </h1>
-              <h3 className="font-bold text-orange-600  text-center">
-                Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал
-                авчрахад бэлэн байна.
-              </h3>
-              <h3 className="font-bold text-orange-600 mb-8 text-center">
-                Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!{" "}
-              </h3>
-              <div className="flex flex-wrap justify-center gap-4 mb-8">
-                {types.map((type, index) => (
-                  <motion.button
-                    key={index}
-                    onClick={() => filterHandler(type.categoryNames)}
-                    className={`min-w-[110px] h-[45px] rounded-full border border-orange-600 p-3 bg-white hover:bg-orange-100 text-orange-600 flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 ${
-                      animalFilter === type.categoryNames
-                        ? "ring-2 ring-orange-500"
-                        : ""
-                    }`}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <img
-                      className="h-[32px] w-[32px] rounded-full object-cover"
-                      src={type.imageUrl}
-                      alt={type.categoryNames}
-                    />
-                    <span className="font-medium">{type.categoryNames}</span>
-                  </motion.button>
-                ))}
-              </div>
+    <div className="flex items-center justify-center">
+      <div className="bg-orange-50 min-h-screen p-8">
+        <div className="container mx-auto p-12">
+          <div className="container mx-auto">
+            <h1 className="text-[30px] font-bold text-orange-600 mb-5 text-center">
+              Meet the animals
+            </h1>
+            <h3 className="font-bold text-orange-600 text-center">
+              Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал авчрахад
+              бэлэн байна.
+            </h3>
+            <h3 className="font-bold text-orange-600 mb-8 text-center">
+              Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!{" "}
+            </h3>
+            <div className="flex flex-wrap justify-center gap-4 mb-8">
+              {types.map((type, index) => (
+                <motion.button
+                  key={index}
+                  onClick={() => filterHandler(type.categoryNames)}
+                  className={`min-w-[110px] h-[45px] rounded-full border border-orange-600 p-3 bg-white hover:bg-orange-100 text-orange-600 flex items-center justify-center gap-2 cursor-pointer transition-all duration-300 ${
+                    animalFilter === type.categoryNames
+                      ? "ring-2 ring-orange-500"
+                      : ""
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <img
+                    className="h-[32px] w-[32px] rounded-full object-cover"
+                    src={type.imageUrl}
+                    alt={type.categoryNames}
+                  />
+                  <span className="font-medium">{type.categoryNames}</span>
+                </motion.button>
+              ))}
             </div>
-            <div className="grid justify-center grid-cols-3 gap-x-5 gap-y-28 mt-5 p-10">
-              {pets
-                ?.filter((pet) =>
-                  animalFilter
-                    ? pet.petCategoryId.categoryLabel
-                        .toLocaleLowerCase()
-                        .includes(animalFilter)
-                    : true
-                )
-                .slice(0, sliceCount)
-                .map((pet, index) => (
-                  <motion.div
-                    key={index}
+          </div>
+          <div className="grid justify-center grid-cols-3 gap-x-5 gap-y-28 mt-5 p-10">
+            {pets
+              ?.filter((pet) =>
+                animalFilter
+                  ? pet.petCategoryId.categoryLabel
+                      .toLocaleLowerCase()
+                      .includes(animalFilter)
+                  : true
+              )
+              .slice(0, sliceCount)
+              .map((pet, index) => (
+                <motion.div
+                  key={index}
+                  style={{
+                    perspective: "1000px",
+                    cursor: "pointer",
+                  }}
+                  className="relative group"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <motion.img
+                    src={pet.image[0]}
+                    alt={pet.petName}
+                    className="object-cover rounded-lg border group-hover:opacity-70 relative h-[450px] w-[380px]"
                     style={{
-                      perspective: "1000px",
-                      cursor: "pointer",
+                      transition: "transform 0.5s ease-in-out",
                     }}
-                    className="relative group"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <motion.img
-                      src={pet.image[0]}
-                      alt={pet.petName}
-                      className="object-cover rounded-lg border group-hover:opacity-70 relative h-[450px] w-[380px]"
-                      style={{
-                        transition: "transform 0.5s ease-in-out",
-                      }}
-                    />
+                  />
 
-                    <motion.div
-                      className="absolute top-[355px] w-[340px] h-[158px] left-5 p-4 bg-[#fff] rounded-sm z-10"
-                      style={{
-                        transition: "transform 1s ease-in-out",
-                      }}
-                    >
-                      <div className="text-gray-500 flex items-center justify-center border-b border-gray-300 pb-2">
-                        <span className="text-[26px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono">
-                          {pet.petName}
-                        </span>
-                      </div>
-                      <div className="flex flex-col p-3">
-                        <div className="flex justify-between">
-                          <div className="text-[16px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono flex items-center  gap-3">
-                            Age :
-                            <span className="text-primary  text-lg font-black font-mono text-orange-600 text-[16px]">
-                              {pet.age}
-                            </span>
-                          </div>
-                          <div className="text-[16px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono flex items-center  gap-3">
-                            Sex :
-                            <span className="text-primary  text-lg font-black font-mono text-orange-600 text-[16px]">
-                              {pet.sex}
-                            </span>
-                          </div>
+                  <motion.div
+                    className="absolute top-[355px] w-[340px] h-[158px] left-5 p-4 bg-[#fff] rounded-sm z-10"
+                    style={{
+                      transition: "transform 1s ease-in-out",
+                    }}
+                  >
+                    <div className="text-gray-500 flex items-center justify-center border-b border-gray-300 pb-2">
+                      <span className="text-[26px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono">
+                        {pet.petName}
+                      </span>
+                    </div>
+                    <div className="flex flex-col p-3">
+                      <div className="flex justify-between">
+                        <div className="text-[16px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono flex items-center  gap-3">
+                          Age :
+                          <span className="text-primary  text-lg font-black font-mono text-orange-600 text-[16px]">
+                            {pet.age}
+                          </span>
                         </div>
                         <div className="text-[16px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono flex items-center  gap-3">
-                          Status :
+                          Sex :
                           <span className="text-primary  text-lg font-black font-mono text-orange-600 text-[16px]">
-                            {pet.status}
+                            {pet.sex}
                           </span>
                         </div>
                       </div>
-                    </motion.div>
-
-                    {/* Button that will appear on hover */}
-                    <motion.div
-                      key={index}
-                      className="absolute top-36 left-[200px] transform -translate-x-1/2  mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-                    >
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          openModal(pet);
-                        }}
-                        className="w-[160px] h-[50px] bg-orange-500 hover:bg-orange-600 text-white text-[20px] px-6 py-2 rounded-full font-semibold transform translate-y-full group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center"
-                      >
-                        <Heart className="w-5 h-5 mr-2" /> Adoption
-                      </button>
-                    </motion.div>
+                      <div className="text-[16px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono flex items-center  gap-3">
+                        Status :
+                        <span className="text-primary  text-lg font-black font-mono text-orange-600 text-[16px]">
+                          {pet.status}
+                        </span>
+                      </div>
+                    </div>
                   </motion.div>
-                ))}
-            </div>
 
-            <div className="group mt-5 flex justify-center items-center pt-10">
-              <button
-                onClick={() => setSliceCount((prev) => prev + 8)}
+                  {/* Button that will appear on hover */}
+                  <motion.div
+                    key={index}
+                    className="absolute top-36 left-[200px] transform -translate-x-1/2  mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+                  >
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        openModal(pet);
+                      }}
+                      className="w-[160px] h-[50px] bg-orange-500 hover:bg-orange-600 text-white text-[20px] px-6 py-2 rounded-full font-semibold transform translate-y-full group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center"
+                    >
+                      <Heart className="w-5 h-5 mr-2" /> Adoption
+                    </button>
+                  </motion.div>
+                </motion.div>
+              ))}
+          </div>
 
-    <div className="bg-orange-50 min-h-screen p-8">
-      <div className="container mx-auto p-12">
-        <div className="container mx-auto">
-          <h1 className="text-4xl font-bold text-orange-500 mb-4 text-center">
-            Meet the animals
-          </h1>
-          <h3 className="font-bold text-orange-400  text-center">
-            Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал авчрахад
-            бэлэн байна.
-          </h3>
-          <h3 className="font-bold text-orange-400 mb-8 text-center">
-            Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!{" "}
-          </h3>
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            {categories.map((category, index) => (
-              <div
-                key={index}
-                onClick={() => filterHandler(category.categoryNames)}
-                className={`px-6 py-3 rounded-full text-lg font-semibold transition-all duration-300 ${
-                  animalFilter === category.categoryNames
-                    ? "bg-orange-500 text-white shadow-lg scale-105"
-                    : "bg-white text-orange-500 hover:bg-orange-100"
-                }`}
-
-              
-                {category.imageUrl} {category.categoryNames}
-              </div>
-            ))}
+          <div className="group mt-5 flex justify-center items-center pt-10">
+            <button
+              onClick={() => setSliceCount((prev) => prev + 8)}
+              className="px-6 py-2 bg-orange-500 text-white rounded-full hover:bg-orange-600"
+            >
+              Load More
+            </button>
           </div>
         </div>
       </div>
-      <div>NEWCARDS&Modal</div>
     </div>
   );
 };
