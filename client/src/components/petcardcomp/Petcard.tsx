@@ -1,5 +1,7 @@
 "use client";
 
+
+import { useEffect, useState } from "react";
 import { useEffect, useState, useRef } from "react";
 import React from "react";
 import { useSearchParams } from "next/navigation";
@@ -17,17 +19,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { ToastAction } from "../ui/toast";
-import { useToast } from "@/hooks/use-toast";
-import { useUser } from "@clerk/nextjs";
-import { Button } from "../ui/button";
-import { Heart, PawPrint } from "lucide-react";
+import Cards from "./Cards";
 
 type Pet = {
   _id: string;
-  userId: string;
   weight: string;
   petName: string;
   age: string;
@@ -41,10 +39,10 @@ type Pet = {
   isVaccined: string;
 };
 
-type PetCategory = {
-  categoryNames: string;
+type PetCategory = { categoryNames: string;
   categoryLabel: string;
   imageUrl: string;
+ 
 };
 
 const types = [
@@ -86,16 +84,21 @@ const types = [
 ];
 
 const Petcard = () => {
+
+
   const searchParams = useSearchParams();
   const filterName = searchParams.get("filter");
 
   const { toast } = useToast();
   const data = useUser();
+
   const { push } = useRouter();
-  const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
-  const [sliceCount, setSliceCount] = useState(8);
   const [pets, setPets] = useState<Pet[]>([]);
+
+  const [animalFilter, setAnimalFilter] = useState<string>("бүгд");
+
   const [animalFilter, setAnimalFilter] = useState(filterName);
+
 
   const filterHandler = (categoryNames: string) => {
     setAnimalFilter(categoryNames);
@@ -116,21 +119,50 @@ const Petcard = () => {
     fetchPets();
   }, []);
 
-  const openModal = (pet: Pet) => {
-    setSelectedPet(pet);
-  };
-  const closeModal = () => {
-    setSelectedPet(null);
-  };
-
-  const handleAdoptClick = (petId: string) => {
-    if (selectedPet) {
-      push(`/application?petId=${petId}`);
-      closeModal();
-    }
-  };
+  const filteredPets =
+    animalFilter === "бүгд"
+      ? pets
+      : pets.filter((pet) => pet.petCategoryId.categoryNames === animalFilter);
 
   return (
+
+    <div className="bg-orange-50 min-h-screen p-8">
+      <div className="container mx-auto p-12">
+        <h1 className="text-4xl font-bold text-orange-400 mb-4 text-center">
+          Meet the animals
+        </h1>
+        <h3 className="font-bold text-orange-400 text-center">
+          Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал авчрахад
+          бэлэн байна.
+        </h3>
+        <h3 className="font-bold text-orange-400 mb-8 text-center">
+          Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!
+        </h3>
+        <div className="flex flex-wrap justify-center gap-4 mb-8">
+          {categories.map((category, index) => (
+            <div
+              key={index}
+              onClick={() => filterHandler(category.categoryNames)}
+              className={`px-6 py-3 rounded-full text-lg font-semibold transition-all duration-300 cursor-pointer ${
+                animalFilter === category.categoryNames
+                  ? "bg-orange-400 text-white shadow-lg scale-105"
+                  : "bg-white text-orange-500 hover:bg-orange-100"
+              }`}
+            >
+              {category.imageUrl} {category.categoryNames}
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredPets.length > 0 ? (
+            filteredPets.map((pet) => <Cards key={pet._id} pet={pet} />)
+          ) : (
+            <p className="text-center text-gray-500 col-span-full">
+              Систем ачааллаж байна түр хүлээнэ үү...
+            </p>
+          )}
+        </div>
+
     <div className="flex items-center justify-center">
       <div className="bg-orange-50 min-h-screen p-8">
         <div className="container mx-auto p-12">
@@ -260,6 +292,7 @@ const Petcard = () => {
             </button>
           </div>
         </div>
+
       </div>
     </div>
   );
