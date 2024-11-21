@@ -4,22 +4,38 @@ import { Button } from "@/components/ui/button";
 
 import { motion } from "framer-motion";
 
+import axios from "axios";
+
 import { ToastAction } from "@/components/ui/toast";
-import { Heart, Home, Search, Menu, PawPrint } from "lucide-react";
+import {
+  Heart,
+  Home,
+  Search,
+  Menu,
+  PawPrint,
+  Rabbit,
+  Fish,
+} from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { ChevronDown, Dog, Cat, Bird, MapPin } from "lucide-react";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+} from "@radix-ui/react-dropdown-menu";
 
 export default function HomePage() {
   const { toast } = useToast();
@@ -67,6 +83,10 @@ export default function HomePage() {
   const ref2 = useRef<HTMLDivElement | null>(null);
 
   const isInView2 = useInView(ref1, { threshold: 0.1 });
+
+  const handleClick = (which: string) => {
+    push(`/petcard?filter=${which}`);
+  };
 
   return (
     <div className="flex flex-col items-center  ">
@@ -152,47 +172,42 @@ export default function HomePage() {
               transition={{ duration: 0.5 }}
               className="flex-1"
             >
-              {/* <nav className="w-full bg-[#1D2B32] p-4">
-                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row gap-4 items-stretch">
+              <div className="w-screen max-w-[1200px] bg-[#1D2B32] p-4 h-[200px] rounded-sm flex items-center justify-between">
+                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row gap-10 ">
                   <div className="relative flex-1 min-w-[240px]">
-                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="Enter City, State, or Zip"
-                      className="pl-9 bg-white/10 border-0 text-white placeholder:text-white/70"
-                    />
+                    <div
+                      className="pl-9 border-0 text-white
+                      placeholder:text-white/70 outline-none  rounded-sm flex
+                      font-bold"
+                    >
+                      Тэжээвэр амьтан хайх
+                    </div>
                   </div>
-                  <div className="grid sm:grid-cols-3 flex-[2] gap-2">
-                    <Button className="bg-[#E55C4D] hover:bg-[#E55C4D]/90 text-white h-full">
+                  <div className="flex flex-wrap gap-2 items-center justify-center">
+                    <Button
+                      onClick={() => handleClick("нохой")}
+                      className="bg-orange-500 hover:bg-orange-600/90 text-white flex-1 h-[100px] w-[200px]"
+                    >
                       <Dog className="mr-2 h-5 w-5" />
                       Find Your Dog
                     </Button>
                     <Button
-                      variant="ghost"
-                      className="bg-[#E55C4D] hover:bg-[#E55C4D]/90 text-white h-full"
+                      onClick={() => handleClick("муур")}
+                      className="bg-orange-500 hover:bg-orange-600/90 text-white flex-1 h-[100px] w-[300px]"
                     >
                       <Cat className="mr-2 h-5 w-5" />
                       Find Your Cat
                     </Button>
-                    <Button className="bg-[#E55C4D] hover:bg-[#E55C4D]/90 text-white h-full">
+                    <Button
+                      onClick={() => handleClick("шувуу")}
+                      className="bg-orange-500 hover:bg-orange-600/90 text-white flex-1 h-[100px] w-[300px]"
+                    >
                       <Bird className="mr-2 h-5 w-5" />
                       Find Your Birds
                     </Button>
                   </div>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger>
-                      <button className="bg-[#1D2B32] text-white border border-white/20 hover:bg-white/10">
-                        Find Other Pets
-                        <ChevronDown className="ml-2 h-4 w-4" />
-                      </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem>Small & Furry</DropdownMenuItem>
-                      <DropdownMenuItem>Scales, Fins & Other</DropdownMenuItem>
-                      <DropdownMenuItem>Barnyard</DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
                 </div>
-              </nav> */}
+              </div>
             </motion.div>
           </div>
         </section>

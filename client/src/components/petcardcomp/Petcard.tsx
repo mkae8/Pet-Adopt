@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import React from "react";
+import { useSearchParams } from "next/navigation";
 import {
   motion,
   useMotionTemplate,
@@ -42,11 +43,11 @@ type Pet = {
 
 type PetCategory = {
   categoryNames: string;
-  // categoryName: string;
+  categoryLabel: string;
   imageUrl: string;
 };
 
-const types: PetCategory[] = [
+const types = [
   {
     categoryNames: "бүгд",
     imageUrl:
@@ -85,13 +86,16 @@ const types: PetCategory[] = [
 ];
 
 const Petcard = () => {
+  const searchParams = useSearchParams();
+  const filterName = searchParams.get("filter");
+
   const { toast } = useToast();
   const data = useUser();
   const { push } = useRouter();
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
   const [sliceCount, setSliceCount] = useState(8);
   const [pets, setPets] = useState<Pet[]>([]);
-  const [animalFilter, setAnimalFilter] = useState("");
+  const [animalFilter, setAnimalFilter] = useState(filterName);
 
   const filterHandler = (categoryNames: string) => {
     setAnimalFilter(categoryNames);
@@ -103,7 +107,6 @@ const Petcard = () => {
         `${process.env.BACKEND_URL}/get/pet`
       );
       setPets(response.data);
-      console.log(response.data, "sdasdasdasfasdafwegha");
     } catch (error) {
       console.error("Error fetching pets:", error);
     }
@@ -168,9 +171,11 @@ const Petcard = () => {
             </div>
             <div className="grid justify-center grid-cols-3 gap-x-5 gap-y-28 mt-5 p-10">
               {pets
-                .filter((pet) =>
+                ?.filter((pet) =>
                   animalFilter
-                    ? pet.petCategoryId.categoryNames === animalFilter
+                    ? pet.petCategoryId.categoryLabel
+                        .toLocaleLowerCase()
+                        .includes(animalFilter)
                     : true
                 )
                 .slice(0, sliceCount)
