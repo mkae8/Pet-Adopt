@@ -1,5 +1,6 @@
 "use client";
 
+import { PetCard } from "@/components/mkae/Stripe";
 import PetForm from "@/components/petAddAdoption/PetForm";
 
 const PetAddPage = () => {
@@ -12,6 +13,7 @@ const PetAddPage = () => {
       />
       <div className="relative z-10 w-full max-w-7xl px-4">
         <PetForm />
+        <PetCard />
       </div>
     </div>
   );

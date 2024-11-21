@@ -1,6 +1,7 @@
 "use client";
 
 import PetForm from "@/components/petAddAdoption/PetForm";
+import { PetCard } from "../mkae/Stripe";
 
 const PetAddPage = () => {
   return (
@@ -12,6 +13,7 @@ const PetAddPage = () => {
       />
       <div className="relative inset-0 z-10 w-full  ">
         <PetForm />
+        <PetCard />
       </div>
     </div>
   );
