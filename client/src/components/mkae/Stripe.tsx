@@ -3,7 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
-import { ChevronLeft, ChevronRight, PlusCircle, Loader2 } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  PlusCircle,
+  Loader2,
+  PawPrintIcon,
+} from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -81,9 +87,10 @@ export const Stripe = () => {
 
   return (
     <div className="container mx-auto py-9 px-4">
-      <Card className="mb-8">
+      <Card className="mb-8 w-1/3">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-orange-700 flex items-center justify-between">
+          <CardTitle className="text-2xl  font-bold text-orange-500 flex items-center gap-2">
+            <PawPrintIcon />
             <span>Таны нэмсэн амьтад</span>
           </CardTitle>
         </CardHeader>
@@ -118,10 +125,10 @@ export const Stripe = () => {
             {pets.map((pet) => (
               <Card
                 key={pet._id}
-                className="flex-shrink-0 w-[371px] snap-center "
+                className="flex-shrink-0 w-[355px] snap-center "
               >
                 <CardHeader>
-                  <CardTitle className="text-xl font-bold text-orange-700">
+                  <CardTitle className="text-xl font-bold text-orange-500">
                     {pet.petName}
                   </CardTitle>
                   <Badge variant="secondary" className="mt-2">
