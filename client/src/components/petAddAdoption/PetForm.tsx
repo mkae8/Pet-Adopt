@@ -101,6 +101,7 @@ const PetForm = () => {
       age: "",
       description: "",
       location: "",
+      weight: "",
     },
   });
 
@@ -144,7 +145,7 @@ const PetForm = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto py-10 ">
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold text-primary flex items-center justify-center">
@@ -308,9 +309,9 @@ const PetForm = () => {
                           <SelectItem value="Одоогоор хүлээгдэж байгаа">
                             Одоогоор хүлээгдэж байгаа
                           </SelectItem>
-                          <SelectItem value="Үрчилэгдсэн">
+                          {/* <SelectItem value="Үрчилэгдсэн">
                             Үрчилэгдсэн
-                          </SelectItem>
+                          </SelectItem> */}
                         </SelectContent>
                       </Select>
                       <FormMessage />

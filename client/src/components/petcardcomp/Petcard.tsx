@@ -47,6 +47,7 @@ type PetCategory = {
   imageUrl: string;
 };
 
+
 const types = [
   {
     categoryNames: "бүгд",
@@ -83,7 +84,6 @@ const types = [
     imageUrl:
       "https://i.pinimg.com/736x/a1/72/8c/a1728c9efa993c656c734a77e6741718.jpg",
   },
-];
 
 const Petcard = () => {
   const searchParams = useSearchParams();
@@ -131,6 +131,7 @@ const Petcard = () => {
   };
 
   return (
+
     <div className=" flex items-center justify-center">
       <div className="">
         <div className="bg-orange-50 min-h-screen p-8">
@@ -255,102 +256,39 @@ const Petcard = () => {
             <div className="group mt-5 flex justify-center items-center pt-10">
               <button
                 onClick={() => setSliceCount((prev) => prev + 8)}
-                className="relative h-12 w-48 md:h-12 md:w-48 rounded-full text-lg md:text-xl border border-orange-500 bg-primary flex justify-center items-center overflow-hidden transition duration-300 "
-              >
-                <span className="font-medium">See more</span>
-              </button>
-            </div>
 
-            <Dialog open={selectedPet !== null} onOpenChange={closeModal}>
-              {selectedPet && (
-                <DialogContent className="sm:max-w-[50%] md:max-w-[50%] lg:max-w-[40%] h-[50%]  md:rounded-[32px] overflow-hidden bg-white shadow-lg">
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.5 }}
-                    className="flex flex-col md:flex-row"
-                  >
-                    {/* Pet Image Section */}
-                    <div className="sm:max-w-[48%] md:max-w-[48%] lg:max-w-[38%] h-[48%]  md:rounded-[30px] relative ">
-                      <img
-                        src={selectedPet.image[0]}
-                        alt={selectedPet.petName}
-                        className=" object-cover rounded-lg shadow-lg"
-                      />
-                    </div>
+    <div className="bg-orange-50 min-h-screen p-8">
+      <div className="container mx-auto p-12">
+        <div className="container mx-auto">
+          <h1 className="text-4xl font-bold text-orange-500 mb-4 text-center">
+            Meet the animals
+          </h1>
+          <h3 className="font-bold text-orange-400  text-center">
+            Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал авчрахад
+            бэлэн байна.
+          </h3>
+          <h3 className="font-bold text-orange-400 mb-8 text-center">
+            Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!{" "}
+          </h3>
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            {categories.map((category, index) => (
+              <div
+                key={index}
+                onClick={() => filterHandler(category.categoryNames)}
+                className={`px-6 py-3 rounded-full text-lg font-semibold transition-all duration-300 ${
+                  animalFilter === category.categoryNames
+                    ? "bg-orange-500 text-white shadow-lg scale-105"
+                    : "bg-white text-orange-500 hover:bg-orange-100"
+                }`}
 
-                    {/* Pet Details Section */}
-                    <div className="p-2 flex flex-col md:ml-6 gap-5 items-center md:items-start">
-                      <DialogTitle className="text-[40px] tracking-normal leading-none font-bold text-orange-600 capitalize touch-manipulation transition-all duration-300 ease-in-out align-middle whitespace-nowrap font-mono">
-                        {selectedPet.petName}
-                      </DialogTitle>
-                      <DialogHeader>
-                        <div className="flex flex-col ">
-                          <div className="text-gray-500 flex items-center font-serif gap-3">
-                            Амьтаны нас :
-                            <span className="text-primary  text-lg font-black font-mono text-[#f04336] tex-[20px]">
-                              {selectedPet.age}
-                            </span>
-                          </div>
-                          <div className="text-gray-500 flex items-center font-serif gap-3">
-                            Амьтаны тухай :
-                            <span className="text-primary text-lg font-black font-mono text-[#f04336] tex-[20px]">
-                              {selectedPet.description}
-                            </span>
-                          </div>
-                        </div>
-                      </DialogHeader>
-                      <DialogDescription className="text-gray-500 flex items-center font-serif gap-3">
-                        description :
-                        <span className="text-primary text-lg font-black font-mono text-[#f04336] tex-[20px]">
-                          {selectedPet.description}
-                        </span>
-                      </DialogDescription>
-
-                      {/* Adopt Button */}
-                      <DialogFooter className="mt-4 w-full flex justify-center">
-                        <div className="group">
-                          <div className="relative h-14 w-52 md:h-16 md:w-56 rounded-sm text-xl font-semibold text-white border-0 bg-[#f04336] flex justify-center items-center  transition-all duration-300 ease-in-out overflow-hidden">
-                            <Button
-                              onClick={() => {
-                                if (!data.isSignedIn) {
-                                  toast({
-                                    title: "Нэвтэрч орно уу",
-                                    description: "Бүртгэлгүй бол бүртгүүлнэ үү",
-                                    action: (
-                                      <ToastAction
-                                        onClick={() => {
-                                          push("/sign-in");
-                                        }}
-                                        altText="Goto schedule to undo"
-                                      >
-                                        нэвтрэх
-                                      </ToastAction>
-                                    ),
-                                  });
-                                  return;
-                                } else {
-                                  handleAdoptClick(selectedPet._id);
-                                }
-                              }}
-                              className="w-full h-full bg-[#F97316] text-white rounded-sm font-semibold text-lg flex justify-center items-center"
-                            >
-                              Adopt {selectedPet.petName}
-                            </Button>
-                            {/* Hover effect */}
-                            <span className="absolute inset-0 bg-[#F97316] transform translate-y-full transition-transform duration-300 group-hover:translate-y-0"></span>
-                          </div>
-                        </div>
-                      </DialogFooter>
-                    </div>
-                  </motion.div>
-                </DialogContent>
-              )}
-            </Dialog>
+              
+                {category.imageUrl} {category.categoryNames}
+              </div>
+            ))}
           </div>
         </div>
       </div>
+      <div>NEWCARDS&Modal</div>
     </div>
   );
 };
