@@ -37,6 +37,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { petSchema } from "@/lib/form-schema";
 import { Loading } from "../Loading";
+import { useToast } from "@/hooks/use-toast";
 
 type Category = {
   _id: string;
@@ -49,6 +50,7 @@ const PetForm = () => {
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const [categories, setCategories] = useState<Category[]>([]);
+  const { toast } = useToast();
 
   const getPresignedURL = async () => {
     try {
@@ -81,6 +83,7 @@ const PetForm = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     if (user) {
       getCategories();
@@ -101,6 +104,7 @@ const PetForm = () => {
       age: "",
       description: "",
       location: "",
+      weight: "",
     },
   });
 
@@ -124,17 +128,25 @@ const PetForm = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        toast.error(
-          `Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`
-        );
+        toast({
+          title: "Алдаа",
+          description: "Мэдээлэл хадгалагдах үед алдаа гарлаа",
+        });
+
         setLoading(false);
         return;
       }
-      toast.success("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
+      toast({
+        title: "Амжилттай нэмэгдлээ",
+        description: "Амьтны мэдээлэл амжилттай хадгалагдлаа!",
+      });
       form.reset();
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("Алдаа гарлаа.");
+      console.log("Error:", error);
+      toast({
+        title: "Алдаа",
+        description: "Мэдээлэл хадгалагдах үед алдаа гарлаа",
+      });
     } finally {
       setLoading(false);
     }
@@ -144,7 +156,7 @@ const PetForm = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-10">
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold text-primary flex items-center justify-center">
@@ -308,9 +320,9 @@ const PetForm = () => {
                           <SelectItem value="Одоогоор хүлээгдэж байгаа">
                             Одоогоор хүлээгдэж байгаа
                           </SelectItem>
-                          <SelectItem value="Үрчилэгдсэн">
+                          {/* <SelectItem value="Үрчилэгдсэн">
                             Үрчилэгдсэн
-                          </SelectItem>
+                          </SelectItem> */}
                         </SelectContent>
                       </Select>
                       <FormMessage />
