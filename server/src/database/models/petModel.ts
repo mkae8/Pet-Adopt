@@ -1,13 +1,13 @@
 import { Model, Schema, models, model, Types } from "mongoose";
 
 enum Sex {
-  Male = "Male",
-  Female = "Female",
+  Male = "Эр",
+  Female = "Эм",
 }
 enum Size {
-  Small = "Small",
-  Medium = "Medium",
-  Large = "Large",
+  Small = "Жижиг",
+  Medium = "Дунд",
+  Large = "Том",
 }
 enum Status {
   Available = "Үрчлүүлэх боломжтой",

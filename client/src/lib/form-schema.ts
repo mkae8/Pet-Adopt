@@ -15,7 +15,7 @@ export const petSchema = z.object({
     .min(0, { message: "Age must be a positive number." })
     .max(100, { message: "Age must be no more than 20." }),
 
-  size: z.enum(["Small", "Medium", "Large"], {
+  size: z.enum(["Жижиг", "Дунд", "Том"], {
     message: "Size must be one of Small, Medium, or Large.",
   }),
 
@@ -37,7 +37,7 @@ export const petSchema = z.object({
     ["Үрчлүүлэх боломжтой", "Одоогоор хүлээгдэж байгаа", "Үрчилэгдсэн"],
     { message: "Status must be one of the predefined values." }
   ),
-  sex: z.enum(["Male", "Female"], {
+  sex: z.enum(["Эр", "Эм"], {
     message: "Sex must be one of the predefined values.",
   }),
   description: z
