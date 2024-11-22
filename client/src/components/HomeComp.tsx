@@ -342,7 +342,9 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="container"></div>
+            <div className="container top-40 absolute left-20">
+              <img className="bg -[#f5f3eb]" src="./noxoi.png" alt="" />
+            </div>
           </div>
           <img
             src="./bottomshape.png"
