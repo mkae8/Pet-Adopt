@@ -3,9 +3,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { motion } from "framer-motion";
+import { useUser } from "@clerk/nextjs";
 
-import { Loading } from "../Loading";
 import { Cards } from "./Cards";
+import { Button } from "@/components/ui/button";
+import { Loading } from "../Loading";
 
 type Pet = {
   _id: string;
@@ -23,84 +26,110 @@ type Pet = {
 };
 
 type PetCategory = {
-  categoryNames: string;
-  imageUrl: string;
-};
-type Category = {
   _id: string;
   categoryName: string;
   categoryLabel: string;
 };
 
-// const categories: PetCategory[] = [
-//   { categoryNames: "бүгд", imageUrl: "🐾" },
-//   { categoryNames: "нохой", imageUrl: "🐶" },
-//   { categoryNames: "муур", imageUrl: "🐱" },
-//   { categoryNames: "шувуу", imageUrl: "🦜" },
-//   { categoryNames: "туулай", imageUrl: "🐰" },
-//   { categoryNames: "мэрэгч", imageUrl: "🐹" },
-//   { categoryNames: "загас", imageUrl: "🐠" },
-// ];
-
 const Petcard = () => {
   const { push } = useRouter();
   const [pets, setPets] = useState<Pet[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<PetCategory[]>([]);
   const [animalFilter, setAnimalFilter] = useState<string>("бүгд");
+  const [loading, setLoading] = useState(true);
+  const { user } = useUser();
 
-  const filterHandler = (categoryNames: string) => {
-    setAnimalFilter(categoryNames);
+  const getCategories = async () => {
+    try {
+      const res = await axios.get(`${process.env.BACKEND_URL}/get/categories`);
+      setCategories([
+        { _id: "all", categoryName: "бүгд", categoryLabel: "Бүгд" },
+        ...res.data,
+      ]);
+    } catch (error) {
+      console.log("Error fetching categories:", error);
+    }
   };
 
   const fetchPets = async () => {
     try {
+      setLoading(true);
       const response = await axios.get<Pet[]>(
         `${process.env.BACKEND_URL}/get/pet`
       );
       setPets(response.data);
     } catch (error) {
       console.error("Error fetching pets:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
+    if (user) {
+      getCategories();
+    }
     fetchPets();
-  }, []);
+  }, [user]);
+
+  const handleFilterChange = (categoryName: string) => {
+    setAnimalFilter(categoryName);
+  };
 
   const filteredPets =
     animalFilter === "бүгд"
       ? pets
-      : pets.filter((pet) => pet.petCategoryId.categoryNames === animalFilter);
+      : pets.filter((pet) => pet.petCategoryId.categoryName === animalFilter);
 
   return (
-    <div className="bg-orange-50 min-h-screen p-8">
-      <div className="container mx-auto p-12">
-        <h1 className="text-4xl font-bold text-orange-400 mb-4 text-center">
+    <div className="bg-orange-50 min-h-screen p-4 sm:p-8">
+      <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl sm:text-4xl font-bold text-orange-400 mb-4 text-center">
           Meet the animals
         </h1>
-        <h3 className="font-bold text-orange-400 text-center">
+        <h3 className="font-bold text-orange-400 text-center text-sm sm:text-base">
           Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал авчрахад
           бэлэн байна.
         </h3>
-        <h3 className="font-bold text-orange-400 mb-8 text-center">
+        <h3 className="font-bold text-orange-400 mb-8 text-center text-sm sm:text-base">
           Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!
         </h3>
-        <div className="flex flex-wrap justify-center gap-4 mb-8">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
           {categories.map((category) => (
-            <div key={category._id}>{category.categoryLabel}</div>
+            <motion.div
+              key={category._id}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                variant={
+                  animalFilter === category.categoryName ? "default" : "outline"
+                }
+                onClick={() => handleFilterChange(category.categoryName)}
+                className="min-w-[100px] sm:min-w-[120px]"
+              >
+                {category.categoryLabel}
+              </Button>
+            </motion.div>
           ))}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredPets.length > 0 ? (
-            filteredPets.map((pet) => <Cards key={pet._id} pet={pet} />)
-          ) : (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white p-6 rounded-lg shadow-xl flex items-center space-x-4">
-                <Loading />
-              </div>
+        {loading ? (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-xl flex items-center space-x-4">
+              <Loading />
             </div>
-          )}
-        </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {filteredPets.length > 0 ? (
+              filteredPets.map((pet) => <Cards key={pet._id} pet={pet} />)
+            ) : (
+              <p className="col-span-full text-center text-gray-500">
+                No pets found in this category.
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
