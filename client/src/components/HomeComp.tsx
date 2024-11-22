@@ -38,6 +38,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
+import Testimonials from "./Testimonials";
 
 export default function HomePage() {
   const { toast } = useToast();
@@ -55,6 +56,7 @@ export default function HomePage() {
     options: UseInViewOptions = {}
   ) {
     const [isInView, setIsInView] = useState(false);
+    const [slide, setSlide] = useState(0);
 
     useEffect(() => {
       const observer = new IntersectionObserver(([entry]) => {
@@ -213,97 +215,8 @@ export default function HomePage() {
             </motion.div>
           </div>
         </section>
-        <section className="w-full ">
-          <img src="./topfooter.png" alt="" className="w-full bg-[#f5f3eb]  " />
-          <div className="relative">
-            <img
-              className="w-screen h-[700px] "
-              src="./footerbackground.png"
-              alt=""
-            />
-            <div className="container absolute top-20 left-28 ">
-              <div className="w-full h-sreen mx-auto flex flex-col items-center justify-center">
-                <div className="flex flex-col justify-center items-center gap-10 w-[690px]">
-                  <FaPaw className="h-[40px] w-[40px] text-orange-500" />
-                  <p className="text-3xl font-bold tracking-tighter text-orange-500 ">
-                    Амьтан үрчилж авсан хүмүүсийн сэтгэгдэл
-                  </p>
-                  <p className="text-xl tracking-tighter font-medium text-center">
-                    The best overall dog DNA test is Embark Breed & Health Kit
-                    (view at Chewy), which provides you with a breed brwn and
-                    information Most dogs
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="container absolute top-96 left-40  ">
-              <div className="flex gap-32">
-                <div className="h-[280px] w-[500px] bg-white flex justify-center items-center">
-                  <div className="flex">
-                    <div className="w-[150px] h-[150px] flex justify-center ">
-                      <div className="bg-orange-500 h-[90px] w-[90px]  flex justify-center items-center rounded-full">
-                        <img
-                          className="h-[70px] w-[70px] rounded-full"
-                          src="./shagai.jpg"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <div className="w-[270px] flex flex-col gap-6">
-                      <p className="text-base">
-                        “ The best overall dog DNA test Embark Breed Health Kit
-                        view at Chewy, which provides with a breed brwn and
-                        information."
-                      </p>
-                      <div className="flex gap-12">
-                        <div className="flex flex-col">
-                          <p className="text-xl font-bold tracking-tighter text-orange-500">
-                            Д.Алтаншагай
-                          </p>
-                          <p>Pinecone Student</p>
-                        </div>
-                        <IoIosAttach className="w-14 h-14 text-orange-500" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="h-[280px] w-[500px] bg-white flex justify-center items-center">
-                  <div className="flex">
-                    <div className="w-[150px] h-[150px] flex justify-center ">
-                      <div className="bg-orange-500 h-[90px] w-[90px]  flex justify-center items-center rounded-full">
-                        <img
-                          className="h-[70px] w-[70px] rounded-full"
-                          src="./tengis.jpg"
-                          alt=""
-                        />
-                      </div>
-                    </div>
-                    <div className="w-[270px] flex flex-col gap-6">
-                      <p className="text-base">
-                        “ The best overall dog DNA test Embark Breed Health Kit
-                        view at Chewy, which provides with a breed brwn and
-                        information."
-                      </p>
-                      <div className="flex gap-12">
-                        <div className="flex flex-col">
-                          <p className="text-xl font-bold tracking-tighter text-orange-500">
-                            Х.Түвшинтэнгис
-                          </p>
-                          <p>Pinecone Student</p>
-                        </div>
-                        <IoIosAttach className="w-14 h-14 text-orange-500" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <img
-            src="./bottomshape.png"
-            alt=""
-            className="w-full bg-[#f5f3eb]  "
-          />
+        <section className="w-full mx-auto">
+          <Testimonials />
         </section>
         <section className="w-full flex justify-center py-12 md:py-24 lg:py-32  dark:bg-gray-800">
           <div className="container px-4 md:px-6">
@@ -325,33 +238,37 @@ export default function HomePage() {
           </div>
         </section>
         <section className="w-full">
-          <img src="./topfooter.png" alt="" className="w-full bg-[#f5f3eb]  " />
+          <img src="./topfooter.png" alt="" className="w-full bg-[#f5f3eb]" />
           <div className="relative">
             <img
-              className="w-screen h-[700px] "
+              className="w-screen h-[700px] object-cover"
               src="./footerbackground.png"
               alt=""
             />
-            <div className="container absolute top-20 left-28 ">
-              <div className="w-full h-sreen mx-auto flex flex-col items-center justify-center">
-                <div className="flex flex-col justify-center items-center gap-10 w-[690px]">
-                  <FaPaw className="h-[40px] w-[40px] text-orange-500" />
-                  <p className="text-3xl font-bold tracking-tighter text-orange-500 ">
-                    Амьтан тэжээх сонирхолтой хүмүүст
-                  </p>
-                </div>
+
+            {/* Main content container */}
+            <div className="container absolute top-20 left-1/2 transform -translate-x-1/2">
+              <div className="flex flex-col items-center justify-center text-center gap-10 w-full max-w-[690px] mx-auto">
+                <FaPaw className="h-[40px] w-[40px] text-orange-500" />
+                <p className="text-3xl font-bold tracking-tighter text-orange-500">
+                  Амьтан тэжээх сонирхолтой хүмүүст
+                </p>
               </div>
             </div>
-            <div className="container top-40 absolute left-20">
-              <img className="bg -[#f5f3eb]" src="./noxoi.png" alt="" />
+
+            {/* Image on the left side */}
+            <div className="container absolute top-40 left-20">
+              <img
+                className="w-full max-w-[300px] object-contain"
+                src="./sdasda.jpeg"
+                alt=""
+              />
             </div>
           </div>
-          <img
-            src="./bottomshape.png"
-            alt=""
-            className="w-full bg-[#f5f3eb]  "
-          />
+
+          <img src="./bottomshape.png" alt="" className="w-full bg-[#f5f3eb]" />
         </section>
+
         <section className="w-full h-[700px] mx-auto flex flex-col gap-10">
           <div className="w-full mx-auto flex flex-col items-center justify-center">
             <div className="flex flex-col justify-center items-center gap-10 w-[690px] mt-20">

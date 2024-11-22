@@ -1,4 +1,3 @@
-"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -9,21 +8,6 @@ import { useUser } from "@clerk/nextjs";
 import { Cards } from "./Cards";
 import { Button } from "@/components/ui/button";
 import { Loading } from "../Loading";
-
-type Pet = {
-  _id: string;
-  weight: string;
-  petName: string;
-  age: string;
-  sex: string;
-  size: string;
-  status: string;
-  description: string;
-  image: string[];
-  petCategoryId: PetCategory;
-  location: string;
-  isVaccined: string;
-};
 
 type PetCategory = {
   _id: string;
@@ -136,3 +120,4 @@ const Petcard = () => {
 };
 
 export default Petcard;
+

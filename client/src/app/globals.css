@@ -168,4 +168,30 @@
     background-position: center;
     z-index: -1;
   }
+
+  .ddd {
+    border: none;
+    text-indent: -99999px;
+    padding: 0;
+    width: 23px;
+    height: 8px;
+    background: black;
+    border-radius: 4px;
+    transition: 0.3s linear;
+  }
+
+  .geeg {
+    border: none;
+    text-indent: -99999px;
+    padding: 0;
+    width: 33px;
+    height: 8px;
+    background: rgb(249 115 22 / var(--tw-text-opacity, 1));
+    border-radius: 4px;
+    transition: 0.3s linear;
+  }
+
+  .algabol {
+    scrollbar-width: none;
+  }
 }
