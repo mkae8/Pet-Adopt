@@ -13,7 +13,7 @@ export const petSchema = z.object({
   age: z
     .string()
     .min(0, { message: "Age must be a positive number." })
-    .max(20, { message: "Age must be no more than 20." }),
+    .max(100, { message: "Age must be no more than 20." }),
 
   size: z.enum(["Small", "Medium", "Large"], {
     message: "Size must be one of Small, Medium, or Large.",
