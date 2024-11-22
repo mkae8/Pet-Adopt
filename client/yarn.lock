@@ -432,34 +432,34 @@
     human-id "^1.0.2"
     prettier "^2.7.1"
 
-"@clerk/backend@1.17.0":
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/@clerk/backend/-/backend-1.17.0.tgz#53c7e0fd5a4a2453b88687a43cce286ac6706b06"
-  integrity sha512-rqeyF217p4GiUKmi+9/wIlWcW2ybaskcwohtSHuuuMmH+kW46ITGSymjka+1bcni/2mHNqxl6RmpQEGK2ncmtQ==
+"@clerk/backend@1.17.1":
+  version "1.17.1"
+  resolved "https://registry.yarnpkg.com/@clerk/backend/-/backend-1.17.1.tgz#90eface8959ec9465fcb94eb73c9fc06453a595b"
+  integrity sha512-gfjdLILCVdt0wOuFlv0QwYcdNR1dR7VkwhzZV8y4zhcF95AalzIQaBH3vUsOzlOxieBsuuB+dS1ZauHAwGFdgg==
   dependencies:
-    "@clerk/shared" "2.15.0"
-    "@clerk/types" "4.34.0"
+    "@clerk/shared" "2.16.0"
+    "@clerk/types" "4.34.1"
     cookie "0.7.0"
     snakecase-keys "5.4.4"
     tslib "2.4.1"
 
-"@clerk/clerk-react@5.16.0":
-  version "5.16.0"
-  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-5.16.0.tgz#16aaad4f5b91e521283988a885bbd214ef49d888"
-  integrity sha512-u2RocKKBDjygFv0v/qo8JMEsINKpHoDa1cA9ldAnXJHNlQFO66hH0Ax1gPKtafttthzVug237jiX7lGKifMoDw==
+"@clerk/clerk-react@5.16.1":
+  version "5.16.1"
+  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-5.16.1.tgz#20da22e5c370fb8b699951df9b82d538018479c6"
+  integrity sha512-CTXn4RlNLxZxrohtbmkpsZFwmE51J10ErcLXCnwNjyN0gBz0xX9fJapysGhSR3osrZASaIzmrP8/bCTnNvs7Sg==
   dependencies:
-    "@clerk/shared" "2.15.0"
-    "@clerk/types" "4.34.0"
+    "@clerk/shared" "2.16.0"
+    "@clerk/types" "4.34.1"
     tslib "2.4.1"
 
 "@clerk/elements@^0.19.0":
-  version "0.19.4"
-  resolved "https://registry.yarnpkg.com/@clerk/elements/-/elements-0.19.4.tgz#624574fde4d9bbb8da9b0f6fcfe195d29ab23f78"
-  integrity sha512-kz7Zn8Go6xen2oOqDwkl09f8iTgB3PjeBP19Zw/Yg8pK7iu7Mg5qEPuQs8cGlvcbm0hz7YGJOjXdfRrwY8awRw==
+  version "0.19.5"
+  resolved "https://registry.yarnpkg.com/@clerk/elements/-/elements-0.19.5.tgz#0e4267493053b79c5a46c5bcbdac2f25074e4bc3"
+  integrity sha512-1/+5rA+R/BkxDZLFze8auj+s94y5hz3rmiJOHYWnP2Fa1pH0+sI3wD6LFSQqP/gWWEQnXmL1BIkTW7rt9W5GFA==
   dependencies:
-    "@clerk/clerk-react" "5.16.0"
-    "@clerk/shared" "2.15.0"
-    "@clerk/types" "^4.34.0"
+    "@clerk/clerk-react" "5.16.1"
+    "@clerk/shared" "2.16.0"
+    "@clerk/types" "4.34.1"
     "@radix-ui/primitive" "^1.1.0"
     "@radix-ui/react-form" "^0.1.0"
     "@radix-ui/react-slot" "^1.1.0"
@@ -468,42 +468,42 @@
     xstate "^5.15.0"
 
 "@clerk/localizations@^3.6.0":
-  version "3.6.4"
-  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.6.4.tgz#00247a7aa62798f1f506ec7b3bf3c48cc786511c"
-  integrity sha512-mQCtStwNrs3HVVrmhu2qFqvtjKP4mYGKs0bUgzJE3dlO52XAMAJL4nYqlq6egVYKLa84TZHPQABodIXyUt1KMw==
+  version "3.6.5"
+  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.6.5.tgz#31d2e88491ce3dc1f2a8d622205bfdc410ac4c75"
+  integrity sha512-8EKgl3s68uOqmBvuIqhBdfxMmmu9iG1LBZFx6n0ShOz+6Zvr/MtWZgiB20bhan9R8FEeayG0wbcMbaXM7f9UlQ==
   dependencies:
-    "@clerk/types" "4.34.0"
+    "@clerk/types" "4.34.1"
 
 "@clerk/nextjs@^6.3.0":
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/@clerk/nextjs/-/nextjs-6.4.0.tgz#d1fd1d182c75c9c5d7f7ac5a64f69ea241d407b4"
-  integrity sha512-M79Zjhf/QXQh8hFcsFDbzOqXnA3+YwCx/97YjDj+PwPE7uuqzGgPfnqRAwwcher7A2bWi6x+Bb7O/y6VjAkNCQ==
+  version "6.4.1"
+  resolved "https://registry.yarnpkg.com/@clerk/nextjs/-/nextjs-6.4.1.tgz#d5d582c297cb1290d54c5ac7c111b512f223d59f"
+  integrity sha512-dmHCQMlqrdVLIKG0xO5oRsAbwjETRM5eW7wUlhTJEp3XUZYJUggR838Vupj/1sLaCJxcFWNDobgKw/MdEKT5Ng==
   dependencies:
-    "@clerk/backend" "1.17.0"
-    "@clerk/clerk-react" "5.16.0"
-    "@clerk/shared" "2.15.0"
-    "@clerk/types" "4.34.0"
+    "@clerk/backend" "1.17.1"
+    "@clerk/clerk-react" "5.16.1"
+    "@clerk/shared" "2.16.0"
+    "@clerk/types" "4.34.1"
     crypto-js "4.2.0"
     ezheaders "0.1.0"
     server-only "0.0.1"
     tslib "2.4.1"
 
-"@clerk/shared@2.15.0":
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-2.15.0.tgz#6cae6a867c18f04459d5a185e5625fd9d3ead9a4"
-  integrity sha512-aO1l9mYiz9ZVU8hOJKg5fTeyVVm2NLdGlwSROhOgWVzJ/0FcfmQfuMkiMC7ZwRUQb9jqdGj5Kdb4QxUFJNCkyA==
+"@clerk/shared@2.16.0":
+  version "2.16.0"
+  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-2.16.0.tgz#2e801d9acc4c86f49d574eab57df026f32c5a659"
+  integrity sha512-JM5GZcrnvppV+06v5ebsjTI5vGQFGI6TlrLiAHAfcOo/numCDR3EN5MWQW27kD09bsrRtgBNsPiejTpMqXGWjA==
   dependencies:
-    "@clerk/types" "4.34.0"
+    "@clerk/types" "4.34.1"
     dequal "2.0.3"
     glob-to-regexp "0.4.1"
     js-cookie "3.0.5"
     std-env "^3.7.0"
     swr "^2.2.0"
 
-"@clerk/types@4.34.0", "@clerk/types@^4.34.0":
-  version "4.34.0"
-  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.34.0.tgz#4398bbf220fe1ac0b9095c44598cb27cc60d56b1"
-  integrity sha512-4ghDvf80/sFlpx5HnmIl3vW7SOqEaTDwyKAw64H/E2ahgGUMk+qLVpxnBumTpowq+bGjfMVwbneDQOhtmYidoQ==
+"@clerk/types@4.34.1":
+  version "4.34.1"
+  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.34.1.tgz#ca96d1b762c70b81a94792feb7ffe84f449a313e"
+  integrity sha512-FaeHmmoZkIrPrU6AOJ8FUke+LM8ZH072w0Aog6kbQGL3bCBZgUGFy7faTzozxbd+TWTbzVDoTAbDeZCq21UOFg==
   dependencies:
     csstype "3.1.1"
 
@@ -1325,9 +1325,9 @@
     thumbhash "0.1.1"
 
 "@splinetool/runtime@^1.9.44":
-  version "1.9.44"
-  resolved "https://registry.yarnpkg.com/@splinetool/runtime/-/runtime-1.9.44.tgz#db77a0e7b58a7f21d61c5855f9db399ee7786b6a"
-  integrity sha512-ODaRxHiJ3FrEkamldT7kRvNqnOqu6P/5kIilGtUB1P7Vtpw0IBxuk0tymrFHacDbeFEhe/cv93w9O0qHuKr5iA==
+  version "1.9.46"
+  resolved "https://registry.yarnpkg.com/@splinetool/runtime/-/runtime-1.9.46.tgz#32b4b1537d19d5f9927a0d0f9550a0a347d1a678"
+  integrity sha512-v3SGrlwlYK3jgpIuhVAwio3orjeq0dXCPaMsqgJYi1f9WhEA/w+bITSEHXc0gsPJr74QRL6hGFrw7J/KpOwY5A==
   dependencies:
     on-change "^4.0.0"
     semver-compare "^1.0.0"
@@ -1812,9 +1812,9 @@ camelcase-css@^2.0.1:
   integrity sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==
 
 caniuse-lite@^1.0.30001579, caniuse-lite@^1.0.30001669:
-  version "1.0.30001680"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001680.tgz#5380ede637a33b9f9f1fc6045ea99bd142f3da5e"
-  integrity sha512-rPQy70G6AGUMnbwS1z6Xg+RkHYPAi18ihs47GH0jcxIG7wArmPgY3XbS2sRdBbxJljp3thdT8BIqv9ccCypiPA==
+  version "1.0.30001683"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001683.tgz#7f026a2d5d319a9cf8915a1451173052caaadc81"
+  integrity sha512-iqmNnThZ0n70mNwvxpEC2nBJ037ZHZUoBI5Gorh1Mw6IlEAZujEoU1tXA628iZfzm7R9FvFzxbfdgml82a3k8Q==
 
 carousel@^0.0.3:
   version "0.0.3"
@@ -2202,27 +2202,27 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.5.41:
-  version "1.5.63"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.63.tgz#69444d592fbbe628d129866c2355691ea93eda3e"
-  integrity sha512-ddeXKuY9BHo/mw145axlyWjlJ1UBt4WK3AlvkT7W2AbqfRQoacVoRUCF6wL3uIx/8wT9oLKXzI+rFqHHscByaA==
+  version "1.5.64"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.64.tgz#ac8c4c89075d35a1514b620f47dfe48a71ec3697"
+  integrity sha512-IXEuxU+5ClW2IGEYFC2T7szbyVgehupCWQe5GNh+H065CD6U6IFN0s4KeAMFGNmQolRU4IV7zGBWSYMmZ8uuqQ==
 
 embla-carousel-react@^8.4.0:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-8.4.0.tgz#d817d16f290277d3db74e2fa3377c0d3010b9370"
-  integrity sha512-r5UszqLnIIhfXfGzTlfEAYZ310H4gIiLvBsNQ9dnHY6T2ooMsZs+k5vpJAYjkFtUSaQJ1xZxSGwIV6+IoA8QEw==
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/embla-carousel-react/-/embla-carousel-react-8.5.1.tgz#e06ff28cb53698d453ffad89423c23d725e9b010"
+  integrity sha512-z9Y0K84BJvhChXgqn2CFYbfEi6AwEr+FFVVKm/MqbTQ2zIzO1VQri6w67LcfpVF0AjbhwVMywDZqY4alYkjW5w==
   dependencies:
-    embla-carousel "8.4.0"
-    embla-carousel-reactive-utils "8.4.0"
+    embla-carousel "8.5.1"
+    embla-carousel-reactive-utils "8.5.1"
 
-embla-carousel-reactive-utils@8.4.0:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/embla-carousel-reactive-utils/-/embla-carousel-reactive-utils-8.4.0.tgz#8da29a5f6ae97ac1166c49813cd9bc3818642054"
-  integrity sha512-yi/2paSYQqMGgh983Sj8G4+zt4bhABC1pzN4P4Vmc7UhSxqo9I7r15tR7s3/zS0JEl3orRSw7TxX92IZqj5NXA==
+embla-carousel-reactive-utils@8.5.1:
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/embla-carousel-reactive-utils/-/embla-carousel-reactive-utils-8.5.1.tgz#3059ab2f72f04988a96694f700a772a72bb75ffb"
+  integrity sha512-n7VSoGIiiDIc4MfXF3ZRTO59KDp820QDuyBDGlt5/65+lumPHxX2JLz0EZ23hZ4eg4vZGUXwMkYv02fw2JVo/A==
 
-embla-carousel@8.4.0:
-  version "8.4.0"
-  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-8.4.0.tgz#18bb23d2815e12e5c9602f1f56658931eef68d82"
-  integrity sha512-sUzm4DGGsdZCom7LEO38Uu6C7oQoFfPorKDf/f7j2EeRCMhHSOt3CvF+pHCaI6N+x5Y8/tfLueJ0WZlgUREnew==
+embla-carousel@8.5.1:
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-8.5.1.tgz#8d83217e831666f6df573b0d3727ff0ae9208002"
+  integrity sha512-JUb5+FOHobSiWQ2EJNaueCNT/cQU9L6XWBbWmorWPQT9bkbk+fhsuLr8wWrzXKagO3oWszBO7MSx+GfaRk4E6A==
 
 emoji-regex@^8.0.0:
   version "8.0.0"

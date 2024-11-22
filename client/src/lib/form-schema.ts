@@ -1,10 +1,17 @@
+import { zip } from "lodash";
 import { z } from "zod";
 
 export const petSchema = z.object({
   petName: z
     .string()
-    .min(2, { message: "petName must be at least 2 characters." })
-    .max(50, { message: "petName must be no more than 50 characters." }),
+    // .min(2, { message: "petName must be at least 2 characters." })
+    // .max(50, { message: "petName must be no more than 50 characters." })
+    .refine((value) => value != "" || value.length >= 2, {
+      message: "petName must be at least 2 characters.",
+    })
+    .refine((value) => value === "" || value.length <= 50, {
+      message: "petName must be no more than 50 characters.",
+    }),
 
   petCategoryId: z
     .string()
@@ -13,9 +20,9 @@ export const petSchema = z.object({
   age: z
     .string()
     .min(0, { message: "Age must be a positive number." })
-    .max(20, { message: "Age must be no more than 20." }),
+    .max(100, { message: "Age must be no more than 20." }),
 
-  size: z.enum(["Small", "Medium", "Large"], {
+  size: z.enum(["Жижиг", "Дунд", "Том"], {
     message: "Size must be one of Small, Medium, or Large.",
   }),
 
@@ -34,10 +41,10 @@ export const petSchema = z.object({
   }),
 
   status: z.enum(
-    ["Үрчлүүлэх боломжтой", "Одоогоор хүлээгдэж байгаа", "Үрчилэгдсэн"],
+    ["Үрчлүүлэх боломжтой", "Одоогоор хүлээгдэж байгаа", "Үрчлэгдсэн"],
     { message: "Status must be one of the predefined values." }
   ),
-  sex: z.enum(["Male", "Female"], {
+  sex: z.enum(["Эр", "Эм"], {
     message: "Sex must be one of the predefined values.",
   }),
   description: z
