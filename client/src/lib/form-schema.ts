@@ -1,10 +1,17 @@
+import { zip } from "lodash";
 import { z } from "zod";
 
 export const petSchema = z.object({
   petName: z
     .string()
-    .min(2, { message: "petName must be at least 2 characters." })
-    .max(50, { message: "petName must be no more than 50 characters." }),
+    // .min(2, { message: "petName must be at least 2 characters." })
+    // .max(50, { message: "petName must be no more than 50 characters." })
+    .refine((value) => value != "" || value.length >= 2, {
+      message: "petName must be at least 2 characters.",
+    })
+    .refine((value) => value === "" || value.length <= 50, {
+      message: "petName must be no more than 50 characters.",
+    }),
 
   petCategoryId: z
     .string()
@@ -34,7 +41,7 @@ export const petSchema = z.object({
   }),
 
   status: z.enum(
-    ["Үрчлүүлэх боломжтой", "Одоогоор хүлээгдэж байгаа", "Үрчилэгдсэн"],
+    ["Үрчлүүлэх боломжтой", "Одоогоор хүлээгдэж байгаа", "Үрчлэгдсэн"],
     { message: "Status must be one of the predefined values." }
   ),
   sex: z.enum(["Эр", "Эм"], {

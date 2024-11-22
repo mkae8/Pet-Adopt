@@ -1,11 +1,9 @@
 "use client";
-import Application from "../../components/appComps/ApplicationForm";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -17,12 +15,13 @@ import {
 } from "@/components/ui/carousel";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
+
 import { Loader } from "@/components/Loader";
 
 interface Question {
@@ -130,12 +129,12 @@ const Requests = () => {
   };
 
   const getStatusColor = (
-    status: "Үрчлүүлэх боломжтой" | "  Одоогоор хүлээгдэж байгаа" | "Үрчлэгдсэн"
+    status: "Үрчлүүлэх боломжтой" | "Одоогоор хүлээгдэж байгаа" | "Үрчлэгдсэн"
   ) => {
     switch (status) {
       case "Үрчлүүлэх боломжтой":
         return "bg-yellow-500";
-      case "  Одоогоор хүлээгдэж байгаа":
+      case "Одоогоор хүлээгдэж байгаа":
         return "bg-green-500";
       case "Үрчлэгдсэн":
         return "bg-аgrey-500";
