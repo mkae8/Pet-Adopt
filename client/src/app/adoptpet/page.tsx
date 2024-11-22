@@ -429,7 +429,7 @@ export default function CardsStatusPage() {
                   </Card>
                 );
               })
-            : "odoogoor hooson bna"}
+            : "Хоосон байна"}
         </div>
       )}
       <Dialog open={isOpen} onOpenChange={modalClickHandler}>

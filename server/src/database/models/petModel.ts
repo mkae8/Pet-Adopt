@@ -12,7 +12,7 @@ enum Size {
 enum Status {
   Available = "Үрчлүүлэх боломжтой",
   Pending = "Одоогоор хүлээгдэж байгаа",
-  Adopted = "Үрчилэгдсэн",
+  Adopted = "Үрчлэгдсэн",
 }
 enum IsVaccined {
   Yes = "Тийм",

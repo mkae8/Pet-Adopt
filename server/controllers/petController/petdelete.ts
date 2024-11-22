@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PetModel } from "../../src/database/models/petModel";
-
+import { ApplicationModel } from "../../src/database/models/answerModel";
 export const petdelete = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.body;
 
@@ -11,7 +11,6 @@ export const petdelete = async (req: Request, res: Response): Promise<void> => {
 
   try {
     const pet = await PetModel.findById(id);
-
     if (!pet) {
       res.status(404).send({ message: "Pet not found" });
       return;
@@ -22,7 +21,20 @@ export const petdelete = async (req: Request, res: Response): Promise<void> => {
       res.status(404).send({ message: "Pet not found for deletion" });
       return;
     }
-    res.status(200).send({ message: "Pet deleted successfully" });
+    try {
+      const application = await ApplicationModel.find({ petId: id });
+      if (application) {
+        const deletionResult = await ApplicationModel.deleteMany({ petId: id });
+        res.status(200).send({ message: "Pet deleted successfully" });
+        return;
+      }
+      res.status(200).send({ message: "Pet deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting pet:", error);
+      res
+        .status(500)
+        .send({ message: "An error occurred while deleting the pet" });
+    }
   } catch (error) {
     console.error("Error deleting pet:", error);
     res

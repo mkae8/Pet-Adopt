@@ -112,7 +112,6 @@ const Requests = () => {
           `http://localhost:8000/applicationForm/${user.user?.id}`
         );
         console.log(data);
-
         setRequests(data);
       } catch (error) {
         console.log(error);
@@ -164,52 +163,59 @@ const Requests = () => {
                 className="w-full max-w-5xl mx-auto"
               >
                 <CarouselContent className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3">
-                  {requests.map((request, index) => (
-                    <CarouselItem
-                      key={index}
-                      className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3"
-                    >
-                      <Card
-                        className="w-full cursor-pointer hover:shadow-lg"
-                        onClick={() => openModal(request)}
-                      >
-                        <CardHeader>
-                          <CardTitle className="flex justify-between items-center">
-                            <div className="truncate flex items-center text-sm gap-2">
-                              <Avatar>
-                                <AvatarImage
-                                  className="object-cover"
-                                  src={request.petId.image[0]}
-                                  alt={request.petId.petName}
-                                />
-                              </Avatar>
-                              {request.petId.petName}
-                            </div>
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <Badge
-                            className={`${getStatusColor(
-                              request.petId.status
-                            )} text-white text-xs h-14 text-center hover:${getStatusColor(
-                              request.petId.status
-                            )}`}
+                  {requests.length !== 0
+                    ? requests.map((request, index) => (
+                        <CarouselItem
+                          key={index}
+                          className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3"
+                        >
+                          <Card
+                            className="w-full cursor-pointer hover:shadow-lg"
+                            onClick={() => openModal(request)}
                           >
-                            {request.petId.status}
-                          </Badge>
-                          <p className="text-sm text-gray-500 h-12 text-wrap truncate">
-                            {request.userId.username}-ээс хүсэлт ирлээ.
-                          </p>
-                          <Button className="mt-4 w-full">
-                            Хүсэлтийг харах
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </CarouselItem>
-                  ))}
+                            <CardHeader>
+                              <CardTitle className="flex justify-between items-center">
+                                <div className="truncate flex items-center text-sm gap-2">
+                                  <Avatar>
+                                    <AvatarImage
+                                      className="object-cover"
+                                      src={request.petId.image[0]}
+                                      alt={request.petId.petName}
+                                    />
+                                  </Avatar>
+                                  {request.petId.petName}
+                                </div>
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                              <Badge
+                                className={`${getStatusColor(
+                                  request.petId.status
+                                )} text-white text-xs h-14 text-center hover:${getStatusColor(
+                                  request.petId.status
+                                )}`}
+                              >
+                                {request.petId.status}
+                              </Badge>
+                              <p className="text-sm text-gray-500 h-12 text-wrap truncate">
+                                {request.userId.username}-ээс хүсэлт ирлээ.
+                              </p>
+                              <Button className="mt-4 w-full">
+                                Хүсэлтийг харах
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        </CarouselItem>
+                      ))
+                    : "Хүсэлт алга"}
                 </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
+                {requests.length !== 0 ? (
+                  <>
+                    <CarouselPrevious /> <CarouselNext />
+                  </>
+                ) : (
+                  ""
+                )}
               </Carousel>
             </div>
           )}
