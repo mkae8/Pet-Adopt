@@ -6,12 +6,12 @@ import Link from "next/link";
 export default function Page() {
   return (
     <div className="flex h-screen w-screen p-0 m-0 ">
-      <div className="hidden w-1/2 bg-primary bg-center lg:flex flex-col items-center gap-28 ">
+      <div className="hidden w-1/2 bg-primary bg-center lg:flex flex-col h-screen justify-between items-center  ">
         <div className="flex justify-start items-center gap-4 w-4/5 h-[100px]">
           <Link href={"/"}>
             <img className="w-[60px] h-[60px]  " src="/logo.png" alt="" />
           </Link>
-          <Link href={"/"}>{/* <img src="/pet-adopt.png" alt="" /> */}</Link>
+          <Link href={"/"}></Link>
         </div>
         <h2 className=" text-center text-8xl text-wrap font-extrabold text-[#FFDDD2]">
           Бүртгүүлэх
@@ -21,7 +21,7 @@ export default function Page() {
           alt="background image"
           width={550}
           height={500}
-          className="h-[500px] w-[550px] object-cover"
+          className="h-[400px] w-[550px] mb-40 object-cover"
         />
       </div>
 
