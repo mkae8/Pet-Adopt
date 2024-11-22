@@ -1,20 +1,27 @@
-
+"use client";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useUser } from "@clerk/nextjs";
-
 import { Cards } from "./Cards";
 import { Button } from "@/components/ui/button";
 import { Loading } from "../Loading";
-
-type PetCategory = {
+type Pet = {
   _id: string;
-  categoryName: string;
-  categoryLabel: string;
+  weight: string;
+  petName: string;
+  age: string;
+  sex: string;
+  size: string;
+  status: string;
+  description: string;
+  image: string[];
+  petCategoryId: PetCategory;
+  location: string;
+  isVaccined: string;
 };
-
+type PetCategory = { _id: string; categoryName: string; categoryLabel: string };
 const Petcard = () => {
   const { push } = useRouter();
   const [pets, setPets] = useState<Pet[]>([]);
@@ -22,7 +29,6 @@ const Petcard = () => {
   const [animalFilter, setAnimalFilter] = useState<string>("бүгд");
   const [loading, setLoading] = useState(true);
   const { user } = useUser();
-
   const getCategories = async () => {
     try {
       const res = await axios.get(`${process.env.BACKEND_URL}/get/categories`);
@@ -34,7 +40,6 @@ const Petcard = () => {
       console.log("Error fetching categories:", error);
     }
   };
-
   const fetchPets = async () => {
     try {
       setLoading(true);
@@ -48,34 +53,30 @@ const Petcard = () => {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     if (user) {
       getCategories();
     }
     fetchPets();
   }, [user]);
-
   const handleFilterChange = (categoryName: string) => {
     setAnimalFilter(categoryName);
   };
-
   const filteredPets =
     animalFilter === "бүгд"
       ? pets
       : pets.filter((pet) => pet.petCategoryId.categoryName === animalFilter);
-
   return (
     <div className="bg-orange-50 min-h-screen p-4 sm:p-8">
       <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl sm:text-4xl font-bold text-orange-400 mb-4 text-center">
-          Meet the animals
+          Үрчлүүлэх амьтадтай танилцаарай
         </h1>
-        <h3 className="font-bold text-orange-400 text-center text-sm sm:text-base">
+        <h3 className="font-semibold text-orange-300 text-center text-[30px] sm:text-base">
           Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал авчрахад
           бэлэн байна.
         </h3>
-        <h3 className="font-bold text-orange-400 mb-8 text-center text-sm sm:text-base">
+        <h3 className="font-semibold text-orange-300 mb-8 text-center text-sm sm:text-base">
           Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!
         </h3>
         <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
@@ -109,7 +110,7 @@ const Petcard = () => {
               filteredPets.map((pet) => <Cards key={pet._id} pet={pet} />)
             ) : (
               <p className="col-span-full text-center text-gray-500">
-                No pets found in this category.
+                Энэ ангилалд тэжээвэр амьтан олдсонгүй.
               </p>
             )}
           </div>
@@ -118,6 +119,4 @@ const Petcard = () => {
     </div>
   );
 };
-
 export default Petcard;
-
