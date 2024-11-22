@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
-import axios from "axios";
 import {
   ChevronLeft,
   ChevronRight,
@@ -37,38 +36,19 @@ type Pet = {
   description?: string;
 };
 
-export const Stripe = () => {
+interface StripeProps {
+  fetchData: () => void;
+  loading: boolean;
+  pets: Pet[];
+}
+
+export const Stripe = ({ fetchData, loading, pets }: StripeProps) => {
   const { user } = useUser();
-  const [pets, setPets] = useState<Pet[]>([]);
-  const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const fetchPets = async () => {
-      if (!user) return;
-
-      try {
-        setLoading(true);
-        const response = await axios.get<Pet[]>(
-          `${process.env.BACKEND_URL}/pets/user/${user.id}`
-        );
-        setPets(response.data);
-      } catch (err) {
-        console.log(err);
-        toast({
-          title: "Алдаа",
-          description:
-            "Амьтдын мэдээллийг авахад алдаа гарлаа. Дахин оролдоно уу.",
-          variant: "destructive",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPets();
-  }, [user, toast]);
+    fetchData();
+  }, [user]);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
@@ -98,8 +78,10 @@ export const Stripe = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm sm:text-base text-gray-600">
-            Нийт {pets.length} амьтан бүртгэгдсэн байна.
+          <p className="text-sm sm:text-base text-gray-600 flex gap-2">
+            Нийт
+            <p className="text-orange-500 font-semibold">{pets.length}</p>{" "}
+            амьтан бүртгэгдсэн байна.
           </p>
         </CardContent>
       </Card>

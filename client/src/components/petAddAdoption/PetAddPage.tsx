@@ -3,9 +3,31 @@
 import { useState, useEffect } from "react";
 import PetForm from "@/components/petAddAdoption/PetForm";
 import { Stripe } from "@/components/mkae/Stripe";
+import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
+import { useUser } from "@clerk/nextjs";
+
+type Pet = {
+  _id: string;
+  image?: string;
+  petName?: string;
+  petCategoryId?: string;
+  age?: string;
+  sex?: string;
+  size?: string;
+  weight?: string;
+  status?: string;
+  vaccinated?: string;
+  location?: string;
+  description?: string;
+};
 
 export default function PetAddPage() {
+  const { user } = useUser();
   const [isMobile, setIsMobile] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [pets, setPets] = useState<Pet[]>([]);
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,6 +42,28 @@ export default function PetAddPage() {
     };
   }, []);
 
+  const fetchPets = async () => {
+    if (!user) return;
+
+    try {
+      setLoading(true);
+      const response = await axios.get<Pet[]>(
+        `${process.env.BACKEND_URL}/pets/user/${user.id}`
+      );
+      setPets(response.data);
+    } catch (err) {
+      console.log(err);
+      toast({
+        title: "Алдаа",
+        description:
+          "Амьтдын мэдээллийг авахад алдаа гарлаа. Дахин оролдоно уу.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="relative flex flex-col items-center justify-center min-h-screen w-full bg-orange-50 overflow-hidden">
       <div
@@ -33,12 +77,12 @@ export default function PetAddPage() {
           <div className="flex flex-col lg:flex-row gap-8">
             <div className="w-full lg:w-2/3">
               <div className=" rounded-lg  p-6 mb-8 lg:mb-0  border-orange-300">
-                <PetForm />
+                <PetForm fetchData={fetchPets} />
               </div>
             </div>
             <div className="w-full lg:w-1/3">
               <div className=" rounded-lg  p-6  border-orange-300">
-                <Stripe />
+                <Stripe fetchData={fetchPets} loading={loading} pets={pets} />
               </div>
             </div>
           </div>

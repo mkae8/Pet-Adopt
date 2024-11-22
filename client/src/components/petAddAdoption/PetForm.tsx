@@ -43,8 +43,11 @@ type Category = {
   categoryName: string;
   categoryLabel: string;
 };
+interface PetFormProps {
+  fetchData: () => void;
+}
 
-const PetForm = () => {
+const PetForm = ({ fetchData }: PetFormProps) => {
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
@@ -136,6 +139,7 @@ const PetForm = () => {
       console.error("Error:", error);
       toast.error("Алдаа гарлаа.");
     } finally {
+      fetchData();
       setLoading(false);
     }
   };
@@ -245,8 +249,8 @@ const PetForm = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="Male">Эр</SelectItem>
-                            <SelectItem value="Female">Эм</SelectItem>
+                            <SelectItem value="Эр">Эр</SelectItem>
+                            <SelectItem value="Эм">Эм</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
@@ -269,9 +273,9 @@ const PetForm = () => {
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            <SelectItem value="Small">Жижиг</SelectItem>
-                            <SelectItem value="Medium">Дунд</SelectItem>
-                            <SelectItem value="Large">Том</SelectItem>
+                            <SelectItem value="Жижиг">Жижиг</SelectItem>
+                            <SelectItem value="Дунд">Дунд</SelectItem>
+                            <SelectItem value="Том">Том</SelectItem>
                           </SelectContent>
                         </Select>
                         <FormMessage />
