@@ -39,7 +39,11 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import Testimonials from "./Testimonials";
-
+import { LuDog } from "react-icons/lu";
+import { FaBone } from "react-icons/fa";
+import { MdEmergencyRecording } from "react-icons/md";
+import { HiDocumentReport } from "react-icons/hi";
+import { FaStethoscope } from "react-icons/fa";
 export default function HomePage() {
   const { toast } = useToast();
   const data = useUser();
@@ -238,35 +242,47 @@ export default function HomePage() {
           </div>
         </section>
         <section className="w-full">
-          <img src="./topfooter.png" alt="" className="w-full bg-[#f5f3eb]" />
+          <img
+            src="./topfooter.png"
+            alt="Top Footer"
+            className="w-full bg-[#f5f3eb]"
+          />
           <div className="relative">
             <img
               className="w-screen h-[700px] object-cover"
               src="./footerbackground.png"
-              alt=""
+              alt="Footer Background"
             />
 
             {/* Main content container */}
-            <div className="container absolute top-20 left-1/2 transform -translate-x-1/2">
-              <div className="flex flex-col items-center justify-center text-center gap-10 w-full max-w-[690px] mx-auto">
-                <FaPaw className="h-[40px] w-[40px] text-orange-500" />
-                <p className="text-3xl font-bold tracking-tighter text-orange-500">
-                  Амьтан тэжээх сонирхолтой хүмүүст
-                </p>
-              </div>
-            </div>
-
-            {/* Image on the left side */}
-            <div className="container absolute top-40 left-20">
+            <div className="container absolute top-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center gap-10 w-full max-w-[690px] mx-auto">
+              <FaPaw className="h-[40px] w-[40px] text-orange-500" />
+              <p className="text-3xl font-bold tracking-tighter text-orange-500">
+                Амьтан тэжээх сонирхолтой хүмүүст
+              </p>
               <img
-                className="w-full max-w-[300px] object-contain"
-                src="./sdasda.jpeg"
-                alt=""
+                className=" w-[100px] md:w-[400px] md:object-contain"
+                src="./aaaa.png"
+                alt="Interesting Animal Image"
               />
+              <LuDog />
+              <FaBone />
+              <FaPaw />
+              <FaStethoscope />
+              <MdEmergencyRecording />
+              <HiDocumentReport />
+            </div>
+            {/* Image on the right side */}
+            <div className="container absolute top-56  transform translate-x-1/2 flex flex-col items-center justify-center text-center gap-10 w-full max-w-[690px] mx-auto">
+              <div className="flex w-full  justify-center items-center"></div>
             </div>
           </div>
 
-          <img src="./bottomshape.png" alt="" className="w-full bg-[#f5f3eb]" />
+          <img
+            src="./bottomshape.png"
+            alt="Bottom Shape"
+            className="w-full bg-[#f5f3eb]"
+          />
         </section>
 
         <section className="w-full h-[700px] mx-auto flex flex-col gap-10">
