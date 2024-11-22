@@ -20,8 +20,9 @@ type Pet = {
 };
 
 type PetCategory = {
-  categoryNames: string;
-  imageUrl: string;
+  _id: string;
+  categoryName: string;
+  categoryLabel: string;
 };
 
 export const Cards = ({ pet }: { pet: Pet }) => {
