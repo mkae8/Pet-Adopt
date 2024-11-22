@@ -7,7 +7,7 @@ import { z } from "zod";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
-import { PawPrintIcon } from "lucide-react";
+import { Loader2, PawPrintIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -108,7 +108,6 @@ const PetForm = () => {
   const handleSubmit = async (data: z.infer<typeof petSchema>) => {
     setLoading(true);
     const imgData = await uploadImage();
-    console.log(data);
 
     try {
       const response = await fetch(`${process.env.BACKEND_URL}/create/pet`, {
@@ -131,8 +130,8 @@ const PetForm = () => {
         setLoading(false);
         return;
       }
-      toast.success("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
       form.reset();
+      toast.success("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
     } catch (error) {
       console.error("Error:", error);
       toast.error("Алдаа гарлаа.");
@@ -140,259 +139,265 @@ const PetForm = () => {
       setLoading(false);
     }
   };
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
-    <div className="container mx-auto py-10 ">
-      <Card className="w-full max-w-4xl mx-auto">
-        <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-primary flex items-center justify-center">
-            <PawPrintIcon className="w-8 h-8 mr-2" />
-            Амьтны мэдээлэл нэмэх
-          </CardTitle>
-          <CardDescription>
-            Амьтны дэлгэрэнгүй мэдээллийг оруулна уу
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(handleSubmit)}
-              className="space-y-6"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <FormField
-                  control={form.control}
-                  name="petCategoryId"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Амьтны төрөл</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
+    <>
+      {loading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl flex items-center space-x-4">
+            <Loading />
+          </div>
+        </div>
+      )}
+      <div className="container mx-auto py-10 ">
+        <Card className="w-full max-w-4xl mx-auto">
+          <CardHeader className="text-center">
+            <CardTitle className="text-3xl font-bold text-primary flex items-center justify-center">
+              <PawPrintIcon className="w-8 h-8 mr-2" />
+              Амьтны мэдээлэл нэмэх
+            </CardTitle>
+            <CardDescription>
+              Амьтны дэлгэрэнгүй мэдээллийг оруулна уу
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(handleSubmit)}
+                className="space-y-6"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="petCategoryId"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Амьтны төрөл</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Амьтны төрөл" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            {categories.map((category) => (
+                              <SelectItem
+                                key={category._id}
+                                value={category._id}
+                              >
+                                {category.categoryLabel}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="petName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Амьтны нэр</FormLabel>
                         <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Амьтны төрөл" />
-                          </SelectTrigger>
+                          <Input
+                            placeholder="Амьтны нэрийг оруулна уу"
+                            {...field}
+                          />
                         </FormControl>
-                        <SelectContent>
-                          {categories.map((category) => (
-                            <SelectItem key={category._id} value={category._id}>
-                              {category.categoryLabel}
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="age"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Нас</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Амьтны насыг жилээр оруулна уу"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="sex"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Хүйс</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Хүйс сонгоно уу" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Male">Эр</SelectItem>
+                            <SelectItem value="Female">Эм</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="size"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Хэмжээ</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Хэмжээг сонгоно уу" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Small">Жижиг</SelectItem>
+                            <SelectItem value="Medium">Дунд</SelectItem>
+                            <SelectItem value="Large">Том</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="weight"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Жин</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Жинг кг-аар оруулна уу"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="status"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Статус</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Статус сонгоно уу" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Үрчлүүлэх боломжтой">
+                              Үрчлүүлэх боломжтой
                             </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="petName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Амьтны нэр</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Амьтны нэрийг оруулна уу"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="age"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Нас</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Амьтны насыг жилээр оруулна уу"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="sex"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Хүйс</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Хүйс сонгоно уу" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Male">Эр</SelectItem>
-                          <SelectItem value="Female">Эм</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="size"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Хэмжээ</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Хэмжээг сонгоно уу" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Small">Жижиг</SelectItem>
-                          <SelectItem value="Medium">Дунд</SelectItem>
-                          <SelectItem value="Large">Том</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="weight"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Жин</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Жинг кг-аар оруулна уу"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="status"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Статус</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Статус сонгоно уу" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Үрчлүүлэх боломжтой">
-                            Үрчлүүлэх боломжтой
-                          </SelectItem>
-                          <SelectItem value="Одоогоор хүлээгдэж байгаа">
-                            Одоогоор хүлээгдэж байгаа
-                          </SelectItem>
-                          {/* <SelectItem value="Үрчилэгдсэн">
-                            Үрчилэгдсэн
-                          </SelectItem> */}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                            <SelectItem value="Одоогоор хүлээгдэж байгаа">
+                              Одоогоор хүлээгдэж байгаа
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
+                  <FormField
+                    control={form.control}
+                    name="isVaccined"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Вакцинд хамрагдсан эсэх</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <SelectTrigger>
+                              <SelectValue placeholder="Сонгоно уу" />
+                            </SelectTrigger>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="Тийм">Тийм</SelectItem>
+                            <SelectItem value="Үгүй">Үгүй</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
                 <FormField
                   control={form.control}
-                  name="isVaccined"
+                  name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Вакцинд хамрагдсан эсэх</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Сонгоно уу" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Тийм">Тийм</SelectItem>
-                          <SelectItem value="Үгүй">Үгүй</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <FormLabel>Тайлбар</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Амьтны тодорхойлно уу (Жишээ нь: Үүлдэр, өнгө, онцгой шинж тэмдэг гэх мэт...)"
+                          className="h-32"
+                          {...field}
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-              </div>
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Тайлбар</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Амьтны тодорхойлно уу (Жишээ нь: Үүлдэр, өнгө, онцгой шинж тэмдэг гэх мэт...)"
-                        className="h-32"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="location"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Байршил</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Байршлыг оруулна уу" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <div>
-                <Label htmlFor="picture" className="text-primary">
-                  Зураг
-                </Label>
-                <Input
-                  id="picture"
-                  type="file"
-                  onChange={handleFileChange}
-                  className="mt-1"
+                <FormField
+                  control={form.control}
+                  name="location"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Байршил</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Байршлыг оруулна уу" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
-              </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                Мэдээлэл илгээх
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-    </div>
+                <div>
+                  <Label htmlFor="picture" className="text-primary">
+                    Зураг
+                  </Label>
+                  <Input
+                    id="picture"
+                    type="file"
+                    onChange={handleFileChange}
+                    className="mt-1"
+                  />
+                </div>
+                <Button type="submit" className="w-full" disabled={loading}>
+                  Мэдээлэл илгээх
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 };
 

@@ -1,22 +1,73 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import PetForm from "@/components/petAddAdoption/PetForm";
-import { Stripe } from "../mkae/Stripe";
+import { Stripe } from "@/components/mkae/Stripe";
 
-const PetAddPage = () => {
+export default function PetAddPage() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div className="relative flex flex-col items-center justify-center w-screen min-h-screen  ">
+    <div className="relative flex flex-col items-center justify-center min-h-screen w-full bg-orange-50 overflow-hidden">
       <div
-        className="absolute inset-0  w-screen h-screen bg-cover object-contain"
+        className="absolute inset-0 bg-cover bg-center opacity-50"
         style={{ backgroundImage: `url('/create.png')` }}
         aria-hidden="true"
       />
-      <div className="relative inset-0 z-10 w-screen flex-col  ">
-        <PetForm />
-        <Stripe />
+      <div className="absolute inset-0 bg-gradient-to-r from-orange-100 to-orange-200 opacity-70 " />
+      <div className="relative z-10 w-full h-full mt-8 overflow-auto py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-8">
+            <div className="w-full lg:w-2/3">
+              <div className=" rounded-lg  p-6 mb-8 lg:mb-0  border-orange-300">
+                <PetForm />
+              </div>
+            </div>
+            <div className="w-full lg:w-1/3">
+              <div className=" rounded-lg  p-6  border-orange-300">
+                <Stripe />
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      {isMobile && (
+        <div className="fixed bottom-4 right-4 z-20">
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            className="bg-orange-500 hover:bg-orange-600 text-white rounded-full p-3 shadow-lg transition-colors duration-200"
+            aria-label="Scroll to top"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 10l7-7m0 0l7 7m-7-7v18"
+              />
+            </svg>
+          </button>
+        </div>
+      )}
     </div>
   );
-};
-
-export default PetAddPage;
+}
