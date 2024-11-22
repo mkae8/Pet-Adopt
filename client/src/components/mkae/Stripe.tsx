@@ -78,11 +78,11 @@ export const Stripe = ({ fetchData, loading, pets }: StripeProps) => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm sm:text-base text-gray-600 flex gap-2">
+          <div className="text-sm sm:text-base text-gray-600 flex gap-2">
             Нийт
             <p className="text-orange-500 font-semibold">{pets.length}</p>{" "}
             амьтан бүртгэгдсэн байна.
-          </p>
+          </div>
         </CardContent>
       </Card>
 
@@ -131,9 +131,9 @@ export const Stripe = ({ fetchData, loading, pets }: StripeProps) => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <p className="text-sm sm:text-base text-gray-700 line-clamp-3">
+                  <div className="text-sm sm:text-base text-gray-700 line-clamp-3">
                     {pet.description}
-                  </p>
+                  </div>
                 </CardContent>
                 <CardFooter className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                   <p className="text-xs sm:text-sm text-gray-500">
