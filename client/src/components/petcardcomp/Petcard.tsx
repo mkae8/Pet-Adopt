@@ -26,8 +26,6 @@ type PetCategory = { _id: string; categoryName: string; categoryLabel: string };
 const Petcard = () => {
   const [pets, setPets] = useState<Pet[]>([]);
   const [categories, setCategories] = useState<PetCategory[]>([]);
-  const defualtpathname = "бүгд";
-
   const [loading, setLoading] = useState(true);
   const { user } = useUser();
   const getCategories = async () => {

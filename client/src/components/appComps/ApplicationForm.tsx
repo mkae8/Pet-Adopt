@@ -99,13 +99,9 @@ export default function ApplicationForm() {
   };
 
   const submit = async () => {
-    setLoading(true);
+    setLoading(false);
     for (const question of questions) {
       const inputValue = inputValues[question.id];
-
-      setInputValues((prev) => ({
-        ...prev,
-      }));
 
       if (
         question.id !== "question8" &&
@@ -114,6 +110,10 @@ export default function ApplicationForm() {
         setErrorMessage("Бүх асуултад хариулт бичнэ үү!");
         return;
       }
+
+      setInputValues((prev) => ({
+        ...prev,
+      }));
     }
     setErrorMessage("");
 
@@ -128,7 +128,6 @@ export default function ApplicationForm() {
       });
       push("/");
     } catch (error) {
-      console.log(error);
       toast({
         title: "aldaa zaalaa",
         description: "dahin oroldnu ",
@@ -204,7 +203,7 @@ export default function ApplicationForm() {
           </div>
           {errorMessage && (
             <div className="text-red-500 mt-2">
-              <p>{errorMessage}</p>
+              <p className="text-xl font-semibold">{errorMessage}</p>
             </div>
           )}
           <div className=" flex justify-between w-full">
