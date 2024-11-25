@@ -22,7 +22,29 @@ import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { toast, useToast } from "@/hooks/use-toast";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+
 import { Loader } from "@/components/Loader";
+
+const FormSchema = z.object({
+  phoneNumber: z.string().min(1, { message: "Phone number is required." }),
+  description: z
+    .string()
+    .max(100, { message: "Description must be no more than 100 characters." }),
+});
 
 interface Question {
   id: number;
@@ -70,12 +92,24 @@ interface Request {
 }
 
 const Requests = () => {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      phoneNumber: "",
+      description: "",
+    },
+  });
+  const { toast } = useToast();
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
+  const [requests, setRequests] = useState<Request[]>([]);
+  const [loading, setLoading] = useState(true);
+  const user = useUser();
+
+  console.log(user);
 
   const openModal = (requests: Request) => {
     setSelectedRequest(requests);
   };
-
   const questions: Question[] = [
     { id: 1, text: "Танд яагаад амьтан үрчлэн авах сонирхол төрсөн бэ?" },
     { id: 2, text: "Таны амьдрах орчин ямар вэ?" },
@@ -99,17 +133,59 @@ const Requests = () => {
     },
   ];
 
-  const [requests, setRequests] = useState<Request[]>([]);
+  const sendEmail = async (data: z.infer<typeof FormSchema>) => {
+    if (!selectedRequest) {
+      toast({
+        title: "Error",
+        description: "No request selected.",
+        variant: "destructive",
+      });
+      return;
+    }
 
-  const [loading, setLoading] = useState(true);
+    setLoading(true);
+    try {
+      const response: any = await axios.post(
+        `${process.env.BACKEND_URL}/sendMailer`,
+        {
+          email: selectedRequest.userId.email,
+          phone: data.phoneNumber,
+          petName: selectedRequest.petId.petName,
+          senderEmail: user.user?.primaryEmailAddress?.emailAddress,
+        }
+      );
+      console.log(response);
 
-  const user = useUser();
+      if (response.status === 201) {
+        toast({
+          title: "Email sent successfully",
+          description: "The applicant has been notified.",
+        });
+        closeModal();
+      } else {
+        throw new Error("Failed to send email");
+      }
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Success",
+        description: "boloo shas",
+        // variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    sendEmail(data);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data }: any = await axios.get(
-          `http://localhost:8000/applicationForm/${user.user?.id}`
+          `${process.env.BACKEND_URL}/applicationForm/${user.user?.id}`
         );
         console.log(data);
         setRequests(data);
@@ -250,12 +326,55 @@ const Requests = () => {
                   </div>
                 </ScrollArea>
               </div>
-
-              <div className="mt-4 flex justify-end">
-                <Button onClick={closeModal} className="w-full sm:w-auto">
-                  Close
-                </Button>
-              </div>
+              <div>Хэрэв та зөвшөөрч байгаа бол доорхыг бөглөнө үү!</div>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="w-3/3 space-y-6"
+                >
+                  <FormField
+                    control={form.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Утасны дугаар</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Утасны дугаар" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Нэмэлт мэдээлэл</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Нэмэлт мэдээлэл оруулна уу"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <div className="mt-4 flex justify-between items-center">
+                    <Button onClick={closeModal} className="w-full sm:w-auto">
+                      Хаах
+                    </Button>
+                    <Button
+                      type="submit"
+                      className="bg-green-400"
+                      disabled={loading}
+                    >
+                      {loading ? "Илгээж байна..." : "Илгээх"}
+                    </Button>
+                  </div>
+                </form>
+              </Form>
             </DialogContent>
           </Dialog>
         </div>
