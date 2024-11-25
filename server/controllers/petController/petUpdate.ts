@@ -53,7 +53,9 @@ export const petUpdate = async (req: any, res: any) => {
         isVaccined,
       }
     );
-    res.status(201).send({ message: "Pet updated successfully", updatePet });
+    res
+      .status(201)
+      .send({ message: "Амьтны мэдээлэл шинэчлэгдлээ", updatePet });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Failed to create pet", error });
