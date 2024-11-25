@@ -8,22 +8,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDataBase = void 0;
-const mongoose_1 = require("mongoose");
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const URL = process.env.DB_URL || "";
-const connectDataBase = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield (0, mongoose_1.connect)(URL);
-        console.log("Successfully connected to the database.");
-    }
-    catch (err) {
-        console.log("Database holboltodd aldaa garlaa");
-    }
-});
-exports.connectDataBase = connectDataBase;
+const express_1 = require("express");
+const cloudFlare_1 = require("../../controllers/cloudflare/cloudFlare");
+const imegaUpload = (0, express_1.Router)();
+imegaUpload.get("/image", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, cloudFlare_1.getPresignedUrl)();
+    res.send(result);
+}));
+exports.default = imegaUpload;

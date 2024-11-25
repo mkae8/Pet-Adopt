@@ -6,6 +6,8 @@ env.config();
 export const authMiddleware = async (req: any, res: any, next: any) => {
   const { id } = req.body;
 
+  console.log(req.body);
+
   if (!id) {
     return res.status(400).send({ message: "Id not provided" });
   }

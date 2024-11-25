@@ -1,9 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const registerController_1 = require("../../controllers/userConrtoller/registerController");
-const updateUserData_1 = require("../../controllers/userConrtoller/updateUserData");
+const registerController_1 = require("../../controllers/userController/registerController");
+const updateUserData_1 = require("../../controllers/userController/updateUserData");
+const auth_1 = require("../../middleware/auth");
+const usersPet_1 = require("../../controllers/userController/usersPet");
 const userRouter = (0, express_1.Router)();
 userRouter.route("/user/register").post(registerController_1.registerController);
-userRouter.route("/user/update").post(updateUserData_1.updateUserData);
+userRouter.route("/user/update").post(auth_1.authMiddleware, updateUserData_1.updateUserData);
+userRouter.route("/pets/user/:id").get(usersPet_1.usersPet);
 exports.default = userRouter;
