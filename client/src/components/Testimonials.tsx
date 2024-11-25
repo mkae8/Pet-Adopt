@@ -4,7 +4,7 @@ import React, { useRef, useState } from "react";
 import { FaPaw } from "react-icons/fa";
 import { IoIosAttach } from "react-icons/io";
 
-const Testimonials = ({}) => {
+const Testimonials = () => {
   type Testimonial = {
     name: string;
     role: string;
@@ -44,7 +44,7 @@ const Testimonials = ({}) => {
   const scrollTestimonials = (direction: "left" | "right", index: number) => {
     if (testimonialRef.current) {
       setSelectedScroll(index);
-      const scrollAmount = 1000; // Adjust this as needed
+      const scrollAmount = 300; // Adjust this as needed for mobile
       const scrollByValue = direction === "left" ? -scrollAmount : scrollAmount;
 
       testimonialRef.current.scrollBy({
@@ -82,36 +82,36 @@ const Testimonials = ({}) => {
         </div>
 
         {/* Testimonials section */}
-        <div className="container absolute top-96 left-1/2 overflow-hidden transform -translate-x-1/2 flex flex-col lg:flex-row justify-center gap-10 w-[950px]">
+        <div className="container absolute top-96 left-1/2 overflow-hidden transform -translate-x-1/2 flex flex-col lg:flex-row justify-center gap-10 w-full max-w-[1000px]">
           <div
             ref={testimonialRef}
-            className="flex justify-start gap-10 dragg overflow-x-auto algabol "
+            className="flex justify-start gap-5 overflow-x-auto algabol"
           >
             {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="h-[280px] w-full max-w-[500px] bg-white flex justify-center items-center p-4 rounded-lg shadow-md"
-              >
-                <div className="flex">
-                  <div className="w-[150px] flex justify-center">
+              <div className="flex flex-col w-[500px] rounded-lg bg-white lg:flex-row gap-4">
+                <div
+                  key={index}
+                  className="min-w-[300px] w-[300px] md:w-[500px]  bg-white flex flex-col p-4 rounded-lg shadow-md md:h-[280px] "
+                >
+                  <div className="flex justify-center">
                     <div className="bg-orange-500 h-[90px] w-[90px] flex justify-center items-center rounded-full">
                       <img
-                        className="h-[70px] w-[70px] rounded-full"
+                        className="h-[70px] w-[70px] rounded-full object-fit"
                         src={testimonial.image}
                         alt={testimonial.name}
                       />
                     </div>
                   </div>
-                  <div className="w-[270px] flex flex-col gap-6">
+                  <div className="flex flex-col gap-3">
                     <p className="text-base">{testimonial.text}</p>
-                    <div className="flex gap-12 items-center">
+                    <div className="flex justify-between items-center">
                       <div className="flex flex-col">
                         <p className="text-xl font-bold tracking-tighter text-orange-500">
                           {testimonial.name}
                         </p>
                         <p>{testimonial.role}</p>
                       </div>
-                      <IoIosAttach className="w-14 h-14 text-orange-500" />
+                      <IoIosAttach className="w-10 h-10 text-orange-500" />
                     </div>
                   </div>
                 </div>
