@@ -133,7 +133,7 @@ export default function HomePage() {
                     тэжээвэр амьтдын эцэг эх болох аялалаа эхлүүлээрэй.
                   </p>
                 </div>
-                <div className="space-x-4 ">
+                <div className="space-x-4 pt-4">
                   <Button
                     onClick={() => {
                       push("/petcard");
@@ -236,7 +236,14 @@ export default function HomePage() {
               </div>
               <div className="space-x-4">
                 <Button>Сайн дурын ажилтан</Button>
-                <Button variant="outline">Хандив</Button>
+                <Button
+                  onClick={() => {
+                    push("/donation");
+                  }}
+                  variant="outline"
+                >
+                  Хандив
+                </Button>
               </div>
             </div>
           </div>
