@@ -12,18 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDataBase = void 0;
-const mongoose_1 = require("mongoose");
+exports.categoryController = void 0;
+const categoryModel_1 = require("../../src/database/models/categoryModel");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const URL = process.env.DB_URL || "";
-const connectDataBase = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield (0, mongoose_1.connect)(URL);
-        console.log("Successfully connected to the database.");
+const categoryController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { categoryName } = req.body;
+    if (!categoryName) {
+        return res.status(400).send({ message: "hooson bn" });
     }
-    catch (err) {
-        console.log("Database holboltodd aldaa garlaa");
+    try {
+        const newCategory = yield categoryModel_1.CategoryModel.create({
+            categoryName,
+        });
+        res
+            .status(201)
+            .send({ message: "Category created successfully", newCategory });
+    }
+    catch (error) {
+        res.status(500).send({ message: "Failed to create category" });
     }
 });
-exports.connectDataBase = connectDataBase;
+exports.categoryController = categoryController;

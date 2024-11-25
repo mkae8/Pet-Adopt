@@ -12,18 +12,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDataBase = void 0;
-const mongoose_1 = require("mongoose");
+exports.registerController = void 0;
+const userModel_1 = require("../../src/database/models/userModel");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const URL = process.env.DB_URL || "";
-const connectDataBase = () => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        yield (0, mongoose_1.connect)(URL);
-        console.log("Successfully connected to the database.");
+const registerController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { firstName, username, lastName, email, id } = req.body;
+    const isUserExisted = yield userModel_1.UserModel.findOne({ authId: id });
+    if (!isUserExisted) {
+        try {
+            yield userModel_1.UserModel.create({
+                firstName,
+                authId: id,
+                username,
+                lastName,
+                email,
+            });
+            res.status(201).send({ message: "User created successfully" });
+        }
+        catch (error) {
+            console.log(error);
+            res.send({ message: "Email already registered" });
+        }
     }
-    catch (err) {
-        console.log("Database holboltodd aldaa garlaa");
+    else {
+        res.status(200).send({ message: "Successfully Logged In" });
     }
 });
-exports.connectDataBase = connectDataBase;
+exports.registerController = registerController;

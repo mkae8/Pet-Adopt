@@ -8,22 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.connectDataBase = void 0;
-const mongoose_1 = require("mongoose");
-const dotenv_1 = __importDefault(require("dotenv"));
-dotenv_1.default.config();
-const URL = process.env.DB_URL || "";
-const connectDataBase = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.fetchPets = void 0;
+const petModel_1 = require("../../src/database/models/petModel");
+const fetchPets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield (0, mongoose_1.connect)(URL);
-        console.log("Successfully connected to the database.");
+        const pets = yield petModel_1.PetModel.find().populate("petCategoryId");
+        console.log(pets);
+        res.status(200).send(pets);
     }
-    catch (err) {
-        console.log("Database holboltodd aldaa garlaa");
+    catch (error) {
+        console.log(error);
+        res.status(500).send({ message: "Failed to fetch pets" });
     }
 });
-exports.connectDataBase = connectDataBase;
+exports.fetchPets = fetchPets;
