@@ -57,7 +57,7 @@ export default function Footer() {
                   Нүүр
                 </Link>
                 <Link
-                  href="/petcard"
+                  href="/petcard?filter=бүгд"
                   className="hover:text-orange-600 transition-colors text-[#0a303a]"
                 >
                   Үрчлэх

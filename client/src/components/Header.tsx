@@ -81,7 +81,7 @@ export default function Header() {
                   Нүүр
                 </Link>
                 <Link
-                  href="/petcard"
+                  href="/petcard?filter=бүгд"
                   className=" hover:nav_link nhome_link btn_text  font-bold"
                 >
                   Үрчлэх
@@ -153,18 +153,27 @@ export default function Header() {
               <Link
                 href="/"
                 className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                }}
               >
                 Нүүр
               </Link>
               <Link
-                href="/petcard"
+                href="/petcard?filter=бүгд"
                 className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                }}
               >
                 Үрчлэх
               </Link>
               <Link
                 href="/adoptedpet"
                 className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                }}
               >
                 Үрчлэгдсэн амьтад
               </Link>
@@ -185,6 +194,7 @@ export default function Header() {
                             labelIcon={<DotIcon />}
                             onClick={() => {
                               router.push("/requests");
+                              setIsMenuOpen(false);
                             }}
                           />
 
@@ -192,7 +202,8 @@ export default function Header() {
                             label="Таны үрчлүүлэх амьтад"
                             labelIcon={<DotIcon />}
                             onClick={() => {
-                              router.push("/adoptedpet");
+                              router.push("/adoptpet");
+                              setIsMenuOpen(false);
                             }}
                           />
                         </UserButton.MenuItems>

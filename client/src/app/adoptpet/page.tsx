@@ -262,11 +262,6 @@ export default function CardsStatusPage() {
   });
 
   const [fetchPetid, setFetchPetid] = useState<string>();
-  // const resetForm = async () => {
-  //   if (!isOpen) {
-  //     await form.reset();
-  //   }
-  // };
 
   const handleSubmit = async (data: z.infer<typeof petSchema>) => {
     setLoading1(true);

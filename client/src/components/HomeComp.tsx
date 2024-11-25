@@ -44,6 +44,7 @@ import { FaBone } from "react-icons/fa";
 import { MdEmergencyRecording } from "react-icons/md";
 import { HiDocumentReport } from "react-icons/hi";
 import { FaStethoscope } from "react-icons/fa";
+import { useQueryState } from "nuqs";
 export default function HomePage() {
   const { toast } = useToast();
   const data = useUser();
@@ -99,7 +100,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center  ">
       <main className="flex-1 w-screen justify-center">
-        <section className="w-full h-screen mt-[-72px] flex justify-center py-12 md:py-24 lg:py-32 xl:py-48 bg-[url('/headerbanner-1.jpg')]">
+        <section className="w-full h-screen mt-[-72px] flex justify-center py-12 md:py-24 lg:py-32 xl:py-48 ]">
           <video
             autoPlay
             loop
@@ -136,7 +137,7 @@ export default function HomePage() {
                 <div className="space-x-4 pt-4">
                   <Button
                     onClick={() => {
-                      push("/petcard");
+                      push("/petcard?filter=бүгд");
                     }}
                   >
                     Амьтан үрчлэх
@@ -188,30 +189,30 @@ export default function HomePage() {
                       placeholder:text-white/70 outline-none  rounded-sm flex
                       font-bold"
                     >
-                      Тэжээвэр амьтан хайх
+                      Онцлох тэжээвэр амьтан
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2 items-center justify-center">
                     <Button
-                      onClick={() => handleClick("нохой")}
+                      onClick={() => handleClick("Dog")}
                       className="bg-orange-500 hover:bg-orange-600/90 text-white flex-1 h-[100px] w-[200px]"
                     >
                       <Dog className="mr-2 h-5 w-5" />
-                      Find Your Dog
+                      Нохой хайх
                     </Button>
                     <Button
-                      onClick={() => handleClick("муур")}
+                      onClick={() => handleClick("Cat")}
                       className="bg-orange-500 hover:bg-orange-600/90 text-white flex-1 h-[100px] w-[300px]"
                     >
                       <Cat className="mr-2 h-5 w-5" />
-                      Find Your Cat
+                      Муур хайх
                     </Button>
                     <Button
-                      onClick={() => handleClick("шувуу")}
+                      onClick={() => handleClick("bird")}
                       className="bg-orange-500 hover:bg-orange-600/90 text-white flex-1 h-[100px] w-[300px]"
                     >
                       <Bird className="mr-2 h-5 w-5" />
-                      Find Your Birds
+                      шувуу хайх
                     </Button>
                   </div>
                 </div>
