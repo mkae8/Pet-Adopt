@@ -316,6 +316,8 @@ export default function CardsStatusPage() {
       setCardToDelete(null);
     }
   };
+  console.log(categories);
+
   useEffect(() => {
     if (user) {
       getCategories();
