@@ -172,7 +172,7 @@ export default function HomePage() {
           </div>
         </section>
         <section className="w-full flex justify-center py-12 md:py-24 lg:py-32 bg-white dark:bg-gray-800">
-          <div className="flex flex-col md:flex-row gap-6">
+          <div className="flex flex-col gap-6">
             <motion.div
               ref={ref}
               initial={{ opacity: 0, y: 50 }}
@@ -180,45 +180,61 @@ export default function HomePage() {
               transition={{ duration: 0.5 }}
               className="flex-1"
             >
-              <div className="w-screen max-w-[1200px] bg-[#1D2B32] p-4 h-[200px] rounded-sm flex items-center justify-between">
-                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row gap-10 ">
-                  <div className="relative flex-1 min-w-[240px]">
-                    <div
-                      className="pl-9 border-0 text-white
-                      placeholder:text-white/70 outline-none  rounded-sm flex
-                      font-bold"
-                    >
-                      Тэжээвэр амьтан хайх
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-2 items-center justify-center">
-                    <Button
-                      onClick={() => handleClick("нохой")}
-                      className="bg-orange-500 hover:bg-orange-600/90 text-white flex-1 h-[100px] w-[200px]"
-                    >
-                      <Dog className="mr-2 h-5 w-5" />
-                      Find Your Dog
-                    </Button>
-                    <Button
-                      onClick={() => handleClick("муур")}
-                      className="bg-orange-500 hover:bg-orange-600/90 text-white flex-1 h-[100px] w-[300px]"
-                    >
-                      <Cat className="mr-2 h-5 w-5" />
-                      Find Your Cat
-                    </Button>
-                    <Button
-                      onClick={() => handleClick("шувуу")}
-                      className="bg-orange-500 hover:bg-orange-600/90 text-white flex-1 h-[100px] w-[300px]"
-                    >
-                      <Bird className="mr-2 h-5 w-5" />
-                      Find Your Birds
-                    </Button>
-                  </div>
+              <div className="w-full max-w-[1200px] bg-[#1D2B32] p-4 rounded-sm flex flex-col md:w-screen md:flex-col gap-5 items-center justify-between">
+                <div className="flex-1 text-center md:text-left">
+                  <h2 className="text-white text-2xl md:text-3xl font-bold">
+                    Тэжээвэр амьтан хайх
+                  </h2>
+                </div>
+                <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto items-center justify-center mt-4 md:mt-0">
+                  <Button
+                    onClick={() => handleClick("Dog")}
+                    className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
+                  >
+                    <Dog className="mr-2 h-5 w-5" />
+                    Find Your Dog
+                  </Button>
+                  <Button
+                    onClick={() => handleClick("Cat")}
+                    className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
+                  >
+                    <Cat className="mr-2 h-5 w-5" />
+                    Find Your Cat
+                  </Button>
+                  <Button
+                    onClick={() => handleClick("Bird")}
+                    className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
+                  >
+                    <Bird className="mr-2 h-5 w-5" />
+                    Find Your Birds
+                  </Button>
+                  <Button
+                    onClick={() => handleClick("Rabbit")}
+                    className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
+                  >
+                    <Rabbit className="mr-2 h-5 w-5" />
+                    Find Your Rabbit
+                  </Button>
+                  <Button
+                    onClick={() => handleClick("Hamster")}
+                    className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
+                  >
+                    <Rabbit className="mr-2 h-5 w-5" />
+                    Find Your Hamster
+                  </Button>{" "}
+                  <Button
+                    onClick={() => handleClick("Fish")}
+                    className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
+                  >
+                    <Rabbit className="mr-2 h-5 w-5" />
+                    Find Your Fish
+                  </Button>
                 </div>
               </div>
             </motion.div>
           </div>
         </section>
+
         <section className="w-full mx-auto">
           <Testimonials />
         </section>
@@ -292,21 +308,27 @@ export default function HomePage() {
           />
         </section>
 
-        <section className="w-full h-[700px] mx-auto flex flex-col gap-10">
+        <section className="w-full h-auto mx-auto flex flex-col gap-10">
           <div className="w-full mx-auto flex flex-col items-center justify-center">
-            <div className="flex flex-col justify-center items-center gap-10 w-[690px] mt-20">
+            <div className="flex flex-col justify-center items-center gap-10 w-full max-w-[690px] mt-20">
               <FaPaw className="h-[40px] w-[40px] text-orange-500" />
-              <p className="text-3xl font-bold tracking-tighter text-orange-500 ">
+              <p className="text-3xl font-bold tracking-tighter text-orange-500 text-center">
                 Амьтан тэжээх сонирхолтой хүмүүст
               </p>
             </div>
           </div>
-          <div className="w-full flex max-w-[1200px] mx-auto gap-16 ">
-            <div className="flex flex-col gap-10">
-              <div className="h-[200px] w-[200px]">
-                <img src="./one.jpeg" alt="" />
+
+          <div className="w-full flex flex-col md:flex-row max-w-[1200px] mx-auto gap-10 md:gap-16">
+            {/* First Column */}
+            <div className="flex flex-col gap-10 flex-1">
+              <div className="h-[200px] w-full max-w-[200px] mx-auto">
+                <img
+                  src="./one.jpeg"
+                  alt="Choose Animal"
+                  className="object-cover w-full h-full rounded"
+                />
               </div>
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-5 text-center">
                 <p className="text-xl font-bold tracking-tighter text-orange-500">
                   Амьтнаа сонгох
                 </p>
@@ -316,11 +338,17 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-10">
-              <div className="h-[200px] w-[200px]">
-                <img src="./two.jpeg" alt="" />
+
+            {/* Second Column */}
+            <div className="flex flex-col gap-10 flex-1">
+              <div className="h-[200px] w-full max-w-[200px] mx-auto">
+                <img
+                  src="./two.jpeg"
+                  alt="Get to Know Animal"
+                  className="object-cover w-full h-full rounded"
+                />
               </div>
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-5 text-center">
                 <p className="text-xl font-bold tracking-tighter text-orange-500">
                   Амьтнаа таниж мэдэх
                 </p>
@@ -330,11 +358,17 @@ export default function HomePage() {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col gap-10">
-              <div className="h-[200px] w-[200px]">
-                <img src="./three.jpeg" alt="" />
+
+            {/* Third Column */}
+            <div className="flex flex-col gap-10 flex-1">
+              <div className="h-[200px] w-full max-w-[200px] mx-auto">
+                <img
+                  src="./three.jpeg"
+                  alt="Get Them Used to Home"
+                  className="object-cover w-full h-full rounded"
+                />
               </div>
-              <div className="flex flex-col gap-5">
+              <div className="flex flex-col gap-5 text-center">
                 <p className="text-xl font-bold tracking-tighter text-orange-500">
                   Гэртээ дасгах
                 </p>
