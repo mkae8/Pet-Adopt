@@ -16,7 +16,6 @@ export const applicationForm = async (req: Request, res: Response) => {
     question7,
     question8,
   } = req.body;
-  console.log(req.body);
 
   const user = await UserModel.findOne({ authId: userId });
   const foundPet = await PetModel.findById(petId);
@@ -30,8 +29,6 @@ export const applicationForm = async (req: Request, res: Response) => {
     res.status(404).send({ message: "Pet not found" });
     return;
   }
-
-  console.log(foundPet);
 
   try {
     await ApplicationModel.create({
