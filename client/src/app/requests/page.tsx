@@ -235,7 +235,7 @@ const Requests = () => {
                 </div>
               </DialogHeader>
               <div className="mt-2 flex flex-col sm:flex-row gap-4">
-                <ScrollArea className="md:h-[500px] h-[500px] w-full  border  rounded-md ">
+                <ScrollArea className="md:h-[500px] h-[300px] w-full  border  rounded-md ">
                   <div className="flex flex-col p-5 gap-5">
                     {questions.map((el, index) => (
                       <div key={index} className="border rounded-sm px-1 py-2">

@@ -75,7 +75,12 @@ export const Cards = ({ pet }: { pet: Pet }) => {
       router.push(`/application?petId=${pet._id}`);
     }
   };
-
+  const width = window.innerWidth;
+  useEffect(() => {
+    if (width < 799) {
+      setIsHovered(true);
+    }
+  });
   return (
     <>
       <motion.div
@@ -120,7 +125,7 @@ export const Cards = ({ pet }: { pet: Pet }) => {
             </motion.div>
           </div>
           <motion.div
-            className="flex flex-col space-y-2"
+            className="flex flex-col space-y-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.3 }}

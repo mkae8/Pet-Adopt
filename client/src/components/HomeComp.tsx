@@ -236,7 +236,13 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button>Сайн дурын ажилтан</Button>
+                <Button
+                  onClick={() => {
+                    push("https://www.facebook.com/groups/961305777715556");
+                  }}
+                >
+                  Сайн дурын ажилтан
+                </Button>
                 <Button
                   onClick={() => {
                     push("/donation");
