@@ -203,7 +203,7 @@ export default function HomePage() {
                     Find Your Cat
                   </Button>
                   <Button
-                    onClick={() => handleClick("Bird")}
+                    onClick={() => handleClick("bird")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
                     <Bird className="mr-2 h-5 w-5" />
@@ -224,7 +224,7 @@ export default function HomePage() {
                     Find Your Hamster
                   </Button>{" "}
                   <Button
-                    onClick={() => handleClick("Fish")}
+                    onClick={() => handleClick("fish")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
                     <Rabbit className="mr-2 h-5 w-5" />
