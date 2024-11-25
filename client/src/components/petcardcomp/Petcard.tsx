@@ -67,54 +67,65 @@ const Petcard = () => {
       ? pets
       : pets.filter((pet) => pet.petCategoryId.categoryName === animalFilter);
   return (
-    <div className="bg-orange-50 min-h-screen p-4 sm:p-8">
-      <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl sm:text-4xl font-bold text-orange-400 mb-4 text-center">
-          Үрчлүүлэх амьтадтай танилцаарай
-        </h1>
-        <h3 className="font-semibold text-orange-300 text-center text-[30px] sm:text-base">
-          Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал авчрахад
-          бэлэн байна.
-        </h3>
-        <h3 className="font-semibold text-orange-300 mb-8 text-center text-sm sm:text-base">
-          Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!
-        </h3>
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
-          {categories.map((category) => (
-            <motion.div
-              key={category._id}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                variant={
-                  animalFilter === category.categoryName ? "default" : "outline"
-                }
-                onClick={() => handleFilterChange(category.categoryName)}
-                className="min-w-[100px] sm:min-w-[120px]"
+    <div>
+      <div className="bg-orange-50 min-h-screen p-4 sm:p-8">
+        <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-orange-400 mb-4 text-center">
+            Үрчлүүлэх амьтадтай танилцаарай
+          </h1>
+          <h3 className="font-semibold text-orange-300 text-center text-[30px] sm:text-base">
+            Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал авчрахад
+            бэлэн байна.
+          </h3>
+          <h3 className="font-semibold text-orange-300 mb-8 text-center text-sm sm:text-base">
+            Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!
+          </h3>
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
+            {categories.map((category) => (
+              <motion.div
+                key={category._id}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {category.categoryLabel}
-              </Button>
-            </motion.div>
-          ))}
-        </div>
-        {loading ? (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-xl flex items-center space-x-4">
-              <Loading />
+                <Button
+                  variant={
+                    animalFilter === category.categoryName
+                      ? "default"
+                      : "outline"
+                  }
+                  onClick={() => handleFilterChange(category.categoryName)}
+                  className="min-w-[100px] sm:min-w-[120px]"
+                >
+                  {category.categoryLabel}
+                </Button>
+              </motion.div>
+            ))}
+          </div>
+          {loading ? (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white p-6 rounded-lg shadow-xl flex items-center space-x-4">
+                <Loading />
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {filteredPets.length > 0 ? (
-              filteredPets.map((pet) => <Cards key={pet._id} pet={pet} />)
-            ) : (
-              <p className="col-span-full text-center text-gray-500">
-                Энэ ангилалд тэжээвэр амьтан олдсонгүй.
-              </p>
-            )}
-          </div>
-        )}
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {filteredPets.length > 0 ? (
+                filteredPets.map((pet) => <Cards key={pet._id} pet={pet} />)
+              ) : (
+                <p className="col-span-full text-center text-gray-500">
+                  Энэ ангилалд тэжээвэр амьтан олдсонгүй.
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="mb-20">
+        <img
+          src="./bottomshape.png"
+          alt="Bottom Shape"
+          className="w-full bg-orange-50"
+        />
       </div>
     </div>
   );
