@@ -1,11 +1,13 @@
+import { Loading } from "@/components/Loading";
 import Petcard from "@/components/petcardcomp/Petcard";
-import React from "react";
+
+import React, { Suspense } from "react";
 
 const page = () => {
   return (
-    <div>
+    <Suspense fallback={<Loading />}>
       <Petcard />
-    </div>
+    </Suspense>
   );
 };
 export default page;

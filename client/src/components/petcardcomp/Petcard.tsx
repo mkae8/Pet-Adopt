@@ -6,7 +6,6 @@ import { useUser } from "@clerk/nextjs";
 import { Cards } from "./Cards";
 import { Button } from "@/components/ui/button";
 import { Loading } from "../Loading";
-import { usePathname } from "next/navigation";
 import { useQueryState } from "nuqs";
 type Pet = {
   _id: string;
