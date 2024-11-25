@@ -34,7 +34,9 @@ export const statusUpdate = async (
     }
 
     // Success response
-    res.status(200).send({ message: `Pet status updated to ${newStatus}` });
+    res
+      .status(200)
+      .send({ message: `Амьтны төлөв шинэчлэгдлээ : ${newStatus}` });
   } catch (error) {
     console.error("Error updating pet status:", error);
     res
