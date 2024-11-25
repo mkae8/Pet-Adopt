@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 
 import { Nunito, Montserrat } from "next/font/google";
 import localFont from "next/font/local";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -56,10 +57,12 @@ export default function RootLayout({
         >
           <ToastContainer />
           <UserControl>
-            <Toaster />
-            <Header />
-            {children}
-            <Footer />
+            <NuqsAdapter>
+              <Toaster />
+              <Header />
+              {children}
+              <Footer />
+            </NuqsAdapter>
           </UserControl>
         </body>
       </html>

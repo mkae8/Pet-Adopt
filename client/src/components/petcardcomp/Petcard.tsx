@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useUser } from "@clerk/nextjs";
 import { Cards } from "./Cards";
 import { Button } from "@/components/ui/button";
 import { Loading } from "../Loading";
+import { usePathname } from "next/navigation";
+import { useQueryState } from "nuqs";
 type Pet = {
   _id: string;
   weight: string;
@@ -23,10 +24,8 @@ type Pet = {
 };
 type PetCategory = { _id: string; categoryName: string; categoryLabel: string };
 const Petcard = () => {
-  const { push } = useRouter();
   const [pets, setPets] = useState<Pet[]>([]);
   const [categories, setCategories] = useState<PetCategory[]>([]);
-  const [animalFilter, setAnimalFilter] = useState<string>("бүгд");
   const [loading, setLoading] = useState(true);
   const { user } = useUser();
   const getCategories = async () => {
@@ -59,13 +58,18 @@ const Petcard = () => {
     }
     fetchPets();
   }, [user]);
-  const handleFilterChange = (categoryName: string) => {
-    setAnimalFilter(categoryName);
-  };
+
+  const [filter, setFilter] = useQueryState("filter");
+
+  useEffect(() => {
+    console.log(filter);
+    console.log(pets);
+  }, [filter]);
+
   const filteredPets =
-    animalFilter === "бүгд"
+    filter === "бүгд"
       ? pets
-      : pets.filter((pet) => pet.petCategoryId.categoryName === animalFilter);
+      : pets.filter((pet) => pet.petCategoryId.categoryName === filter);
   return (
     <div>
       <div className="bg-orange-50 min-h-screen p-4 sm:p-8">
@@ -89,11 +93,9 @@ const Petcard = () => {
               >
                 <Button
                   variant={
-                    animalFilter === category.categoryName
-                      ? "default"
-                      : "outline"
+                    filter === category.categoryName ? "default" : "outline"
                   }
-                  onClick={() => handleFilterChange(category.categoryName)}
+                  onClick={() => setFilter(category.categoryName)}
                   className="min-w-[100px] sm:min-w-[120px]"
                 >
                   {category.categoryLabel}
@@ -110,7 +112,13 @@ const Petcard = () => {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {filteredPets.length > 0 ? (
-                filteredPets.map((pet) => <Cards key={pet._id} pet={pet} />)
+                filteredPets.map((pet) =>
+                  pet.status === "Үрчлэгдсэн" ? (
+                    ""
+                  ) : (
+                    <Cards key={pet._id} pet={pet} />
+                  )
+                )
               ) : (
                 <p className="col-span-full text-center text-gray-500">
                   Энэ ангилалд тэжээвэр амьтан олдсонгүй.

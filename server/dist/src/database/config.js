@@ -17,10 +17,10 @@ const mongoose_1 = require("mongoose");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const URL = process.env.DB_URL || "";
-console.log(URL);
 const connectDataBase = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, mongoose_1.connect)(URL);
+        console.log("Successfully connected to the database.");
     }
     catch (err) {
         console.log("Database holboltodd aldaa garlaa");

@@ -3,6 +3,11 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Cake, Heart, MapPin, PawPrint, Ruler, Weight, X } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
+import { Button } from "../ui/button";
+import { ToastAction } from "../ui/toast";
 
 type Pet = {
   _id: string;
@@ -28,6 +33,9 @@ type PetCategory = {
 export const Cards = ({ pet }: { pet: Pet }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
+  const data = useUser();
+  const { toast } = useToast();
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
@@ -47,6 +55,32 @@ export const Cards = ({ pet }: { pet: Pet }) => {
 
   const closeModal = () => setIsModalOpen(false);
 
+  const submit = () => {
+    if (!data.isSignedIn) {
+      toast({
+        title: "Эхлээд нэвтэрч орно уу",
+        description: "Бүртгэлгүй бол бүртгүүлнэ үү",
+        action: (
+          <ToastAction
+            onClick={() => {
+              router.push("/sign-in");
+            }}
+            altText="Goto schedule to undo"
+          >
+            нэвтрэх
+          </ToastAction>
+        ),
+      });
+    } else {
+      router.push(`/application?petId=${pet._id}`);
+    }
+  };
+  const width = window.innerWidth;
+  useEffect(() => {
+    if (width < 799) {
+      setIsHovered(true);
+    }
+  });
   return (
     <>
       <motion.div
@@ -91,7 +125,7 @@ export const Cards = ({ pet }: { pet: Pet }) => {
             </motion.div>
           </div>
           <motion.div
-            className="flex flex-col space-y-2"
+            className="flex flex-col space-y-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: isHovered ? 1 : 0 }}
             transition={{ duration: 0.3 }}
@@ -188,12 +222,15 @@ export const Cards = ({ pet }: { pet: Pet }) => {
                     </li>
                   </ul>
                 </div>
-                <button className="mt-4 sm:mt-6 w-full py-2 sm:py-3 bg-gradient-to-r  bg-orange-500 text-white font-bold rounded-full shadow-md hover:shadow-lg hover:opacity-90 transition-all duration-300 flex items-center justify-center space-x-2">
+                <Button
+                  onClick={submit}
+                  className="mt-4 sm:mt-6 w-full py-2 sm:py-3 bg-gradient-to-r  bg-orange-500 text-white font-bold rounded-full shadow-md hover:shadow-lg hover:opacity-90 transition-all duration-300 flex items-center justify-center space-x-2"
+                >
                   <Heart className="w-4 h-4 sm:w-5 sm:h-5" />
                   <span className="text-sm sm:text-base">
                     {pet.petName} Үрчлэх
                   </span>
-                </button>
+                </Button>
               </div>
             </div>
           </div>

@@ -44,6 +44,7 @@ import { FaBone } from "react-icons/fa";
 import { MdEmergencyRecording } from "react-icons/md";
 import { HiDocumentReport } from "react-icons/hi";
 import { FaStethoscope } from "react-icons/fa";
+import { useQueryState } from "nuqs";
 export default function HomePage() {
   const { toast } = useToast();
   const data = useUser();
@@ -99,7 +100,7 @@ export default function HomePage() {
   return (
     <div className="flex flex-col items-center  ">
       <main className="flex-1 w-screen justify-center">
-        <section className="w-full h-screen mt-[-72px] flex justify-center py-12 md:py-24 lg:py-32 xl:py-48 bg-[url('/headerbanner-1.jpg')]">
+        <section className="w-full h-screen mt-[-72px] flex justify-center py-12 md:py-24 lg:py-32 xl:py-48 ]">
           <video
             autoPlay
             loop
@@ -136,7 +137,7 @@ export default function HomePage() {
                 <div className="space-x-4 pt-4">
                   <Button
                     onClick={() => {
-                      push("/petcard");
+                      push("/petcard?filter=бүгд");
                     }}
                   >
                     Амьтан үрчлэх
@@ -251,7 +252,13 @@ export default function HomePage() {
                 </p>
               </div>
               <div className="space-x-4">
-                <Button>Сайн дурын ажилтан</Button>
+                <Button
+                  onClick={() => {
+                    push("https://www.facebook.com/groups/961305777715556");
+                  }}
+                >
+                  Сайн дурын ажилтан
+                </Button>
                 <Button
                   onClick={() => {
                     push("/donation");

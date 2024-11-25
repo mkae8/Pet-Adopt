@@ -4,6 +4,7 @@ exports.CategoryModel = void 0;
 const mongoose_1 = require("mongoose");
 const CategorySchema = new mongoose_1.Schema({
     categoryName: { type: String, unique: true, sparse: true },
+    categoryLabel: { type: String, unique: true },
     createdAt: {
         type: Date,
         default: Date.now,

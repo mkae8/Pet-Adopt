@@ -28,7 +28,7 @@ export const petdelete = async (req: Request, res: Response): Promise<void> => {
         res.status(200).send({ message: "Pet deleted successfully" });
         return;
       }
-      res.status(200).send({ message: "Pet deleted successfully" });
+      res.status(200).send({ message: "Амжилттай устгалаа" });
     } catch (error) {
       console.error("Error deleting pet:", error);
       res

@@ -262,11 +262,6 @@ export default function CardsStatusPage() {
   });
 
   const [fetchPetid, setFetchPetid] = useState<string>();
-  // const resetForm = async () => {
-  //   if (!isOpen) {
-  //     await form.reset();
-  //   }
-  // };
 
   const handleSubmit = async (data: z.infer<typeof petSchema>) => {
     setLoading1(true);
@@ -321,6 +316,8 @@ export default function CardsStatusPage() {
       setCardToDelete(null);
     }
   };
+  console.log(categories);
+
   useEffect(() => {
     if (user) {
       getCategories();

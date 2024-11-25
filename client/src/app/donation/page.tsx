@@ -1,29 +1,98 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CreditCard, Smartphone, QrCode } from "lucide-react";
+import { CreditCard, QrCode } from "lucide-react";
+import axios from "axios";
+import { useUser } from "@clerk/nextjs";
+import { useToast } from "@/hooks/use-toast";
 
-const donationAmounts = [10, 25, 50, 100];
+export type DonateModelType = {
+  _id: string;
+  userId: string;
+  isPaid: boolean;
+  amount: string;
+};
+
+const donationAmounts = ["10", "25", "50", "100"];
+
+const Loading = () => {
+  return (
+    <div className="w-screen h-screen bg-white flex justify-center items-center">
+      <img
+        src="/running.gif"
+        alt="Loading..."
+        className="w-[150px] h-[150px]"
+      />
+    </div>
+  );
+};
 
 export default function DonationSection() {
-  const [customAmount, setCustomAmount] = useState("");
+  const [mode, setMode] = useState("bank");
   const [selectedAmount, setSelectedAmount] = useState(donationAmounts[0]);
+  const [qrCode, setQrCode] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleAmountClick = (amount: number) => {
+  const { toast } = useToast();
+  const user = useUser();
+
+  const handleAmountClick = (amount: string) => {
     setSelectedAmount(amount);
-    setCustomAmount("");
   };
 
   const handleCustomAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCustomAmount(e.target.value);
-    setSelectedAmount(0);
+    setSelectedAmount(e.target.value);
   };
+
+  const generateQR = async (donationId: string) => {
+    const response = await axios.post(
+      "https://qpaymock.onrender.com/generate-qr",
+      { url: `http://localhost:8000/donation/update/${donationId}` }
+    );
+    setQrCode(response.data);
+  };
+
+  const handleCreateDonation = async () => {
+    if (!user.isSignedIn) {
+      toast({
+        title: "Please Sign In",
+        description: "You need to be signed in to make a donation.",
+      });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.post<DonateModelType>(
+        "http://localhost:8000/donation/create",
+        {
+          id: user.user?.id,
+          amount: selectedAmount,
+        }
+      );
+
+      await generateQR(response.data._id);
+      setMode("qr");
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to create donation. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <section className="bg-gray-50 py-16">
@@ -34,9 +103,10 @@ export default function DonationSection() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold mb-4">Make a Difference Today</h2>
+          <h2 className="text-3xl font-bold mb-4"></h2>
           <p className="text-xl text-gray-600">
-            Your donation helps us care for and find homes for pets in need.
+            Таны хандив тусламж хэрэгтэй тэжээвэр амьтдыг халамжилж, гэр олоход
+            тусалдаг.
           </p>
         </motion.div>
 
@@ -47,17 +117,22 @@ export default function DonationSection() {
         >
           <Card className="max-w-2xl mx-auto">
             <CardContent className="p-6">
-              <Tabs defaultValue="bank" className="w-full">
-                <TabsList className="grid w-full grid-cols-3 mb-6">
-                  <TabsTrigger value="bank">
-                    <CreditCard className="mr-2 h-4 w-4" />
-                    Bank Transfer
+              <Tabs defaultValue="bank" className="w-full" value={mode}>
+                <TabsList className="grid w-full grid-cols-2 mb-6 ">
+                  <TabsTrigger
+                    value="bank"
+                    disabled={mode === "qr"}
+                    className="text-sm font-bold"
+                  >
+                    <CreditCard className="mr-2 h-4 w-4 " />
+                    Шилжүүлэг
                   </TabsTrigger>
-                  <TabsTrigger value="app">
-                    <Smartphone className="mr-2 h-4 w-4" />
-                    Bank App
-                  </TabsTrigger>
-                  <TabsTrigger value="qr">
+
+                  <TabsTrigger
+                    value="qr"
+                    disabled={mode === "bank"}
+                    className="text-sm font-bold"
+                  >
                     <QrCode className="mr-2 h-4 w-4" />
                     QR Code
                   </TabsTrigger>
@@ -65,7 +140,7 @@ export default function DonationSection() {
 
                 <TabsContent value="bank">
                   <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="grid grid-cols-2 gap-4 mb-4 ">
                       {donationAmounts.map((amount) => (
                         <Button
                           key={amount}
@@ -74,70 +149,53 @@ export default function DonationSection() {
                           }
                           onClick={() => handleAmountClick(amount)}
                         >
-                          ${amount}
+                          {amount}₮
                         </Button>
                       ))}
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="custom-amount">Custom Amount</Label>
+                    <div className="space-y-2 ">
+                      <Label className="text-xl font-bold">
+                        Захиалгат дүн{" "}
+                      </Label>
                       <Input
                         id="custom-amount"
                         type="number"
-                        placeholder="Enter custom amount"
-                        value={customAmount}
+                        placeholder="Захиалгат дүн"
+                        value={selectedAmount}
                         onChange={handleCustomAmountChange}
                       />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="bank-details">Bank Details</Label>
-                      <Input
-                        id="bank-details"
-                        value="Pet Adoption Center - Account: 1234567890"
-                        readOnly
-                      />
-                    </div>
-                    <Button className="w-full">Proceed to Donate</Button>
-                  </div>
-                </TabsContent>
 
-                <TabsContent value="app">
-                  <div className="space-y-4">
-                    <p className="text-center text-gray-600">
-                      Open your bank app and use the following details to make a
-                      donation:
-                    </p>
-                    <div className="space-y-2">
-                      <Label>Recipient Name</Label>
-                      <Input value="Pet Adoption Center" readOnly />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Account Number</Label>
-                      <Input value="1234567890" readOnly />
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Reference</Label>
-                      <Input value="PET-DONATION" readOnly />
-                    </div>
-                    <Button className="w-full">Open Bank App</Button>
+                    <Button
+                      onClick={handleCreateDonation}
+                      className="w-full text-xl font-bold"
+                    >
+                      Үргэлжлүүлэн хандивлах
+                    </Button>
                   </div>
                 </TabsContent>
 
                 <TabsContent value="qr">
                   <div className="space-y-4 text-center">
-                    <p className="text-gray-600">
-                      Scan the QR code below with your bank app to make a
-                      donation:
+                    <p className="text-gray-600 text-xl font-bold">
+                      Хандив хийхийн тулд доорх QR кодыг өөрийн банкны апп-аар
+                      уншина уу.
                     </p>
                     <div className="flex justify-center">
+                      {/* <img
+                        src="https://scontent.fuln8-1.fna.fbcdn.net/v/t1.15752-9/465908512_2230262640681444_5252641863940307412_n.jpg?stp=dst-jpg_s480x480&_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_ohc=Pdcr9HkUOqQQ7kNvgH5eiX1&_nc_zt=23&_nc_ht=scontent.fuln8-1.fna&oh=03_Q7cD1QHllTTfQodnwJhnV9KF-bY38jBppNtRxiOIvbDezboinw&oe=676B638F"
+                        alt="Donation QR Code"
+                        className="w-48 h-48"
+                      /> */}
                       <img
-                        src="/placeholder.svg?height=200&width=200"
+                        src={qrCode as string}
                         alt="Donation QR Code"
                         className="w-48 h-48"
                       />
                     </div>
-                    <p className="text-sm text-gray-500">
-                      Unable to scan? Use the bank transfer option for manual
-                      entry.
+                    <p className=" text-gray-500 text-xl font-bold">
+                      Скан хийх боломжгүй байна уу? Гарын авлагын хувьд банкны
+                      шилжүүлгийн сонголтыг ашиглана уу оруулга.
                     </p>
                   </div>
                 </TabsContent>
