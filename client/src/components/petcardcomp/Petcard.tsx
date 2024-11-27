@@ -52,11 +52,9 @@ const Petcard = () => {
     }
   };
   useEffect(() => {
-    if (user) {
-      getCategories();
-    }
+    getCategories();
     fetchPets();
-  }, [user]);
+  }, []);
 
   const [filter, setFilter] = useQueryState("filter");
 
@@ -76,12 +74,9 @@ const Petcard = () => {
           <h1 className="text-3xl sm:text-4xl font-bold text-orange-400 mb-4 text-center">
             Үрчлүүлэх амьтадтай танилцаарай
           </h1>
-          <h3 className="font-semibold text-orange-300 text-center text-[30px] sm:text-base">
+          <h3 className="font-semibold text-orange-300 mb-8 text-center text-sm sm:text-base">
             Үнэнч анд хайж байна уу? Манай амьтад таны гэрт аз жаргал авчрахад
             бэлэн байна.
-          </h3>
-          <h3 className="font-semibold text-orange-300 mb-8 text-center text-sm sm:text-base">
-            Үрчлүүлэхийг хүлээж буй өхөөрдөм тэжээвэр амьтадтай танилцаарай!
           </h3>
           <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-8">
             {categories.map((category) => (

@@ -73,16 +73,11 @@ const Testimonials = () => {
             <p className="text-3xl font-bold tracking-tighter text-orange-500">
               Амьтан үрчилж авсан хүмүүсийн сэтгэгдэл
             </p>
-            <p className="text-xl tracking-tighter font-medium">
-              The best overall dog DNA test is Embark Breed & Health Kit (view
-              at Chewy), which provides you with a breed breakdown and
-              information. Most dogs...
-            </p>
           </div>
         </div>
 
         {/* Testimonials section */}
-        <div className="container absolute top-96 left-1/2 overflow-hidden transform -translate-x-1/2 flex flex-col lg:flex-row justify-center gap-10 w-full max-w-[1000px]">
+        <div className="container absolute top-72 left-1/2 overflow-hidden transform -translate-x-1/2 flex flex-col lg:flex-row justify-center gap-10 w-full max-w-[1000px]">
           <div
             ref={testimonialRef}
             className="flex justify-start gap-5 overflow-x-auto algabol"

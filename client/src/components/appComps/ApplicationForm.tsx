@@ -83,7 +83,7 @@ export default function ApplicationForm() {
     setSelectedValue(value);
     setInputValues((prev) => ({
       ...prev,
-      8: value,
+      question8: value,
     }));
   };
 
@@ -95,7 +95,7 @@ export default function ApplicationForm() {
   };
 
   const back = () => {
-    router.push("/petcard");
+    router.push("/petcard?filter=бүгд");
   };
 
   const submit = async () => {
@@ -123,8 +123,8 @@ export default function ApplicationForm() {
       });
       setLoading(false);
       toast({
-        title: "Success",
-        description: "Success",
+        title: "Амжилттай",
+        description: "мэдээлэл илгээлээ",
       });
       push("/");
     } catch (error) {

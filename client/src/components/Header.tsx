@@ -26,12 +26,22 @@ export default function Header() {
   };
 
   const user = useUser();
+  console.log(user);
 
   useEffect(() => {});
 
   const DotIcon = () => {
     return (
       <img
+        src="https://www.svgrepo.com/show/408711/sent-send-mail-message-envelope.svg"
+        alt=""
+      />
+    );
+  };
+  const DotIcon2 = () => {
+    return (
+      <img
+        className="-rotate-90 scale-x-[-1]"
         src="https://www.svgrepo.com/show/408711/sent-send-mail-message-envelope.svg"
         alt=""
       />
@@ -72,23 +82,29 @@ export default function Header() {
                 className="w-[35px] h-[35px] rounded-xl"
               />
             </Link>
-            <div className="flex justify-start lg:w-0 lg:flex-1 items-center">
-              <nav className="hidden  md:flex space-x-10 ">
+            <div className="flex justify-start h-10  lg:w-0 lg:flex-1 items-center">
+              <nav className="hidden  md:flex gap-5">
                 <Link
                   href="/"
-                  className=" hover:nav_link nhome_link btn_text font-bold "
+                  className="w-12 hover:nav_link nhome_link btn_text font-bold "
                 >
                   Нүүр
                 </Link>
                 <Link
                   href="/petcard?filter=бүгд"
-                  className=" hover:nav_link nhome_link btn_text  font-bold"
+                  className="w-36 hover:nav_link nhome_link btn_text  font-bold"
                 >
-                  Үрчлэх
+                  Амьтан үрчлэх
+                </Link>
+                <Link
+                  href={user.isSignedIn ? `pet-add-adoption` : `sign-in`}
+                  className="w-44 hover:nav_link nhome_link btn_text font-bold"
+                >
+                  Амьтан үрчлүүлэх
                 </Link>
                 <Link
                   href="/adoptedpet"
-                  className=" hover:nav_link nhome_link btn_text font-bold"
+                  className="w-44 hover:nav_link nhome_link btn_text font-bold"
                 >
                   Үрчлэгдсэн амьтад
                 </Link>
@@ -116,13 +132,19 @@ export default function Header() {
                     <UserButton>
                       <UserButton.MenuItems>
                         <UserButton.Action
-                          label="Танд ирсэн хүсэлтүүд"
+                          label="Таны явуулсан хүсэлтүүд"
                           labelIcon={<DotIcon />}
                           onClick={() => {
                             router.push("/requests");
                           }}
                         />
-
+                        <UserButton.Action
+                          label="Танд ирсэн хүсэлтүүд"
+                          labelIcon={<DotIcon2 />}
+                          onClick={() => {
+                            router.push("/requests");
+                          }}
+                        />
                         <UserButton.Action
                           label="Таны үрчлүүлэх амьтад"
                           labelIcon={<DotIcon1 />}
@@ -166,7 +188,16 @@ export default function Header() {
                   setIsMenuOpen(false);
                 }}
               >
-                Үрчлэх
+                Амьтан үрчлэх
+              </Link>
+              <Link
+                href={user.isSignedIn ? `pet-add-adoption` : `sign-in`}
+                className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                }}
+              >
+                Амьтан үрчлүүлэх
               </Link>
               <Link
                 href="/adoptedpet"
@@ -190,14 +221,21 @@ export default function Header() {
                       <UserButton>
                         <UserButton.MenuItems>
                           <UserButton.Action
-                            label="Танд ирсэн хүсэлтүүд"
+                            label="Таны явуулсан хүсэлтүүд"
                             labelIcon={<DotIcon />}
                             onClick={() => {
                               router.push("/requests");
                               setIsMenuOpen(false);
                             }}
                           />
-
+                          <UserButton.Action
+                            label="Танд ирсэн хүсэлтүүд"
+                            labelIcon={<DotIcon2 />}
+                            onClick={() => {
+                              router.push("/requests");
+                              setIsMenuOpen(false);
+                            }}
+                          />
                           <UserButton.Action
                             label="Таны үрчлүүлэх амьтад"
                             labelIcon={<DotIcon />}

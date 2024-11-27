@@ -25,7 +25,7 @@ export const petdelete = async (req: Request, res: Response): Promise<void> => {
       const application = await ApplicationModel.find({ petId: id });
       if (application) {
         const deletionResult = await ApplicationModel.deleteMany({ petId: id });
-        res.status(200).send({ message: "Pet deleted successfully" });
+        res.status(200).send({ message: "Амжилттай устгалаа" });
         return;
       }
       res.status(200).send({ message: "Амжилттай устгалаа" });
