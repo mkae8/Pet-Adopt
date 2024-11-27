@@ -40,10 +40,10 @@ import { Input } from "@/components/ui/input";
 import { Loader } from "@/components/Loader";
 
 const FormSchema = z.object({
-  phoneNumber: z.string().min(1, { message: "Phone number is required." }),
+  phoneNumber: z.string().min(1, { message: "Утасны дугаар шаардлагатай." }),
   description: z
     .string()
-    .max(100, { message: "Description must be no more than 100 characters." }),
+    .max(100, { message: "Тодорхойлолт 100 тэмдэгтээс хэтрэхгүй байх ёстой." }),
 });
 
 interface Question {
@@ -150,7 +150,9 @@ const Requests = () => {
         {
           email: selectedRequest.userId.email,
           phone: data.phoneNumber,
+          description: data.description,
           petName: selectedRequest.petId.petName,
+          petId: selectedRequest.petId._id,
           senderEmail: user.user?.primaryEmailAddress?.emailAddress,
         }
       );
@@ -169,10 +171,11 @@ const Requests = () => {
     } catch (error) {
       console.log(error);
       toast({
-        title: "Success",
-        description: "boloo shas",
+        title: "Амжилттай",
+        description: "и-мэйл илгээлээ",
         // variant: "destructive",
       });
+      closeModal();
     } finally {
       setLoading(false);
     }
@@ -224,8 +227,10 @@ const Requests = () => {
           zIndex: -1,
         }}
       />
-      <div className=" mt-28 text-3xl font-bold">Үрчлэгчийн мэдээлэл</div>
-      <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-28 relative z-10">
+      <div className=" mt-10 md:mt-28 text-3xl font-bold">
+        Үрчлэгчийн мэдээлэл
+      </div>
+      <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-2 md:mt-28 relative z-10">
         <div className="container mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4">Хүсэлтүүд</h1>
           {loading ? (
@@ -297,21 +302,21 @@ const Requests = () => {
           )}
 
           <Dialog open={selectedRequest !== null} onOpenChange={closeModal}>
-            <DialogContent className="z-[100] w-full md:min-h-[800px] max-w-[400px] rounded-md sm:max-w-[600px] lg:max-w-[700px] min-w-[300px]">
-              <DialogHeader>
-                <DialogTitle>{selectedRequest?.userId.username}</DialogTitle>
-                <div>
-                  <Badge
-                    className={`${getStatusColor(
-                      selectedRequest?.petId.status || "pending"
-                    )} text-white`}
-                  >
-                    {selectedRequest?.petId.status}
-                  </Badge>
-                </div>
-              </DialogHeader>
-              <div className="mt-2 flex flex-col sm:flex-row gap-4">
-                <ScrollArea className="md:h-[500px] h-[300px] w-full  border  rounded-md ">
+            <DialogContent className="z-[100] h-[85%] w-full md:min-h-[800px] max-w-[400px] rounded-md sm:max-w-[600px] lg:max-w-[700px] min-w-[300px]">
+              <ScrollArea className="h-[100%]  w-full  border  rounded-md ">
+                <DialogHeader>
+                  <DialogTitle>{selectedRequest?.userId.username}</DialogTitle>
+                  <div>
+                    <Badge
+                      className={`${getStatusColor(
+                        selectedRequest?.petId.status || "pending"
+                      )} text-white`}
+                    >
+                      {selectedRequest?.petId.status}
+                    </Badge>
+                  </div>
+                </DialogHeader>
+                <div className="mt-2 flex flex-col sm:flex-row gap-4">
                   <div className="flex flex-col p-5 gap-5">
                     {questions.map((el, index) => (
                       <div key={index} className="border rounded-sm px-1 py-2">
@@ -319,62 +324,71 @@ const Requests = () => {
                         <div>{questions[index].text}</div>
                         <h1 className="font-bold">Хариулт</h1>
                         <div className="text-slate-600">
-                          {selectedRequest?.question1}
+                          {index == 0 ? selectedRequest?.question1 : ""}
+                          {index == 1 ? selectedRequest?.question2 : ""}
+                          {index == 2 ? selectedRequest?.question3 : ""}
+                          {index == 3 ? selectedRequest?.question4 : ""}
+                          {index == 4 ? selectedRequest?.question5 : ""}
+                          {index == 5 ? selectedRequest?.question6 : ""}
+                          {index == 6 ? selectedRequest?.question7 : ""}
+                          {index == 7 ? selectedRequest?.question8 : ""}
                         </div>
                       </div>
                     ))}
                   </div>
-                </ScrollArea>
-              </div>
-              <div>Хэрэв та зөвшөөрч байгаа бол доорхыг бөглөнө үү!</div>
-              <Form {...form}>
-                <form
-                  onSubmit={form.handleSubmit(onSubmit)}
-                  className="w-3/3 space-y-6"
-                >
-                  <FormField
-                    control={form.control}
-                    name="phoneNumber"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Утасны дугаар</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Утасны дугаар" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Нэмэлт мэдээлэл</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Нэмэлт мэдээлэл оруулна уу"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="mt-4 flex justify-between items-center">
-                    <Button onClick={closeModal} className="w-full sm:w-auto">
-                      Хаах
-                    </Button>
-                    <Button
-                      type="submit"
-                      className="bg-green-400"
-                      disabled={loading}
-                    >
-                      {loading ? "Илгээж байна..." : "Илгээх"}
-                    </Button>
-                  </div>
-                </form>
-              </Form>
+                </div>
+                <div className="px-5">
+                  Хэрэв та зөвшөөрч байгаа бол доорхыг бөглөнө үү!
+                </div>
+                <Form {...form}>
+                  <form
+                    onSubmit={form.handleSubmit(onSubmit)}
+                    className="w-3/3 space-y-6 px-5"
+                  >
+                    <FormField
+                      control={form.control}
+                      name="phoneNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Утасны дугаар</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Утасны дугаар" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="description"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Нэмэлт мэдээлэл</FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder="Нэмэлт мэдээлэл оруулна уу"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <div className="mt-4 flex justify-between items-center">
+                      <Button onClick={closeModal} className="w-full sm:w-auto">
+                        Хаах
+                      </Button>
+                      <Button
+                        type="submit"
+                        className="bg-green-400"
+                        disabled={loading}
+                      >
+                        {loading ? "Илгээж байна..." : "Илгээх"}
+                      </Button>
+                    </div>
+                  </form>
+                </Form>
+              </ScrollArea>
             </DialogContent>
           </Dialog>
         </div>

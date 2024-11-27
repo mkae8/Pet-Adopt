@@ -193,42 +193,42 @@ export default function HomePage() {
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
                     <Dog className="mr-2 h-5 w-5" />
-                    Find Your Dog
+                    Нохой хайх
                   </Button>
                   <Button
                     onClick={() => handleClick("Cat")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
                     <Cat className="mr-2 h-5 w-5" />
-                    Find Your Cat
+                    Муур хайх
                   </Button>
                   <Button
                     onClick={() => handleClick("bird")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
                     <Bird className="mr-2 h-5 w-5" />
-                    Find Your Birds
+                    шувуу хайх
                   </Button>
                   <Button
                     onClick={() => handleClick("Rabbit")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
                     <Rabbit className="mr-2 h-5 w-5" />
-                    Find Your Rabbit
+                    Туулай хайх
                   </Button>
                   <Button
                     onClick={() => handleClick("Hamster")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
                     <Rabbit className="mr-2 h-5 w-5" />
-                    Find Your Hamster
+                    Мэрэгч хайх
                   </Button>{" "}
                   <Button
                     onClick={() => handleClick("fish")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
                     <Rabbit className="mr-2 h-5 w-5" />
-                    Find Your Fish
+                    Загас хайх
                   </Button>
                 </div>
               </div>

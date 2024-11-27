@@ -4,6 +4,7 @@ import cors from "cors";
 import { UserModel } from "../../src/database/models/userModel";
 
 import env from "dotenv";
+import { PetModel } from "../../src/database/models/petModel";
 
 env.config();
 
@@ -40,12 +41,14 @@ const emailSender = async (
 };
 
 export const sendEmailController = async (req: any, res: any) => {
-  const { email, phone, petName, senderEmail } = req.body;
+  const { email, phone, petName, senderEmail, description, petId } = req.body;
 
   try {
+    const pet = await PetModel.findById(petId);
     const user = await UserModel.findOne({ email });
     const senderUser = await UserModel.findOne({ email: senderEmail });
     console.log(req.body);
+    console.log(pet);
 
     if (!user) {
       return res.status(404).send({ message: "Хэрэглэгч олдсонгүй" });
@@ -55,16 +58,17 @@ export const sendEmailController = async (req: any, res: any) => {
     }
     await emailSender(
       email,
-      "Tanii amitan urchileh huseliig Urchluulegch zuvshuursun baina",
+      "Таны амьтан үрчлэх хүсэлтийг зөвшөөрсөн байна.",
       `
         <div style="font-family: Helvetica, Arial, sans-serif; text-align: center; padding: 20px;">
-          <h2 style="color: #00466a; font-size: 24px; margin-bottom: 20px;">Tanii urchilhiig hussen amitan ${
+          <h2 style="color: #00466a; font-size: 24px; margin-bottom: 20px;">Таны үрчлэхийг хүссэн амьтан: ${
             senderUser.firstName + " " + senderUser.lastName
-          } ${petName} </h2>
-          <div style="color: green; font-size: 48px; font-weight: bold; border: 2px solid green; border-radius: 8px; padding: 20px; display: inline-block;">
-            Love ya all 
-          </div>
-          <p style="font-size: 16px; margin-top: 20px;">Holbogdooroi: ${phone}. </p>
+          } эзэнтэй ${petName}. </h2> 
+        <img style="width: 250px; height: 350px; object-fit: cover;" src="${
+          pet?.image[0]
+        }" alt="" />
+          <div>Нэмэлт мэдээлэл: ${description}</div>
+          <p style="font-size: 16px; margin-top: 20px;">Үрчлүүлэгчийн утасны дугаар : ${phone}. </p>
         </div>
       `,
       "One Time Password"

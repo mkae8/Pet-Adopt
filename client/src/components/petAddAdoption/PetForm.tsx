@@ -85,10 +85,8 @@ const PetForm = ({ fetchData }: PetFormProps) => {
     }
   };
   useEffect(() => {
-    if (user) {
-      getCategories();
-    }
-  }, [user]);
+    getCategories();
+  }, []);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
