@@ -61,7 +61,7 @@ const Testimonials = () => {
       <img src="./topfooter.png" alt="" className="w-full bg-[#f5f3eb]" />
       <div className="relative">
         <img
-          className="w-screen h-[700px] object-cover"
+          className="w-screen h-[700px] object-fit "
           src="./footerbackground.png"
           alt=""
         />
