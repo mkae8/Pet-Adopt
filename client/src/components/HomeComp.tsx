@@ -44,7 +44,7 @@ import { FaBone } from "react-icons/fa";
 import { MdEmergencyRecording } from "react-icons/md";
 import { HiDocumentReport } from "react-icons/hi";
 import { FaStethoscope } from "react-icons/fa";
-import { useQueryState } from "nuqs";
+// import { useQueryState } from "nuqs";
 export default function HomePage() {
   const { toast } = useToast();
   const data = useUser();
@@ -286,21 +286,15 @@ export default function HomePage() {
 
             {/* Main content container */}
             <div className="container absolute top-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center gap-10 w-full max-w-[690px] mx-auto">
-              <FaPaw className="h-[40px] w-[40px] text-orange-500" />
-              <p className="text-3xl font-bold tracking-tighter text-orange-500">
-                Амьтан тэжээх сонирхолтой хүмүүст
+              <FaPaw className="h-[40px] w-[40px] text-red-500" />
+              <p className="text-3xl font-bold tracking-tighter text-red-500">
+                Take care of Pets
               </p>
               <img
-                className=" w-[100px] md:w-[400px] md:object-contain"
-                src="./aaaa.png"
+                className=" w-[300px] md:w-[700px] md:object-contain"
+                src="./noxoi.png"
                 alt="Interesting Animal Image"
               />
-              <LuDog />
-              <FaBone />
-              <FaPaw />
-              <FaStethoscope />
-              <MdEmergencyRecording />
-              <HiDocumentReport />
             </div>
             {/* Image on the right side */}
             <div className="container absolute top-56  transform translate-x-1/2 flex flex-col items-center justify-center text-center gap-10 w-full max-w-[690px] mx-auto">
