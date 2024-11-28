@@ -19,7 +19,7 @@ export type DonateModelType = {
   amount: string;
 };
 
-const donationAmounts = ["10", "25", "50", "100"];
+const donationAmounts = ["10000", "25000", "50000", "100000"];
 
 const Loading = () => {
   return (
@@ -53,7 +53,7 @@ export default function DonationSection() {
   const generateQR = async (donationId: string) => {
     const response = await axios.post(
       "https://qpaymock.onrender.com/generate-qr",
-      { url: `http://localhost:8000/donation/update/${donationId}` }
+      { url: `${process.env.BACKEND_URL}/donation/update/${donationId}` }
     );
     setQrCode(response.data);
   };
@@ -70,7 +70,7 @@ export default function DonationSection() {
     setLoading(true);
     try {
       const response = await axios.post<DonateModelType>(
-        "http://localhost:8000/donation/create",
+        `${process.env.BACKEND_URL}/donation/create`,
         {
           id: user.user?.id,
           amount: selectedAmount,
@@ -178,15 +178,10 @@ export default function DonationSection() {
                 <TabsContent value="qr">
                   <div className="space-y-4 text-center">
                     <p className="text-gray-600 text-xl font-bold">
-                      Хандив хийхийн тулд доорх QR кодыг өөрийн банкны апп-аар
-                      уншина уу.
+                      Хандив хийхийн тулд доорх QR кодыг өөрийн утасны camera
+                      -аар уншина уу.
                     </p>
                     <div className="flex justify-center">
-                      {/* <img
-                        src="https://scontent.fuln8-1.fna.fbcdn.net/v/t1.15752-9/465908512_2230262640681444_5252641863940307412_n.jpg?stp=dst-jpg_s480x480&_nc_cat=104&ccb=1-7&_nc_sid=0024fc&_nc_ohc=Pdcr9HkUOqQQ7kNvgH5eiX1&_nc_zt=23&_nc_ht=scontent.fuln8-1.fna&oh=03_Q7cD1QHllTTfQodnwJhnV9KF-bY38jBppNtRxiOIvbDezboinw&oe=676B638F"
-                        alt="Donation QR Code"
-                        className="w-48 h-48"
-                      /> */}
                       <img
                         src={qrCode as string}
                         alt="Donation QR Code"
@@ -194,8 +189,8 @@ export default function DonationSection() {
                       />
                     </div>
                     <p className=" text-gray-500 text-xl font-bold">
-                      Скан хийх боломжгүй байна уу? Гарын авлагын хувьд банкны
-                      шилжүүлгийн сонголтыг ашиглана уу оруулга.
+                      Хэрэв болсон бол ямар нэгэн хөшөө болж хувьраад хүлээнэ
+                      үү.
                     </p>
                   </div>
                 </TabsContent>
