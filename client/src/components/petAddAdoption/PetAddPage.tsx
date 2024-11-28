@@ -9,7 +9,7 @@ import { useUser } from "@clerk/nextjs";
 
 type Pet = {
   _id: string;
-  image?: string;
+  image?: string[];
   petName?: string;
   petCategoryId?: string;
   age?: string;
@@ -44,12 +44,12 @@ export default function PetAddPage() {
 
   const fetchPets = async () => {
     if (!user) return;
-
     try {
       setLoading(true);
       const response = await axios.get<Pet[]>(
         `${process.env.BACKEND_URL}/pets/user/${user.id}`
       );
+
       setPets(response.data);
     } catch (err) {
       console.log(err);
@@ -63,7 +63,6 @@ export default function PetAddPage() {
       setLoading(false);
     }
   };
-
   return (
     <div>
       <div className="relative flex flex-col items-center justify-center min-h-screen w-full bg-orange-50 overflow-hidden">

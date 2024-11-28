@@ -23,7 +23,7 @@ import { useToast } from "@/hooks/use-toast";
 
 type Pet = {
   _id: string;
-  images?: string[];
+  image?: string[];
   petName?: string;
   petCategoryId?: string;
   age?: string;
@@ -80,7 +80,7 @@ export const Stripe = ({ fetchData, loading, pets }: StripeProps) => {
         <CardContent>
           <div className="text-sm sm:text-base text-gray-600 flex gap-2">
             Нийт
-            <p className="text-orange-500 font-semibold">{pets.length}</p>{" "}
+            <p className="text-orange-500 font-semibold">{pets.length}</p>
             амьтан бүртгэгдсэн байна.
           </div>
         </CardContent>
@@ -93,7 +93,7 @@ export const Stripe = ({ fetchData, loading, pets }: StripeProps) => {
               Та одоогоор ямар ч амьтан нэмээгүй байна.
             </p>
             <Link href="/create-pet">
-              <Button className="bg-orange-500 hover:bg-orange-600 text-white text-sm sm:text-base">
+              <Button className="bg-orange-500  hover:bg-orange-600 text-white text-sm sm:text-base">
                 <PlusCircle className="w-4 h-4 mr-2" />
                 Анхны амьтнаа нэмэх
               </Button>
@@ -127,8 +127,8 @@ export const Stripe = ({ fetchData, loading, pets }: StripeProps) => {
                   <div className="aspect-square mb-4 overflow-hidden rounded-lg">
                     <img
                       src={
-                        pet.images && pet.images.length > 0
-                          ? pet.images[0]
+                        pet.image && pet.image.length > 0
+                          ? pet.image[0]
                           : "/placeholder.svg?height=300&width=300"
                       }
                       alt={pet.petName || "Амьтны зураг"}
@@ -143,15 +143,6 @@ export const Stripe = ({ fetchData, loading, pets }: StripeProps) => {
                   <p className="text-xs sm:text-sm text-gray-500">
                     Байршил: {pet.location}
                   </p>
-                  {/* <Link href={`/pet/${pet._id}`}>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="text-xs sm:text-sm"
-                    >
-                      Дэлгэрэнгүй
-                    </Button>
-                  </Link> */}
                 </CardFooter>
               </Card>
             ))}
