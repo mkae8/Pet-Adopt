@@ -67,7 +67,7 @@ export const Cards = ({ pet }: { pet: Pet }) => {
             }}
             altText="Goto schedule to undo"
           >
-            нэвтрэх
+            Нэвтрэх
           </ToastAction>
         ),
       });
@@ -192,8 +192,11 @@ export const Cards = ({ pet }: { pet: Pet }) => {
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-800 mb-2 tracking-tight">
                     {pet.petName}
                   </h2>
-                  <p className="text-gray-500 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed">
-                    Онцог шинж чанарууд: <span>{pet.description}</span>
+                  <p className="text-orange-300 font-bold text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed">
+                    Онцог шинж чанарууд:
+                    <span className="text-gray-700 font-normal">
+                      {pet.description}
+                    </span>
                   </p>
                   <ul className="text-gray-700 space-y-2 sm:space-y-3 text-xs sm:text-sm font-medium">
                     <li className="flex items-center">

@@ -23,7 +23,7 @@ import { useToast } from "@/hooks/use-toast";
 
 type Pet = {
   _id: string;
-  image?: string;
+  images?: string[];
   petName?: string;
   petCategoryId?: string;
   age?: string;
@@ -126,7 +126,11 @@ export const Stripe = ({ fetchData, loading, pets }: StripeProps) => {
                 <CardContent>
                   <div className="aspect-square mb-4 overflow-hidden rounded-lg">
                     <img
-                      src={pet.image || "/placeholder.svg?height=300&width=300"}
+                      src={
+                        pet.images && pet.images.length > 0
+                          ? pet.images[0]
+                          : "/placeholder.svg?height=300&width=300"
+                      }
                       alt={pet.petName || "Амьтны зураг"}
                       className="w-full h-full object-cover"
                     />
