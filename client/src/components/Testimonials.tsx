@@ -15,27 +15,27 @@ const Testimonials = () => {
   const testimonials: Testimonial[] = [
     {
       name: "Д.Алтаншагай",
-      role: "Pinecone Student",
+      role: "FullStack developer",
       image: "./shagai.jpg",
-      text: "“The best overall dog DNA test Embark Breed Health Kit view at Chewy, which provides with a breed breakdown and information.”",
+      text: "Амьтан тэжээж эхлэхэд ойр дотнын хүн бүр л сөргөөр хүлээж авсан. Үр хүүхэд маань тэжээвэр амьтандаа маш их хайртай болсон.",
     },
     {
       name: "Х.Түвшинтэнгис",
       role: "Pinecone Student",
       image: "./tengis.jpg",
-      text: "“The best overall dog DNA test Embark Breed Health Kit view at Chewy, which provides with a breed breakdown and information.”",
+      text: "Амьтан тэжээхэд гэрийнхний эсэргүүцлээс гадна санхүүгийн асуудал их тулгардаг байсан. Хамгийн анхны цалингаа амьтдадаа зарцуулж байсан.",
     },
     {
       name: "Б.Тэмүүжин",
       role: "Pinecone Student",
       image: "./temuujin.jpg",
-      text: "“The best overall dog DNA test Embark Breed Health Kit view at Chewy, which provides with a breed breakdown and information.”",
+      text: "Гэртээ амьтан тэжээж эхэлснээс хойш миний амьдралд олон эерэг өөрчлөлт гарч байгаа. Одоо мөнгөө зөвхөн амьтан тэжээхдээ зарцуулдаг болсон.",
     },
     {
       name: "Б.Ганбат",
       role: "Pinecone Student",
       image: "./ganbat.jpg",
-      text: "“The best overall dog DNA test Embark Breed Health Kit view at Chewy, which provides with a breed breakdown and information.”",
+      text: "Би муурууддаа хамгийн сайн хоолыг нь авч өгдөг. Амьтан тэжээх болсноос хойш хуримтлуулсан мэдлэгээ олон хүмүүстэй хуваалцаж зөвлөгөө өгдөг. ",
     },
   ];
 
