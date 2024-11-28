@@ -158,11 +158,13 @@ const Requests = () => {
       );
       console.log(response);
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         toast({
-          title: "Email sent successfully",
-          description: "The applicant has been notified.",
+          title: "Амжилттай",
+          description: "И-мэйл илгээлээ",
+          variant: "default",
         });
+        form.reset();
         closeModal();
       } else {
         throw new Error("Failed to send email");
@@ -171,9 +173,9 @@ const Requests = () => {
     } catch (error) {
       console.log(error);
       toast({
-        title: "Амжилттай",
-        description: "и-мэйл илгээлээ",
-        // variant: "destructive",
+        title: "Error",
+        description: "И-мэйл илгээхэд алдаа гарлаа",
+        variant: "destructive",
       });
       closeModal();
     } finally {

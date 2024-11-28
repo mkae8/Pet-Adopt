@@ -4,7 +4,6 @@ import cors from "cors";
 import { UserModel } from "../../src/database/models/userModel";
 
 import env from "dotenv";
-import { PetModel } from "../../src/database/models/petModel";
 
 env.config();
 
@@ -41,14 +40,12 @@ const emailSender = async (
 };
 
 export const sendEmailController = async (req: any, res: any) => {
-  const { email, phone, petName, senderEmail, description, petId } = req.body;
+  const { email, phone, petName, senderEmail, petImage } = req.body;
 
   try {
-    const pet = await PetModel.findById(petId);
     const user = await UserModel.findOne({ email });
     const senderUser = await UserModel.findOne({ email: senderEmail });
-    console.log(req.body);
-    console.log(pet);
+    // console.log(req.body);
 
     if (!user) {
       return res.status(404).send({ message: "Хэрэглэгч олдсонгүй" });
@@ -58,7 +55,7 @@ export const sendEmailController = async (req: any, res: any) => {
     }
 
     const senderName = `${senderUser.firstName} ${senderUser.lastName}`;
-    const subject = "Таны амьтан үрчлэх хүсэлтийг зөвшөөрсөн байна";
+    const subject = "Гэрийн тэжээвэр амьтдыг үрчлэн авах зөвшөөрөл";
     const htmlContent = `
   <!DOCTYPE html>
   <html lang="en">
@@ -89,18 +86,12 @@ export const sendEmailController = async (req: any, res: any) => {
                   <table border="0" cellpadding="0" cellspacing="0" width="100%" style="margin-top: 30px; margin-bottom: 30px;">
                       <tr>
                           <td align="center">
-                              
-                                  <img src=${pet?.image[0]} alt="Paw Print" style="width: 400px; height: 400px; object-fit: cover;">
-                      
+                              <div style="display: inline-block; background-color: #f97316; border-radius: 50%; width: 120px; height: 120px; line-height: 120px; text-align: center;">
+                                  <img src=${petImage} alt="Paw Print" style="width: 100vw; height: 100vh; object-fit: contain;">
+                              </div>
                           </td>
                       </tr>
                   </table>
-           <div style="font-size: 16px; color: #f97316; font-weight: bold; display: flex; flex-direction: column; gap: 4px;">
-  Эзэний явуулсан мэдээлэл:
-  <p style="margin: 0; color: #666666;">${description}</p>
-</div>
-
-                  
                   <p style="color: #666666; font-size: 16px;">
                      Та амьтаны эзэнтэй энэхүү дугаараар холбогдоно уу: <strong style="color: #f97316;">${phone}</strong>
                   </p>
@@ -118,10 +109,12 @@ export const sendEmailController = async (req: any, res: any) => {
   </html>
   `;
     const textContent = `Congratulations! Your request to adopt ${petName} has been approved by ${senderName}. Please contact the adoption center at ${phone} for next steps.`;
+
     await emailSender(email, subject, htmlContent, textContent);
 
-    res.send("Имэйл илгээсэн").status(201);
+    res.status(201).send({ message: "Имэйл илгээсэн" });
   } catch (error) {
-    res.status(500).send(error);
+    console.log(error);
+    res.status(500).send({ message: "Failed to send email" });
   }
 };
