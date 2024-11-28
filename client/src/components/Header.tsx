@@ -135,7 +135,7 @@ export default function Header() {
                           label="Таны явуулсан хүсэлтүүд"
                           labelIcon={<DotIcon />}
                           onClick={() => {
-                            router.push("/requests");
+                            router.push("/my-request");
                           }}
                         />
                         <UserButton.Action
@@ -218,13 +218,14 @@ export default function Header() {
                     </SignedOut>
                     <SignedIn>
                       {user.user?.username}
+
                       <UserButton>
                         <UserButton.MenuItems>
                           <UserButton.Action
                             label="Таны явуулсан хүсэлтүүд"
                             labelIcon={<DotIcon />}
                             onClick={() => {
-                              router.push("/requests");
+                              router.push("/my-request");
                               setIsMenuOpen(false);
                             }}
                           />

@@ -13,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import moment from "moment";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -24,12 +25,11 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { any, string, z } from "zod";
 import { toast, useToast } from "@/hooks/use-toast";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -38,13 +38,6 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { Loader } from "@/components/Loader";
-
-const FormSchema = z.object({
-  phoneNumber: z.string().min(1, { message: "Утасны дугаар шаардлагатай." }),
-  description: z
-    .string()
-    .max(100, { message: "Тодорхойлолт 100 тэмдэгтээс хэтрэхгүй байх ёстой." }),
-});
 
 interface Question {
   id: number;
@@ -78,7 +71,17 @@ interface Request {
     createdAt: Date;
     updatedAt: Date;
   };
-  ownerId: String;
+  ownerId: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    username: string;
+    email: string;
+    authId: string;
+    phoneNumber: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
   question1: string;
   question2: string;
   question3: string;
@@ -92,13 +95,6 @@ interface Request {
 }
 
 const Requests = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    defaultValues: {
-      phoneNumber: "",
-      description: "",
-    },
-  });
   const { toast } = useToast();
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
   const [requests, setRequests] = useState<Request[]>([]);
@@ -133,64 +129,11 @@ const Requests = () => {
     },
   ];
 
-  const sendEmail = async (data: z.infer<typeof FormSchema>) => {
-    if (!selectedRequest) {
-      toast({
-        title: "Error",
-        description: "No request selected.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const response: any = await axios.post(
-        `${process.env.BACKEND_URL}/sendMailer`,
-        {
-          email: selectedRequest.userId.email,
-          phone: data.phoneNumber,
-          description: data.description,
-          petName: selectedRequest.petId.petName,
-          petId: selectedRequest.petId._id,
-          senderEmail: user.user?.primaryEmailAddress?.emailAddress,
-        }
-      );
-      console.log(response);
-
-      if (response.status === 200) {
-        toast({
-          title: "Амжилттай",
-          description: "И-мэйл илгээлээ",
-          variant: "default",
-        });
-        form.reset();
-        closeModal();
-      } else {
-        throw new Error("Failed to send email");
-      }
-      console.log(response);
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: "Error",
-        description: "И-мэйл илгээхэд алдаа гарлаа",
-        variant: "destructive",
-      });
-      closeModal();
-    } finally {
-      setLoading(false);
-    }
-  };
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    sendEmail(data);
-  }
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data }: any = await axios.get(
-          `${process.env.BACKEND_URL}/applicationForm/${user.user?.id}`
+          `${process.env.BACKEND_URL}/myapplicationForm/${user.user?.id}`
         );
         console.log(data);
         setRequests(data);
@@ -241,6 +184,7 @@ const Requests = () => {
     }
     return `${days} өдрийн${days !== 1 ? "" : ""} өмнө`;
   };
+  console.log(requests);
 
   return (
     <div className="h-[70vh] flex flex-col items-center relative">
@@ -252,7 +196,7 @@ const Requests = () => {
         }}
       />
       <div className=" mt-10 md:mt-28 text-3xl font-bold">
-        Үрчлэгчийн мэдээлэл
+        Таны явуулсан хүсэлтүүд
       </div>
       <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-2 md:mt-28 relative z-10">
         <div className="container mx-auto p-4">
@@ -287,7 +231,7 @@ const Requests = () => {
                                       src={request.petId.image[0]}
                                       alt={request.petId.petName}
                                     />
-                                  </Avatar>{" "}
+                                  </Avatar>
                                   <div>
                                     {request.petId.petName}
                                     <div className="text-[9px] font-normal">
@@ -308,7 +252,7 @@ const Requests = () => {
                                 {request.petId.status}
                               </Badge>
                               <p className="text-sm text-gray-500 h-12 text-wrap truncate">
-                                {request.userId.username}-ээс хүсэлт ирлээ.
+                                {request.ownerId.username}- руу явуулсан хүсэлт.
                               </p>
                               <Button className="mt-4 w-full">
                                 Хүсэлтийг харах
@@ -366,57 +310,13 @@ const Requests = () => {
                     ))}
                   </div>
                 </div>
-                <div className="px-5">
-                  Хэрэв та зөвшөөрч байгаа бол доорхыг бөглөнө үү!
+                <div className="w-3/3 space-y-6 px-5">
+                  <div className="mt-4 flex justify-between items-center">
+                    <Button onClick={closeModal} className="w-full sm:w-auto">
+                      Хаах
+                    </Button>
+                  </div>
                 </div>
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="w-3/3 space-y-6 px-5"
-                  >
-                    <FormField
-                      control={form.control}
-                      name="phoneNumber"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Утасны дугаар</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Утасны дугаар" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Нэмэлт мэдээлэл</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Нэмэлт мэдээлэл оруулна уу"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <div className="mt-4 flex justify-between items-center">
-                      <Button onClick={closeModal} className="w-full sm:w-auto">
-                        Хаах
-                      </Button>
-                      <Button
-                        type="submit"
-                        className="bg-green-400"
-                        disabled={loading}
-                      >
-                        {loading ? "Илгээж байна..." : "Илгээх"}
-                      </Button>
-                    </div>
-                  </form>
-                </Form>
               </ScrollArea>
             </DialogContent>
           </Dialog>

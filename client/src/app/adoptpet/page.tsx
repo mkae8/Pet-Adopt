@@ -327,10 +327,25 @@ export default function CardsStatusPage() {
 
   return (
     <div className="container bg-orange-50 h-screen mx-auto p-4">
-      <h1 className="text-3xl mt-2 mb-2 md:mt-10  font-bold md:mb-6">
+      <h1 className="text-3xl mt-2 md:mt-10  font-bold ">
         Таны үрчлүүлэх амьтад
       </h1>
-      <ScrollArea className="md:h-[100%] h-[80%] w-full md:border-none border  rounded-md ">
+      <div className="text-[15px]">Үрчлэгдсэн:</div>
+      <div className="text-[12px]">
+        /та амьтны статусыг үрчлэгдсэн болгосноор тухайн амьтан луу хүсэлт
+        илгээх боломжгүй болж үрчлэгдсэн амьтдын хэсэгт шилжинэ/
+      </div>
+      <div className="text-[15px]">Одоогоор хүлээгдэж байгаа:</div>
+      <div className="text-[12px]">
+        /гадаадаадaac ирж буй аль эсвэл төрөх гэж буй зулзага ямар нэгэн
+        шалтгаанаар хүлээгдэж буй амьтадыг энэ ангилалд оруулна тань руу хүсэлт
+        илгээж болно/
+      </div>
+      <div className="text-[15px]"> Үрчлэх боломжтой:</div>
+      <div className="text-[12px]">
+        /шууд үрчилж өгөхөд бэлэн амьтадыг энэ ангилалд оруулна/
+      </div>
+      <ScrollArea className="md:h-[100%] h-[75%] w-full md:border-none border  rounded-md ">
         {loading ? (
           <Loader />
         ) : (
@@ -673,7 +688,8 @@ export default function CardsStatusPage() {
                       />
                       <div>
                         <Label htmlFor="picture" className="text-primary">
-                          Зураг
+                          Зураг{" "}
+                          <span className="text-xs">/Заавал оруулах/</span>
                         </Label>
                         <Input
                           id="picture"

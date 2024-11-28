@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ApplicationModel } from "../../src/database/models/answerModel";
 import { UserModel } from "../../src/database/models/userModel";
 
-export const applicationFetch = async (
+export const myapplicationFetch = async (
   req: Request,
   res: Response
 ): Promise<void> => {
@@ -18,7 +18,7 @@ export const applicationFetch = async (
   const userId = user._id;
 
   try {
-    const pet = await ApplicationModel.find({ ownerId: userId }).populate([
+    const pet = await ApplicationModel.find({ userId: userId }).populate([
       { path: "userId" },
       { path: "petId" },
       { path: "ownerId" },
