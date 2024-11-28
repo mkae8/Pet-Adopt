@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { toast } from "react-toastify";
+import { toast } from "@/hooks/use-toast";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { Loader2, PawPrintIcon } from "lucide-react";
@@ -125,17 +125,27 @@ const PetForm = ({ fetchData }: PetFormProps) => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        toast.error(
-          `Мэдээлэл хадгалагдах үед алдаа гарлаа: ${errorData.message}`
-        );
+        toast({
+          title: "Error",
+          description: "Мэдээлэл хадгалагдах үед алдаа гарлаа:",
+          variant: "destructive",
+        });
         setLoading(false);
         return;
       }
       form.reset();
-      toast.success("Амьтны мэдээлэл амжилттай хадгалагдлаа!");
+      toast({
+        title: "Амжилттай",
+        description: "Амьтны мэдээлэл амжилттай хадгалагдлаа!",
+        variant: "default",
+      });
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("Алдаа гарлаа.");
+      console.log(error);
+      toast({
+        title: "Error",
+        description: "Мэдээлэл хадгалагдах үед алдаа гарлаа:",
+        variant: "destructive",
+      });
     } finally {
       fetchData();
       setLoading(false);

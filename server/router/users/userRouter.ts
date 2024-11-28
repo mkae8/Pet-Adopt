@@ -10,7 +10,6 @@ const userRouter = Router();
 userRouter.route("/user/register").post(registerController);
 userRouter.route("/user/update").post(authMiddleware, updateUserData);
 userRouter.route("/pets/user/:id").get(usersPet);
-
 userRouter.route("/sendMailer").post(sendEmailController);
 
 export default userRouter;
