@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -37,6 +37,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { petSchema } from "@/lib/form-schema";
 import { Loading } from "../Loading";
+import Image from "next/image";
 
 type Category = {
   _id: string;
@@ -48,34 +49,12 @@ interface PetFormProps {
 }
 
 const PetForm = ({ fetchData }: PetFormProps) => {
-  const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const { user } = useUser();
   const [categories, setCategories] = useState<Category[]>([]);
-
-  const getPresignedURL = async () => {
-    try {
-      const { data } = await axios.get(`${process.env.BACKEND_URL}/image`);
-      return data as { uploadUrl: string; accessUrls: string };
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const uploadImage = async () => {
-    if (image) {
-      try {
-        const data: any = await getPresignedURL();
-        await axios.put(data.uploadUrl, image, {
-          headers: { "Content-Type": image.type },
-        });
-        return data;
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
+  const [uploadImages, setUploadImages] = useState<File[]>([]);
+  const [images, setImages] = useState<(string | null)[]>([null, null, null]);
+  let imageArray: string[];
   const getCategories = async () => {
     try {
       const res = await axios.get(`${process.env.BACKEND_URL}/get/categories`);
@@ -87,14 +66,6 @@ const PetForm = ({ fetchData }: PetFormProps) => {
   useEffect(() => {
     getCategories();
   }, []);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImage(file);
-    }
-  };
-
   const form = useForm<z.infer<typeof petSchema>>({
     resolver: zodResolver(petSchema),
     defaultValues: {
@@ -105,10 +76,50 @@ const PetForm = ({ fetchData }: PetFormProps) => {
       weight: "",
     },
   });
+  const handleUpload = async () => {
+    const { data } = await axios.get<{
+      uploadUrl: string[];
+      accessUrls: string[];
+    }>(`${process.env.BACKEND_URL}/image/${uploadImages.length}`);
+    console.log(data);
+
+    const uploadUrls = data.uploadUrl;
+    console.log(uploadUrls);
+
+    const accessUrls = data.accessUrls;
+    imageArray = data.accessUrls;
+
+    try {
+      await Promise.all(
+        uploadUrls.map(async (uploadUrl: string, index: number) => {
+          await axios.put(uploadUrl, uploadImages[index], {
+            headers: {
+              "Content-Type": uploadImages[index].type,
+            },
+          });
+        })
+      );
+    } catch (error) {
+      console.error("Error uploading file:", error);
+    }
+  };
+
+  const onImageChange =
+    (index: number) => (event: ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files[0]) {
+        const file = event.target.files[0];
+
+        setUploadImages([...uploadImages, file]);
+
+        const newImages = [...images];
+        newImages[index] = URL.createObjectURL(event.target.files[0]);
+        setImages(newImages);
+      }
+    };
 
   const handleSubmit = async (data: z.infer<typeof petSchema>) => {
     setLoading(true);
-    const imgData = await uploadImage();
+    const imgData = await handleUpload();
 
     try {
       const response = await fetch(`${process.env.BACKEND_URL}/create/pet`, {
@@ -118,7 +129,7 @@ const PetForm = ({ fetchData }: PetFormProps) => {
         },
         body: JSON.stringify({
           ...data,
-          image: [imgData?.accessUrls],
+          image: imageArray,
           id: user?.id,
         }),
       });
@@ -134,6 +145,7 @@ const PetForm = ({ fetchData }: PetFormProps) => {
         return;
       }
       form.reset();
+      setImages([null, null, null]);
       toast({
         title: "Амжилттай",
         description: "Амьтны мэдээлэл амжилттай хадгалагдлаа!",
@@ -390,16 +402,25 @@ const PetForm = ({ fetchData }: PetFormProps) => {
                     </FormItem>
                   )}
                 />
-                <div>
-                  <Label htmlFor="picture" className="text-primary">
-                    Зураг
-                  </Label>
-                  <Input
-                    id="picture"
-                    type="file"
-                    onChange={handleFileChange}
-                    className="mt-1"
-                  />
+                <div className="flex gap-[67px]">
+                  {images.map((image, index) => (
+                    <div key={index}>
+                      <label key={index}>
+                        <input type="file" onChange={onImageChange(index)} />
+                        <div className="border relative rounded-sm h-[185px] flex items-center justify-center w-[185px] border-black">
+                          <h1 className="flex items-center">ЗУРАГ НЭМЭХ + </h1>
+                          {image && (
+                            <Image
+                              src={image}
+                              fill
+                              className="absolute object-cover rounded-sm"
+                              alt="image"
+                            />
+                          )}
+                        </div>
+                      </label>
+                    </div>
+                  ))}
                 </div>
                 <Button type="submit" className="w-full" disabled={loading}>
                   Мэдээлэл илгээх

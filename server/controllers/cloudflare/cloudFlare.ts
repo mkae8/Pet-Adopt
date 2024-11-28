@@ -13,15 +13,25 @@ const S3 = new S3Client({
   },
   region: "auto",
 });
-export async function getPresignedUrl() {
-  const id = v4();
-  const url = await getSignedUrl(
-    S3,
-    new PutObjectCommand({ Bucket: "pet", Key: id }),
-    { expiresIn: 60 * 60 }
-  );
+export async function getPresignedUrl(count: string) {
+  const keys = Array.from({ length: Number(count) }, () => v4());
+
+  const urls = keys.map(async (id) => {
+    const getPresignedUrl = await getSignedUrl(
+      S3,
+      new PutObjectCommand({ Bucket: "pet", Key: id }),
+      {
+        expiresIn: 60 * 60,
+      }
+    );
+    return getPresignedUrl;
+  });
+
+  const response = await Promise.all(urls);
   return {
-    uploadUrl: url,
-    accessUrls: "https://pub-050e63764f9e43f3af6873e3befa1b28.r2.dev/" + id,
+    uploadUrl: response,
+    accessUrls: keys.map(
+      (key) => "https://pub-050e63764f9e43f3af6873e3befa1b28.r2.dev/" + key
+    ),
   };
 }
