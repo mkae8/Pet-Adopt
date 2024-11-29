@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +13,6 @@ import {
   Loader2,
   PawPrint,
   Send,
-  X,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -117,11 +116,12 @@ const questions: Question[] = [
   { id: 8, text: "Танай өрхөд хүүхэд эсвэл бусад хараат хүн байгаа уу?" },
 ];
 
-export default function Component() {
+export default function AdoptionRequests() {
   const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
   const [requests, setRequests] = useState<Request[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const user = useUser();
   const { toast } = useToast();
 
@@ -229,13 +229,15 @@ export default function Component() {
   };
 
   const nextRequest = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % requests.length);
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 320, behavior: "smooth" });
+    }
   };
 
   const prevRequest = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + requests.length) % requests.length
-    );
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -320, behavior: "smooth" });
+    }
   };
 
   return (
@@ -247,42 +249,42 @@ export default function Component() {
         </h1>
 
         {loading ? (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-xl flex items-center space-x-4">
-              <Loading />
-            </div>
-          </div>
+          <Loading />
         ) : requests.length === 0 ? (
           <p className="text-center text-gray-600 text-lg">
             Одоогоор хүсэлт байхгүй байна.
           </p>
         ) : (
-          <div className="relative flex justify-center overflow-scroll items-center w-full ">
-            <div className="overflow-hidden">
-              <motion.div
-                className="flex transition-all ease-in-out duration-300"
-                style={{
-                  transform: `translateX(-${currentIndex * 100}%)`,
-                }}
-              >
+          <div className="relative">
+            <div
+              ref={scrollRef}
+              className="flex justify-center overflow-x-auto pb-6 px-4 -mx-4 scrollbar-hide"
+            >
+              <div className="flex space-x-4">
                 {requests.map((request, index) => (
-                  <div key={request._id} className="w-[500px]  px-4">
-                    <Card className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105">
-                      <CardHeader className="bg-gradient-to-r from-orange-400 to-pink-500 text-white">
+                  <motion.div
+                    key={request._id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    className="w-72 flex-shrink-0"
+                  >
+                    <Card className="h-full bg-white shadow-lg rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105">
+                      <CardHeader className="bg-gradient-to-r from-orange-400 to-pink-500 text-white p-4">
                         <CardTitle className="flex items-center justify-between">
-                          <span className="text-2xl font-bold">
+                          <span className="text-xl font-bold truncate">
                             {request.petId.petName}
                           </span>
                           <Badge
                             className={`${getStatusColor(
                               request.petId.status
-                            )} text-white px-3 py-1`}
+                            )} text-white px-2 py-1 text-xs`}
                           >
                             {request.petId.status}
                           </Badge>
                         </CardTitle>
                       </CardHeader>
-                      <CardContent className="p-6">
+                      <CardContent className="p-4">
                         <div className="flex items-center mb-4">
                           <Avatar className="h-12 w-12 rounded-full border-2 border-orange-500">
                             <AvatarImage
@@ -291,17 +293,16 @@ export default function Component() {
                             />
                           </Avatar>
                           <div className="ml-4">
-                            <p className="text-lg font-semibold">
-                              Энэ хүн таньлуу хүсэлт илгээлээ
+                            <p className="text-sm font-semibold truncate">
                               {request.userId.username}
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-xs text-gray-500">
                               {timeAgo(request.createdAt)}
                             </p>
                           </div>
                         </div>
                       </CardContent>
-                      <CardFooter className="bg-gray-50 px-6 py-4">
+                      <CardFooter className="bg-gray-50 p-4">
                         <Button
                           className="w-full"
                           onClick={() => openModal(request)}
@@ -310,16 +311,16 @@ export default function Component() {
                         </Button>
                       </CardFooter>
                     </Card>
-                  </div>
+                  </motion.div>
                 ))}
-              </motion.div>
+              </div>
             </div>
-            {requests.length > 1 && (
+            {requests.length > 4 && (
               <>
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full shadow-md"
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full shadow-md z-10"
                   onClick={prevRequest}
                 >
                   <ChevronLeft className="h-6 w-6" />
@@ -327,7 +328,7 @@ export default function Component() {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full shadow-md"
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full shadow-md z-10"
                   onClick={nextRequest}
                 >
                   <ChevronRight className="h-6 w-6" />
@@ -348,11 +349,14 @@ export default function Component() {
                 </DialogTitle>
               </DialogHeader>
               <ScrollArea className="mt-6 max-h-[60vh] pr-4">
-                <div className="space-y-6 ">
+                <div className="space-y-4">
                   {questions.map((question, index) => (
-                    <div
+                    <motion.div
                       key={question.id}
-                      className="bg-gray-50  rounded-lg p-4 shadow-sm"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: index * 0.1 }}
+                      className="bg-gray-50 rounded-lg p-4 shadow-sm"
                     >
                       <h3 className="font-semibold text-gray-700 mb-2">
                         {question.text}
@@ -366,7 +370,7 @@ export default function Component() {
                           return typeof value === "string" ? value : "N/A";
                         })()}
                       </p>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </ScrollArea>
