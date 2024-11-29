@@ -22,7 +22,7 @@ type Pet = {
   description?: string;
 };
 
-export default function PetAddPage() {
+const PetAddPage = () => {
   const { user } = useUser();
   const [isMobile, setIsMobile] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -122,4 +122,6 @@ export default function PetAddPage() {
       </div>
     </div>
   );
-}
+};
+
+export default PetAddPage;

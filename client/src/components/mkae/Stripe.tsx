@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useUser } from "@clerk/nextjs";
 import {
   ChevronLeft,
@@ -19,7 +19,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { useToast } from "@/hooks/use-toast";
 
 type Pet = {
   _id: string;
@@ -92,12 +91,11 @@ export const Stripe = ({ fetchData, loading, pets }: StripeProps) => {
             <p className="text-base sm:text-lg text-gray-600 mb-4">
               Та одоогоор ямар ч амьтан нэмээгүй байна.
             </p>
-            <Link href="/create-pet">
-              <Button className="bg-orange-500  hover:bg-orange-600 text-white text-sm sm:text-base">
-                <PlusCircle className="w-4 h-4 mr-2" />
-                Анхны амьтнаа нэмэх
-              </Button>
-            </Link>
+
+            <Button className="bg-orange-500  hover:bg-orange-600 text-white text-sm sm:text-base">
+              <PlusCircle className="w-4 h-4 mr-2" />
+              Анхны амьтнаа нэмээрэй
+            </Button>
           </CardContent>
         </Card>
       ) : (
