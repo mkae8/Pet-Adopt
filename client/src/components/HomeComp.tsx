@@ -28,7 +28,9 @@ import { useToast } from "@/hooks/use-toast";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { FaPaw } from "react-icons/fa";
+
+import { MdEmergencyRecording } from "react-icons/md";
+
 import { IoIosAttach } from "react-icons/io";
 
 import { ChevronDown, Dog, Cat, Bird, MapPin } from "lucide-react";
@@ -39,12 +41,15 @@ import {
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import Testimonials from "./Testimonials";
-import { LuDog } from "react-icons/lu";
-import { FaBone } from "react-icons/fa";
-import { MdEmergencyRecording } from "react-icons/md";
-import { HiDocumentReport } from "react-icons/hi";
-import { FaStethoscope } from "react-icons/fa";
+
+import { FaCat, FaDog, FaFish, FaSpider } from "react-icons/fa6";
+import { GiEgyptianBird, GiRabbit } from "react-icons/gi";
 // import { useQueryState } from "nuqs";
+import { FaStethoscope } from "react-icons/fa";
+import { FaBone } from "react-icons/fa";
+import { FaPaw } from "react-icons/fa";
+import { MdNote } from "react-icons/md";
+
 export default function HomePage() {
   const { toast } = useToast();
   const data = useUser();
@@ -190,44 +195,44 @@ export default function HomePage() {
                 <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto items-center justify-center mt-4 md:mt-0">
                   <Button
                     onClick={() => handleClick("Dog")}
-                    className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
+                    className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex justify-center items-center h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
-                    <Dog className="mr-2 h-5 w-5" />
+                    <FaDog className="mr-2 h-5 w-5" />
                     Нохой хайх
                   </Button>
                   <Button
                     onClick={() => handleClick("Cat")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
-                    <Cat className="mr-2 h-5 w-5" />
+                    <FaCat className="mr-2 h-5 w-5" />
                     Муур хайх
                   </Button>
                   <Button
                     onClick={() => handleClick("bird")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
-                    <Bird className="mr-2 h-5 w-5" />
-                    шувуу хайх
+                    <GiEgyptianBird className="mr-2 h-5 w-5" />
+                    Шувуу хайх
                   </Button>
                   <Button
                     onClick={() => handleClick("Rabbit")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
-                    <Rabbit className="mr-2 h-5 w-5" />
+                    <GiRabbit className="mr-2 h-5 w-5" />
                     Туулай хайх
                   </Button>
                   <Button
                     onClick={() => handleClick("Hamster")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
-                    <Rabbit className="mr-2 h-5 w-5" />
+                    <FaSpider className="mr-2 h-5 w-5" />
                     Мэрэгч хайх
                   </Button>{" "}
                   <Button
                     onClick={() => handleClick("fish")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex-1 h-[60px] md:h-[80px] w-full max-w-[200px]"
                   >
-                    <Rabbit className="mr-2 h-5 w-5" />
+                    <FaFish className="mr-2 h-5 w-5" />
                     Загас хайх
                   </Button>
                 </div>
@@ -283,22 +288,65 @@ export default function HomePage() {
               src="./footerbackground.png"
               alt="Footer Background"
             />
-
             {/* Main content container */}
             <div className="container absolute top-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center gap-10 w-full max-w-[690px] mx-auto">
-              <FaPaw className="h-[40px] w-[40px] text-red-500" />
-              <p className="text-3xl font-bold tracking-tighter text-red-500">
-                Take care of Pets
+              <FaPaw className="h-[40px] w-[40px] text-orange-500" />
+              <p className="text-3xl font-bold tracking-tighter text-orange-500">
+                Амьтан арчилгаа
               </p>
               <img
-                className=" w-[300px] md:w-[700px] md:object-contain"
-                src="./noxoi.png"
+                className=" w-[200px] md:w-[500px] md:object-contain relative"
+                src="./nohoii.png"
                 alt="Interesting Animal Image"
               />
-            </div>
-            {/* Image on the right side */}
-            <div className="container absolute top-56  transform translate-x-1/2 flex flex-col items-center justify-center text-center gap-10 w-full max-w-[690px] mx-auto">
-              <div className="flex w-full  justify-center items-center"></div>
+              <div className="w-[100px] md:w-[360px] absolute top-[150px] md:top-52 right-[320px] md:right-[550px] flex ">
+                <div className="text-xs md:text-xl">
+                  Lorem ipsum dolor sit amet consectetur
+                </div>
+                <div className="h-12 w-12  rounded-full flex justify-center items-center ">
+                  <FaDog className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaDog>
+                </div>
+              </div>
+              <div className="w-[100px] md:w-[360px] absolute top-[280px] md:top-[360px] right-[320px] md:right-[600px] flex">
+                <div className="text-xs md:text-xl">
+                  Lorem ipsum dolor sit amet consectetur
+                </div>
+                <div className="h-12 w-12  rounded-full flex justify-center items-center ">
+                  <FaStethoscope className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaStethoscope>
+                </div>
+              </div>
+              <div className="w-[100px] md:w-[360px] absolute top-[360px] md:top-[480px] right-[320px] md:right-[560px] flex">
+                <div className="text-xs md:text-xl">
+                  Lorem ipsum dolor sit amet consectetur
+                </div>
+                <div className="h-12 w-12  rounded-full flex justify-center items-center">
+                  <FaBone className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaBone>
+                </div>
+              </div>
+              <div className="w-[100px] md:w-[360px] absolute top-[480px] left-[200px] md:left-[570px] flex">
+                <div className="h-12 w-12  rounded-full flex justify-center items-center ">
+                  <MdNote className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></MdNote>
+                </div>
+                <div className="text-xs md:text-xl">
+                  Lorem ipsum dolor sit amet consectetur
+                </div>
+              </div>
+              <div className="w-[100px] md:w-[360px] absolute top-[280px] md:top-[350px] left-[320px] md:left-[600px] flex">
+                <div className="h-12 w-12  rounded-full flex justify-center items-center">
+                  <MdEmergencyRecording className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></MdEmergencyRecording>
+                </div>
+                <div className="text-xs md:text-xl">
+                  Lorem ipsum dolor sit amet consectetur
+                </div>
+              </div>
+              <div className="w-[100px] md:w-[360px] absolute top-52 left-[200px]  md:left-[550px] flex ">
+                <div className="h-12 w-12  rounded-full flex justify-center items-center  ">
+                  <FaPaw className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaPaw>
+                </div>
+                <div className="text-xs md:text-xl">
+                  Lorem ipsum dolor sit amet consectetur
+                </div>
+              </div>
             </div>
           </div>
 
