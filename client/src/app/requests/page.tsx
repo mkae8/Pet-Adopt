@@ -1,49 +1,55 @@
 "use client";
+
+import { useState, useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
+import axios from "axios";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Loader2,
+  PawPrint,
+  Send,
+  X,
+} from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { useUser } from "@clerk/nextjs";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { toast, useToast } from "@/hooks/use-toast";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-
-import { Loader } from "@/components/Loader";
+import { Loading } from "@/components/Loading";
 
 const FormSchema = z.object({
   phoneNumber: z.string().min(1, { message: "Утасны дугаар шаардлагатай." }),
-  description: z
-    .string()
-    .max(100, { message: "Тодорхойлолт 100 тэмдэгтээс хэтрэхгүй байх ёстой." }),
+  description: z.string().max(2000, {
+    message: "Тодорхойлолт 2000 тэмдэгтээс хэтрэхгүй байх ёстой.",
+  }),
 });
 
 interface Question {
@@ -65,7 +71,7 @@ interface Request {
     size: string;
     weight: string;
     location: string;
-    status: any;
+    status: "Үрчлүүлэх боломжтой" | "Одоогоор хүлээгдэж байгаа" | "Үрчлэгдсэн";
   };
   userId: {
     _id: string;
@@ -78,7 +84,7 @@ interface Request {
     createdAt: Date;
     updatedAt: Date;
   };
-  ownerId: String;
+  ownerId: string;
   question1: string;
   question2: string;
   question3: string;
@@ -91,7 +97,34 @@ interface Request {
   updatedAt: string;
 }
 
-const Requests = () => {
+const questions: Question[] = [
+  { id: 1, text: "Танд яагаад амьтан үрчлэн авах сонирхол төрсөн бэ?" },
+  { id: 2, text: "Таны амьдрах орчин ямар вэ?" },
+  { id: 3, text: "Танд өөр амьтад бий юу?" },
+  {
+    id: 4,
+    text: "Өмнө нь амьтан тэжээж байсан уу? Хэрэв тийм бол юу болсон бэ?",
+  },
+  { id: 5, text: "Өдөр бүр амьтанд хэр их цаг зарцуулах боломжтой вэ?" },
+  {
+    id: 6,
+    text: "Хэрэв та аялалд гарах эсвэл удаан хугацаагаар хол байх шаардлага гарвал амьтандаа хэрхэн анхаарал тавих төлөвлөгөөтэй вэ?",
+  },
+  {
+    id: 7,
+    text: "Амьтны хоол, малын эмчид үзүүлэх, яаралтай тусламж зэрэг зардлуудад санхүүгийн хувьд бэлтгэлтэй юу?",
+  },
+  { id: 8, text: "Танай өрхөд хүүхэд эсвэл бусад хараат хүн байгаа уу?" },
+];
+
+export default function Component() {
+  const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
+  const [requests, setRequests] = useState<Request[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const user = useUser();
+  const { toast } = useToast();
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -99,53 +132,40 @@ const Requests = () => {
       description: "",
     },
   });
-  const { toast } = useToast();
-  const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
-  const [requests, setRequests] = useState<Request[]>([]);
-  const [loading, setLoading] = useState(true);
-  const user = useUser();
 
-  console.log(user);
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user.isLoaded && user.user?.id) {
+        try {
+          const { data } = await axios.get<Request[]>(
+            `${process.env.BACKEND_URL}/applicationForm/${user.user.id}`
+          );
+          setRequests(data);
+        } catch (error) {
+          console.error("Failed to fetch requests:", error);
+          toast({
+            title: "Error",
+            description: "Failed to load requests. Please try again later.",
+            variant: "destructive",
+          });
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+    fetchData();
+  }, [user.isLoaded, user.user?.id, toast]);
 
-  const openModal = (requests: Request) => {
-    setSelectedRequest(requests);
-  };
-  const questions: Question[] = [
-    { id: 1, text: "Танд яагаад амьтан үрчлэн авах сонирхол төрсөн бэ?" },
-    { id: 2, text: "Таны амьдрах орчин ямар вэ?" },
-    { id: 3, text: "Танд өөр амьтад бий юу?" },
-    {
-      id: 4,
-      text: "Өмнө нь амьтан тэжээж байсан уу? Хэрэв тийм бол юу болсон бэ?",
-    },
-    { id: 5, text: "Өдөр бүр амьтанд хэр их цаг зарцуулах боломжтой вэ?" },
-    {
-      id: 6,
-      text: "Хэрэв та аялалд гарах эсвэл удаан хугацаагаар хол байх шаардлага гарвал амьтандаа хэрхэн анхаарал тавих төлөвлөгөөтэй вэ?",
-    },
-    {
-      id: 7,
-      text: "Амьтны хоол, малын эмчид үзүүлэх, яаралтай тусламж зэрэг зардлуудад санхүүгийн хувьд бэлтгэлтэй юу?",
-    },
-    {
-      id: 8,
-      text: "Танай өрхөд хүүхэд эсвэл бусад хараат хүн байгаа уу?",
-    },
-  ];
+  const openModal = (request: Request) => setSelectedRequest(request);
+  const closeModal = () => setSelectedRequest(null);
 
   const sendEmail = async (data: z.infer<typeof FormSchema>) => {
-    if (!selectedRequest) {
-      toast({
-        title: "Error",
-        description: "No request selected.",
-        variant: "destructive",
-      });
+    if (!selectedRequest || !user.user?.primaryEmailAddress?.emailAddress)
       return;
-    }
 
     setLoading(true);
     try {
-      const response: any = await axios.post(
+      const response = await axios.post(
         `${process.env.BACKEND_URL}/sendMailer`,
         {
           email: selectedRequest.userId.email,
@@ -153,277 +173,256 @@ const Requests = () => {
           description: data.description,
           petName: selectedRequest.petId.petName,
           petId: selectedRequest.petId._id,
-          senderEmail: user.user?.primaryEmailAddress?.emailAddress,
+          senderEmail: user.user.primaryEmailAddress.emailAddress,
         }
       );
-      console.log(response);
 
       if (response.status === 200) {
         toast({
           title: "Амжилттай",
           description: "И-мэйл илгээлээ",
-          variant: "default",
         });
         form.reset();
         closeModal();
       } else {
         throw new Error("Failed to send email");
       }
-      console.log(response);
     } catch (error) {
-      console.log(error);
+      console.error("Failed to send email:", error);
       toast({
         title: "Error",
         description: "И-мэйл илгээхэд алдаа гарлаа",
         variant: "destructive",
       });
-      closeModal();
     } finally {
       setLoading(false);
     }
   };
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    sendEmail(data);
-  }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const { data }: any = await axios.get(
-          `${process.env.BACKEND_URL}/applicationForm/${user.user?.id}`
-        );
-        console.log(data);
-        setRequests(data);
-      } catch (error) {
-        console.log(error);
-      }
-      setLoading(false);
-    };
-    if (user.isLoaded) {
-      fetchData();
-    }
-  }, [user.isLoaded]);
+  const onSubmit = (data: z.infer<typeof FormSchema>) => sendEmail(data);
 
-  const closeModal = () => {
-    setSelectedRequest(null);
-  };
-
-  const getStatusColor = (
-    status: "Үрчлүүлэх боломжтой" | "Одоогоор хүлээгдэж байгаа" | "Үрчлэгдсэн"
-  ) => {
+  const getStatusColor = (status: Request["petId"]["status"]) => {
     switch (status) {
       case "Үрчлүүлэх боломжтой":
         return "bg-yellow-500";
       case "Одоогоор хүлээгдэж байгаа":
         return "bg-green-500";
       case "Үрчлэгдсэн":
-        return "bg-аgrey-500";
+        return "bg-gray-500";
+      default:
+        return "bg-blue-500";
     }
   };
 
   const timeAgo = (timestamp: string): string => {
     const now = new Date();
-    const diff = now.getTime() - new Date(timestamp).getTime(); // Difference in milliseconds
-
+    const diff = now.getTime() - new Date(timestamp).getTime();
     const seconds = Math.floor(diff / 1000);
     const minutes = Math.floor(seconds / 60);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
 
-    if (seconds < 60) {
-      return `${seconds} секундийн${seconds !== 1 ? "" : ""} өмнө`;
-    }
-    if (minutes < 60) {
-      return `${minutes} минутын${minutes !== 1 ? "" : ""} өмнө`;
-    }
-    if (hours < 24) {
-      return `${hours} цагийн${hours !== 1 ? "" : ""} өмнө`;
-    }
-    return `${days} өдрийн${days !== 1 ? "" : ""} өмнө`;
+    if (seconds < 60) return `${seconds} секундийн өмнө`;
+    if (minutes < 60) return `${minutes} минутын өмнө`;
+    if (hours < 24) return `${hours} цагийн өмнө`;
+    return `${days} өдрийн өмнө`;
+  };
+
+  const nextRequest = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % requests.length);
+  };
+
+  const prevRequest = () => {
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + requests.length) % requests.length
+    );
   };
 
   return (
-    <div className="h-[70vh] flex flex-col items-center relative">
-      <div
-        className="absolute inset-0 bg-black opacity-30"
-        style={{
-          backgroundImage: "url('/wallpaper3.jpeg')",
-          zIndex: -1,
-        }}
-      />
-      <div className=" mt-10 md:mt-28 text-3xl font-bold">
-        Үрчлэгчийн мэдээлэл
-      </div>
-      <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-2 md:mt-28 relative z-10">
-        <div className="container mx-auto p-4">
-          <h1 className="text-2xl font-bold mb-4">Хүсэлтүүд</h1>
-          {loading ? (
-            <Loader />
-          ) : (
-            <div className="flex flex-col gap-4 ">
-              <Carousel
-                opts={{
-                  align: "start",
-                }}
-                className="w-full max-w-5xl mx-auto"
-              >
-                <CarouselContent className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3">
-                  {requests.length !== 0
-                    ? requests.toReversed().map((request, index) => (
-                        <CarouselItem
-                          key={index}
-                          className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3"
-                        >
-                          <Card
-                            className="w-full cursor-pointer hover:shadow-lg"
-                            onClick={() => openModal(request)}
-                          >
-                            <CardHeader>
-                              <CardTitle className="flex justify-between items-center">
-                                <div className="truncate flex items-center text-sm gap-2">
-                                  <Avatar>
-                                    <AvatarImage
-                                      className="object-cover"
-                                      src={request.petId.image[0]}
-                                      alt={request.petId.petName}
-                                    />
-                                  </Avatar>{" "}
-                                  <div>
-                                    {request.petId.petName}
-                                    <div className="text-[9px] font-normal">
-                                      {timeAgo(request.createdAt)}
-                                    </div>
-                                  </div>
-                                </div>
-                              </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                              <Badge
-                                className={`${getStatusColor(
-                                  request.petId.status
-                                )} text-white text-xs h-14 text-center hover:${getStatusColor(
-                                  request.petId.status
-                                )}`}
-                              >
-                                {request.petId.status}
-                              </Badge>
-                              <p className="text-sm text-gray-500 h-12 text-wrap truncate">
-                                {request.userId.username}-ээс хүсэлт ирлээ.
-                              </p>
-                              <Button className="mt-4 w-full">
-                                Хүсэлтийг харах
-                              </Button>
-                            </CardContent>
-                          </Card>
-                        </CarouselItem>
-                      ))
-                    : "Хүсэлт алга"}
-                </CarouselContent>
-                {requests.length !== 0 ? (
-                  <>
-                    <CarouselPrevious /> <CarouselNext />
-                  </>
-                ) : (
-                  ""
-                )}
-              </Carousel>
-            </div>
-          )}
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-12">
+          <PawPrint className="inline-block mr-2 text-orange-500" />
+          Үрчлэгчийн мэдээлэл
+        </h1>
 
-          <Dialog open={selectedRequest !== null} onOpenChange={closeModal}>
-            <DialogContent className="z-[100] h-[85%] w-full md:min-h-[800px] max-w-[400px] rounded-md sm:max-w-[600px] lg:max-w-[700px] min-w-[300px]">
-              <ScrollArea className="h-[100%]  w-full  border  rounded-md ">
-                <DialogHeader>
-                  <DialogTitle>{selectedRequest?.userId.username}</DialogTitle>
-                  <div>
-                    <Badge
-                      className={`${getStatusColor(
-                        selectedRequest?.petId.status || "pending"
-                      )} text-white`}
-                    >
-                      {selectedRequest?.petId.status}
-                    </Badge>
-                  </div>
-                </DialogHeader>
-                <div className="mt-2 flex flex-col sm:flex-row gap-4">
-                  <div className="flex flex-col p-5 gap-5">
-                    {questions.map((el, index) => (
-                      <div key={index} className="border rounded-sm px-1 py-2">
-                        <h1 className="font-bold">Асуулт {index + 1}</h1>
-                        <div>{questions[index].text}</div>
-                        <h1 className="font-bold">Хариулт</h1>
-                        <div className="text-slate-600">
-                          {index == 0 ? selectedRequest?.question1 : ""}
-                          {index == 1 ? selectedRequest?.question2 : ""}
-                          {index == 2 ? selectedRequest?.question3 : ""}
-                          {index == 3 ? selectedRequest?.question4 : ""}
-                          {index == 4 ? selectedRequest?.question5 : ""}
-                          {index == 5 ? selectedRequest?.question6 : ""}
-                          {index == 6 ? selectedRequest?.question7 : ""}
-                          {index == 7 ? selectedRequest?.question8 : ""}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="px-5">
-                  Хэрэв та зөвшөөрч байгаа бол доорхыг бөглөнө үү!
-                </div>
-                <Form {...form}>
-                  <form
-                    onSubmit={form.handleSubmit(onSubmit)}
-                    className="w-3/3 space-y-6 px-5"
-                  >
-                    <FormField
-                      control={form.control}
-                      name="phoneNumber"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Утасны дугаар</FormLabel>
-                          <FormControl>
-                            <Input placeholder="Утасны дугаар" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="description"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Нэмэлт мэдээлэл</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Нэмэлт мэдээлэл оруулна уу"
-                              {...field}
+        {loading ? (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-xl flex items-center space-x-4">
+              <Loading />
+            </div>
+          </div>
+        ) : requests.length === 0 ? (
+          <p className="text-center text-gray-600 text-lg">
+            Одоогоор хүсэлт байхгүй байна.
+          </p>
+        ) : (
+          <div className="relative flex justify-center overflow-scroll items-center w-full ">
+            <div className="overflow-hidden">
+              <motion.div
+                className="flex transition-all ease-in-out duration-300"
+                style={{
+                  transform: `translateX(-${currentIndex * 100}%)`,
+                }}
+              >
+                {requests.map((request, index) => (
+                  <div key={request._id} className="w-[500px]  px-4">
+                    <Card className="bg-white shadow-lg rounded-lg overflow-hidden transform transition-all duration-300 hover:scale-105">
+                      <CardHeader className="bg-gradient-to-r from-orange-400 to-pink-500 text-white">
+                        <CardTitle className="flex items-center justify-between">
+                          <span className="text-2xl font-bold">
+                            {request.petId.petName}
+                          </span>
+                          <Badge
+                            className={`${getStatusColor(
+                              request.petId.status
+                            )} text-white px-3 py-1`}
+                          >
+                            {request.petId.status}
+                          </Badge>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-6">
+                        <div className="flex items-center mb-4">
+                          <Avatar className="h-12 w-12 rounded-full border-2 border-orange-500">
+                            <AvatarImage
+                              src={request.petId.image[0]}
+                              alt={request.petId.petName}
                             />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <div className="mt-4 flex justify-between items-center">
-                      <Button onClick={closeModal} className="w-full sm:w-auto">
-                        Хаах
-                      </Button>
-                      <Button
-                        type="submit"
-                        className="bg-green-400"
-                        disabled={loading}
-                      >
-                        {loading ? "Илгээж байна..." : "Илгээх"}
-                      </Button>
+                          </Avatar>
+                          <div className="ml-4">
+                            <p className="text-lg font-semibold">
+                              Энэ хүн таньлуу хүсэлт илгээлээ
+                              {request.userId.username}
+                            </p>
+                            <p className="text-sm text-gray-500">
+                              {timeAgo(request.createdAt)}
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                      <CardFooter className="bg-gray-50 px-6 py-4">
+                        <Button
+                          className="w-full"
+                          onClick={() => openModal(request)}
+                        >
+                          Хүсэлтийг харах
+                        </Button>
+                      </CardFooter>
+                    </Card>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+            {requests.length > 1 && (
+              <>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full shadow-md"
+                  onClick={prevRequest}
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full shadow-md"
+                  onClick={nextRequest}
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </Button>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+
+      <AnimatePresence>
+        {selectedRequest && (
+          <Dialog open={true} onOpenChange={closeModal}>
+            <DialogContent className="sm:max-w-[600px]">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold text-gray-800 flex items-center justify-between">
+                  <span>Хүсэлтийн дэлгэрэнгүй</span>
+                </DialogTitle>
+              </DialogHeader>
+              <ScrollArea className="mt-6 max-h-[60vh] pr-4">
+                <div className="space-y-6 ">
+                  {questions.map((question, index) => (
+                    <div
+                      key={question.id}
+                      className="bg-gray-50  rounded-lg p-4 shadow-sm"
+                    >
+                      <h3 className="font-semibold text-gray-700 mb-2">
+                        {question.text}
+                      </h3>
+                      <p className="text-gray-600">
+                        {(() => {
+                          const value =
+                            selectedRequest[
+                              `question${index + 1}` as keyof Request
+                            ];
+                          return typeof value === "string" ? value : "N/A";
+                        })()}
+                      </p>
                     </div>
-                  </form>
-                </Form>
+                  ))}
+                </div>
               </ScrollArea>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-4 mt-6"
+                >
+                  <FormField
+                    control={form.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Утасны дугаар</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Утасны дугаар" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Нэмэлт мэдээлэл</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Нэмэлт мэдээлэл оруулна уу"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Илгээж байна...
+                      </>
+                    ) : (
+                      <>
+                        <Send className="mr-2 h-4 w-4" />
+                        Имэйл илгээх
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </Form>
             </DialogContent>
           </Dialog>
-        </div>
-      </div>
+        )}
+      </AnimatePresence>
     </div>
   );
-};
-
-export default Requests;
+}

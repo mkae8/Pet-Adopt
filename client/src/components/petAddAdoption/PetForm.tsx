@@ -70,12 +70,17 @@ const PetForm = ({ fetchData }: PetFormProps) => {
     resolver: zodResolver(petSchema),
     defaultValues: {
       petName: "",
+      petCategoryId: "",
+      sex: "",
+      status: "",
+      isVaccined: "",
       age: "",
       description: "",
       location: "",
       weight: "",
     },
   });
+
   const handleUpload = async () => {
     const { data } = await axios.get<{
       uploadUrl: string[];
@@ -144,6 +149,8 @@ const PetForm = ({ fetchData }: PetFormProps) => {
         setLoading(false);
         return;
       }
+      console.log(data);
+
       form.reset();
       setImages([null, null, null]);
       toast({
@@ -199,7 +206,7 @@ const PetForm = ({ fetchData }: PetFormProps) => {
                         <FormLabel>Амьтны төрөл</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -261,7 +268,7 @@ const PetForm = ({ fetchData }: PetFormProps) => {
                         <FormLabel>Хүйс</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -285,7 +292,7 @@ const PetForm = ({ fetchData }: PetFormProps) => {
                         <FormLabel>Хэмжээ</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -326,7 +333,7 @@ const PetForm = ({ fetchData }: PetFormProps) => {
                         <FormLabel>Статус</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -355,7 +362,7 @@ const PetForm = ({ fetchData }: PetFormProps) => {
                         <FormLabel>Вакцинд хамрагдсан эсэх</FormLabel>
                         <Select
                           onValueChange={field.onChange}
-                          defaultValue={field.value}
+                          value={field.value}
                         >
                           <FormControl>
                             <SelectTrigger>
@@ -402,13 +409,19 @@ const PetForm = ({ fetchData }: PetFormProps) => {
                     </FormItem>
                   )}
                 />
-                <div className="flex gap-[67px]">
+                <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 lg:gap-[67px]">
                   {images.map((image, index) => (
-                    <div key={index}>
+                    <div key={index} className="w-[150px] sm:w-[185px]">
                       <label key={index}>
-                        <input type="file" onChange={onImageChange(index)} />
-                        <div className="border relative rounded-sm h-[185px] flex items-center justify-center w-[185px] border-black">
-                          <h1 className="flex items-center">ЗУРАГ НЭМЭХ + </h1>
+                        <input
+                          type="file"
+                          onChange={onImageChange(index)}
+                          className="hidden"
+                        />
+                        <div className="border relative rounded-sm h-[150px] sm:h-[200px] w-full flex items-center justify-center border-black">
+                          <h1 className="text-sm sm:text-base flex justify-center items-center">
+                            ЗУРАГ НЭМЭХ +
+                          </h1>
                           {image && (
                             <Image
                               src={image}
@@ -422,6 +435,7 @@ const PetForm = ({ fetchData }: PetFormProps) => {
                     </div>
                   ))}
                 </div>
+
                 <Button type="submit" className="w-full" disabled={loading}>
                   Мэдээлэл илгээх
                 </Button>
