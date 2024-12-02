@@ -38,6 +38,8 @@ export default function DonationSection() {
   const [selectedAmount, setSelectedAmount] = useState(donationAmounts[0]);
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isDonationPaid, setIsDonationPaid] = useState(false);
+  const [petDonationId, setPetDonationId] = useState("");
 
   const { toast } = useToast();
   const user = useUser();
@@ -78,6 +80,7 @@ export default function DonationSection() {
       );
 
       await generateQR(response.data._id);
+      setPetDonationId(response.data._id);
       setMode("qr");
     } catch (error) {
       toast({
@@ -89,6 +92,24 @@ export default function DonationSection() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    const getDonation = async () => {
+      const donate =
+        petDonationId &&
+        (await axios.get(
+          `${process.env.BACKEND_URL}/donation/${petDonationId}`
+        ));
+
+      setIsDonationPaid(donate && donate.data.isPaid);
+    };
+
+    const donationInterval = setInterval(getDonation, 200);
+
+    return () => {
+      clearInterval(donationInterval);
+    };
+  }, [petDonationId]);
 
   if (loading) {
     return <Loading />;
@@ -176,23 +197,27 @@ export default function DonationSection() {
                 </TabsContent>
 
                 <TabsContent value="qr">
-                  <div className="space-y-4 text-center">
-                    <p className="text-gray-600 text-xl font-bold">
-                      Хандив хийхийн тулд доорх QR кодыг өөрийн утасны camera
-                      -аар уншина уу.
-                    </p>
-                    <div className="flex justify-center">
-                      <img
-                        src={qrCode as string}
-                        alt="Donation QR Code"
-                        className="w-48 h-48"
-                      />
+                  {isDonationPaid ? (
+                    <div>Amjilttia tologdloo</div>
+                  ) : (
+                    <div className="space-y-4 text-center">
+                      <p className="text-gray-600 text-xl font-bold">
+                        Хандив хийхийн тулд доорх QR кодыг өөрийн утасны camera
+                        -аар уншина уу.
+                      </p>
+                      <div className="flex justify-center">
+                        <img
+                          src={qrCode as string}
+                          alt="Donation QR Code"
+                          className="w-48 h-48"
+                        />
+                      </div>
+                      <p className=" text-gray-500 text-xl font-bold">
+                        Хэрэв болсон бол ямар нэгэн хөшөө болж хувьраад хүлээнэ
+                        үү.
+                      </p>
                     </div>
-                    <p className=" text-gray-500 text-xl font-bold">
-                      Хэрэв болсон бол ямар нэгэн хөшөө болж хувьраад хүлээнэ
-                      үү.
-                    </p>
-                  </div>
+                  )}
                 </TabsContent>
               </Tabs>
             </CardContent>
