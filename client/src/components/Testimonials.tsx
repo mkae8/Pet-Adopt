@@ -87,7 +87,7 @@ const Testimonials = () => {
                 key={index}
                 className="flex flex-col w-[500px] rounded-lg bg-white lg:flex-row gap-4"
               >
-                <div className="min-w-[300px] w-[300px] md:w-[500px]  bg-white flex flex-col p-4 rounded-lg shadow-md md:h-[280px] ">
+                <div className="min-w-[300px] w-[300px] md:w-[500px]  bg-white flex flex-col gap-5 p-4 rounded-lg shadow-md md:h-[280px] ">
                   <div className="flex justify-center">
                     <div className="bg-orange-500 h-[90px] w-[90px] flex justify-center items-center rounded-full">
                       <img

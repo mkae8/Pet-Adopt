@@ -86,9 +86,6 @@ export default function Footer() {
                       (976) 99484778
                     </a>
                   </div>
-                  <div className="text-xl text-orange-600 font-serif">
-                    <a href="tel:+97699484778">Call now</a>
-                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-4">

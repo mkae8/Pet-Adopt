@@ -49,6 +49,8 @@ import { FaStethoscope } from "react-icons/fa";
 import { FaBone } from "react-icons/fa";
 import { FaPaw } from "react-icons/fa";
 import { MdNote } from "react-icons/md";
+import { GiFrontTeeth } from "react-icons/gi";
+import { IoEarSharp } from "react-icons/io5";
 
 export default function HomePage() {
   const { toast } = useToast();
@@ -292,59 +294,63 @@ export default function HomePage() {
             <div className="container absolute top-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center gap-10 w-full max-w-[690px] mx-auto">
               <FaPaw className="h-[40px] w-[40px] text-orange-500" />
               <p className="text-3xl font-bold tracking-tighter text-orange-500">
-                Амьтан арчилгаа
+                Нохой арчлах зарим зөвлөгөө
               </p>
               <img
                 className=" w-[200px] md:w-[500px] md:object-contain relative"
                 src="./nohoii.png"
                 alt="Interesting Animal Image"
               />
-              <div className="w-[100px] md:w-[360px] absolute top-[150px] md:top-52 right-[320px] md:right-[550px] flex ">
+              <div className="w-[100px] md:w-[360px] absolute top-[160px] md:top-52 right-[290px] md:right-[550px] flex ">
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Тогтмол арчилгаа нь үхэжсэн арьс, гялалзсан байлгана.
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
                   <FaDog className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaDog>
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[280px] md:top-[360px] right-[320px] md:right-[600px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[220px] md:top-[360px] right-[310px] md:right-[600px] flex">
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Чихний байнгын үзлэг нь чихний халдварын шинж тэмдгийг эрт
+                  илрүүлэхэд тусална.
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
                   <FaStethoscope className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaStethoscope>
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[360px] md:top-[480px] right-[320px] md:right-[560px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[270px] md:top-[480px] right-[295px] md:right-[560px] flex">
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Зөв хоол хүнс нь бүх төрлийн өөрчлөлтийг авчирдаг.
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center">
                   <FaBone className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaBone>
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[480px] left-[200px] md:left-[570px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[270px] md:top-[480px] left-[295px] md:left-[570px] flex">
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
-                  <MdNote className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></MdNote>
+                  <IoEarSharp className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></IoEarSharp>
                 </div>
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Малын эмчийн зөвшөөрлөөр долоо хоног бүр шалгаж, чихийг
+                  цэвэрлэх.
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[280px] md:top-[350px] left-[320px] md:left-[600px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[220px] md:top-[350px] left-[300px] md:left-[600px] flex">
                 <div className="h-12 w-12  rounded-full flex justify-center items-center">
-                  <MdEmergencyRecording className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></MdEmergencyRecording>
+                  <GiFrontTeeth className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></GiFrontTeeth>
                 </div>
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Нохойнхоо шүдийг тогтмол угаах нь буйлны өвчин, шүд цоорохоос
+                  сэргийлнэ.
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-52 left-[200px]  md:left-[550px] flex ">
+              <div className="w-[100px] md:w-[360px] absolute top-[170px] md:top-[220px] left-[290px]  md:left-[550px] flex ">
                 <div className="h-12 w-12  rounded-full flex justify-center items-center  ">
                   <FaPaw className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaPaw>
                 </div>
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Нохойныхоо хумсыг тайрсыхаа дараа шууд шагнаж амттан
+                  хэрэглээрэй.
                 </div>
               </div>
             </div>
