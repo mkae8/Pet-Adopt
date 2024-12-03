@@ -467,12 +467,12 @@
     client-only "^0.0.1"
     xstate "^5.15.0"
 
-"@clerk/localizations@^3.6.0":
-  version "3.6.5"
-  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.6.5.tgz#31d2e88491ce3dc1f2a8d622205bfdc410ac4c75"
-  integrity sha512-8EKgl3s68uOqmBvuIqhBdfxMmmu9iG1LBZFx6n0ShOz+6Zvr/MtWZgiB20bhan9R8FEeayG0wbcMbaXM7f9UlQ==
+"@clerk/localizations@^3.7.1":
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.7.1.tgz#bccd9757117cc59a6e0d054a02fbca4cae2ac6df"
+  integrity sha512-+nfrOj+r0QxebXhLPv5gDs1u69L3/NyPOThmscdEQIA45GTzGvxSG4KfKzX5Ae5fi84S3W89mnhFuh8lJ2sQ+Q==
   dependencies:
-    "@clerk/types" "4.34.1"
+    "@clerk/types" "4.35.1"
 
 "@clerk/nextjs@^6.3.0":
   version "6.4.1"
@@ -504,6 +504,13 @@
   version "4.34.1"
   resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.34.1.tgz#ca96d1b762c70b81a94792feb7ffe84f449a313e"
   integrity sha512-FaeHmmoZkIrPrU6AOJ8FUke+LM8ZH072w0Aog6kbQGL3bCBZgUGFy7faTzozxbd+TWTbzVDoTAbDeZCq21UOFg==
+  dependencies:
+    csstype "3.1.1"
+
+"@clerk/types@4.35.1":
+  version "4.35.1"
+  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.35.1.tgz#ad6eeaac5e7e2a1acdb50531e6a9db2d6fdd6ca0"
+  integrity sha512-+okFnYScyXF8/b2LZ97UM98hB3kn7vmgXG/oDbAXC1rl47CWfdYnCfoeHcGZtJMiFv8PoP3sgom86+iPaALQwQ==
   dependencies:
     csstype "3.1.1"
 

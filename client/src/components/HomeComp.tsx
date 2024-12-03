@@ -303,7 +303,8 @@ export default function HomePage() {
               />
               <div className="w-[100px] md:w-[360px] absolute top-[160px] md:top-52 right-[290px] md:right-[550px] flex ">
                 <div className="text-xs md:text-xl">
-                  Тогтмол арчилгаа нь үхэжсэн арьс, гялалзсан байлгана.
+                  Дасгал хөдөлгөөн, оюун ухаан хөгжил
+
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
                   <FaDog className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaDog>
@@ -311,8 +312,7 @@ export default function HomePage() {
               </div>
               <div className="w-[100px] md:w-[360px] absolute top-[220px] md:top-[360px] right-[310px] md:right-[600px] flex">
                 <div className="text-xs md:text-xl">
-                  Чихний байнгын үзлэг нь чихний халдварын шинж тэмдгийг эрт
-                  илрүүлэхэд тусална.
+                  Эрүүл мэндийн үзлэг, вакцинжуулалт
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
                   <FaStethoscope className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaStethoscope>
@@ -320,7 +320,7 @@ export default function HomePage() {
               </div>
               <div className="w-[100px] md:w-[360px] absolute top-[270px] md:top-[480px] right-[295px] md:right-[560px] flex">
                 <div className="text-xs md:text-xl">
-                  Зөв хоол хүнс нь бүх төрлийн өөрчлөлтийг авчирдаг.
+                  Хоол тэжээлд анхаарал тавих
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center">
                   <FaBone className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaBone>
@@ -331,8 +331,7 @@ export default function HomePage() {
                   <IoEarSharp className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></IoEarSharp>
                 </div>
                 <div className="text-xs md:text-xl">
-                  Малын эмчийн зөвшөөрлөөр долоо хоног бүр шалгаж, чихийг
-                  цэвэрлэх.
+                  Биеийн халуун, орчны тохиромжтой байдал
                 </div>
               </div>
               <div className="w-[100px] md:w-[360px] absolute top-[220px] md:top-[350px] left-[300px] md:left-[600px] flex">
@@ -340,8 +339,7 @@ export default function HomePage() {
                   <GiFrontTeeth className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></GiFrontTeeth>
                 </div>
                 <div className="text-xs md:text-xl">
-                  Нохойнхоо шүдийг тогтмол угаах нь буйлны өвчин, шүд цоорохоос
-                  сэргийлнэ.
+                  Тамхи, химийн бодисоос хол байлгах
                 </div>
               </div>
               <div className="w-[100px] md:w-[360px] absolute top-[170px] md:top-[220px] left-[290px]  md:left-[550px] flex ">
@@ -349,13 +347,11 @@ export default function HomePage() {
                   <FaPaw className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaPaw>
                 </div>
                 <div className="text-xs md:text-xl">
-                  Нохойныхоо хумсыг тайрсыхаа дараа шууд шагнаж амттан
-                  хэрэглээрэй.
+                  Сэтгэл санааны анхаарал
                 </div>
               </div>
             </div>
           </div>
-
           <img
             src="./bottomshape.png"
             alt="Bottom Shape"

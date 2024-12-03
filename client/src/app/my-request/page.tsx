@@ -160,7 +160,7 @@ const Requests = () => {
       case "Одоогоор хүлээгдэж байгаа":
         return "bg-green-500";
       case "Үрчлэгдсэн":
-        return "bg-аgrey-500";
+        return "bg-gray-300";
     }
   };
 

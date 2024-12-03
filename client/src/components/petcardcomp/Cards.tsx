@@ -88,7 +88,7 @@ export const Cards = ({ pet }: { pet: Pet }) => {
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 799) {
+    if (typeof window !== "undefined" && window.innerWidth < 1100) {
       setIsHovered(true);
     }
   }, []);
@@ -104,6 +104,7 @@ export const Cards = ({ pet }: { pet: Pet }) => {
       prevIndex === 0 ? pet.image.length - 1 : prevIndex - 1
     );
   };
+  console.log(isHovered);
 
   return (
     <>
@@ -117,7 +118,7 @@ export const Cards = ({ pet }: { pet: Pet }) => {
         <img
           src={pet.image[0]}
           alt={pet.petName}
-          className="w-full h-96 object-cover"
+          className="w-[384px] h-96 object-cover"
         />
         <motion.div
           className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4"
