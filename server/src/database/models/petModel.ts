@@ -33,30 +33,34 @@ export type PetsModelType = {
   location: string;
   isVaccined: IsVaccined;
   status: Status;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
-const PetSchema = new Schema<PetsModelType>({
-  userId: { type: Schema.Types.ObjectId, required: true, ref: "Users" },
-  petCategoryId: {
-    type: Schema.Types.ObjectId,
-    required: false,
-    ref: "Category",
+const PetSchema = new Schema<PetsModelType>(
+  {
+    userId: { type: Schema.Types.ObjectId, required: true, ref: "Users" },
+    petCategoryId: {
+      type: Schema.Types.ObjectId,
+      required: false,
+      ref: "Category",
+    },
+    petName: { type: String, required: true },
+    isVaccined: { type: String, required: false },
+    image: { type: [String], required: true },
+    description: { type: String, required: true },
+    age: { type: String, required: true },
+    sex: { type: String, enum: Object.values(Sex), required: true },
+    size: { type: String, enum: Object.values(Size), required: true },
+    weight: { type: String, required: true },
+    location: { type: String, required: true },
+    status: {
+      type: String,
+      enum: Object.values(Status),
+      required: false,
+    },
   },
-  petName: { type: String, required: true },
-  isVaccined: { type: String, required: false },
-  image: { type: [String], required: true },
-  description: { type: String, required: true },
-  age: { type: String, required: true },
-  sex: { type: String, enum: Object.values(Sex), required: true },
-  size: { type: String, enum: Object.values(Size), required: true },
-  weight: { type: String, required: true },
-  location: { type: String, required: true },
-  status: {
-    type: String,
-    enum: Object.values(Status),
-    required: false,
-  },
-});
-
+  { timestamps: true }
+);
 export const PetModel: Model<PetsModelType> =
   models["Pets"] || model<PetsModelType>("Pets", PetSchema);

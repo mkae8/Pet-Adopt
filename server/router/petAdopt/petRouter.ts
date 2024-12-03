@@ -16,5 +16,3 @@ petRouter.route("/statusupdate").post(statusUpdate);
 petRouter.route("/update/pet").post(authMiddleware, petUpdate);
 export default petRouter;
 
-// 8000 / get / pet
-// >post huselt
