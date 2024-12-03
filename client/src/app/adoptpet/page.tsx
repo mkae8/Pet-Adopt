@@ -120,7 +120,6 @@ export default function CardsStatusPage() {
       const { data } = await axios.get<CardData[]>(
         `${process.env.BACKEND_URL}/pet-get/${user.user?.id}`
       );
-      console.log(data);
       if (data.length == 0) {
         setCards(undefined);
       } else {
@@ -139,7 +138,6 @@ export default function CardsStatusPage() {
           `${process.env.BACKEND_URL}/petdelete`,
           { id: id }
         );
-        console.log(data);
         if (data) {
           toast({
             title: `${data.message}`,
@@ -151,10 +149,8 @@ export default function CardsStatusPage() {
       }
     };
     deletePet();
-    console.log(id);
   };
   useEffect(() => {
-    console.log(user.isLoaded);
     if (user.isLoaded) {
       fetchPet();
     }
@@ -167,7 +163,6 @@ export default function CardsStatusPage() {
           `${process.env.BACKEND_URL}/statusupdate`,
           { id, newStatus }
         );
-        console.log(data);
         if (data) {
           toast({
             title: `${data.message}`,
@@ -224,11 +219,8 @@ export default function CardsStatusPage() {
       uploadUrl: string[];
       accessUrls: string[];
     }>(`${process.env.BACKEND_URL}/image/${uploadImages.length}`);
-    console.log(data);
 
     const uploadUrls = data.uploadUrl;
-    console.log(uploadUrls);
-
     const accessUrls = data.accessUrls;
     imageArray = data.accessUrls;
 
@@ -291,9 +283,6 @@ export default function CardsStatusPage() {
   });
 
   const [fetchPetid, setFetchPetid] = useState<string>();
-  console.log(categories);
-  console.log(cards);
-
   const handleSubmit = async (data: z.infer<typeof petSchema>) => {
     setLoading1(true);
     const imgData = await handleUpload();

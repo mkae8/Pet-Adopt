@@ -86,11 +86,8 @@ const PetForm = ({ fetchData }: PetFormProps) => {
       uploadUrl: string[];
       accessUrls: string[];
     }>(`${process.env.BACKEND_URL}/image/${uploadImages.length}`);
-    console.log(data);
 
     const uploadUrls = data.uploadUrl;
-    console.log(uploadUrls);
-
     const accessUrls = data.accessUrls;
     imageArray = data.accessUrls;
 
@@ -159,8 +156,6 @@ const PetForm = ({ fetchData }: PetFormProps) => {
         setLoading(false);
         return;
       }
-      console.log(data);
-
       form.reset();
       setImages([null, null, null]);
       toast({

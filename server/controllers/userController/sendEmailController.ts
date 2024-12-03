@@ -47,9 +47,6 @@ export const sendEmailController = async (req: any, res: any) => {
     const pet = await PetModel.findById(petId);
     const user = await UserModel.findOne({ email });
     const senderUser = await UserModel.findOne({ email: senderEmail });
-    console.log(req.body);
-    console.log(pet);
-
     if (!user) {
       return res.status(404).send({ message: "Хэрэглэгч олдсонгүй" });
     }

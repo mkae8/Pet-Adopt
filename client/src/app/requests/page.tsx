@@ -105,8 +105,6 @@ const Requests = () => {
   const [loading, setLoading] = useState(true);
   const user = useUser();
 
-  console.log(user);
-
   const openModal = (requests: Request) => {
     setSelectedRequest(requests);
   };
@@ -156,7 +154,6 @@ const Requests = () => {
           senderEmail: user.user?.primaryEmailAddress?.emailAddress,
         }
       );
-      console.log(response);
 
       if (response.status === 201) {
         toast({
@@ -167,13 +164,11 @@ const Requests = () => {
       } else {
         throw new Error("Failed to send email");
       }
-      console.log(response);
     } catch (error) {
       console.log(error);
       toast({
         title: "Амжилттай",
         description: "и-мэйл илгээлээ",
-        // variant: "destructive",
       });
       closeModal();
     } finally {

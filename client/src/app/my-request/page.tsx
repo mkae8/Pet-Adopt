@@ -101,8 +101,6 @@ const Requests = () => {
   const [loading, setLoading] = useState(true);
   const user = useUser();
 
-  console.log(user);
-
   const openModal = (requests: Request) => {
     setSelectedRequest(requests);
   };
@@ -135,7 +133,6 @@ const Requests = () => {
         const { data }: any = await axios.get(
           `${process.env.BACKEND_URL}/myapplicationForm/${user.user?.id}`
         );
-        console.log(data);
         setRequests(data);
       } catch (error) {
         console.log(error);
@@ -184,7 +181,6 @@ const Requests = () => {
     }
     return `${days} өдрийн${days !== 1 ? "" : ""} өмнө`;
   };
-  console.log(requests);
 
   return (
     <div className="h-[70vh] flex flex-col items-center relative">

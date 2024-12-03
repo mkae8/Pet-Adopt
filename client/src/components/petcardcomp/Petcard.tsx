@@ -58,10 +58,7 @@ const Petcard = () => {
 
   const [filter, setFilter] = useQueryState("filter");
 
-  useEffect(() => {
-    console.log(filter);
-    console.log(pets);
-  }, [filter]);
+  useEffect(() => {}, [filter]);
 
   const filteredPets =
     filter === "бүгд"
