@@ -3,9 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { PawPrintIcon } from "lucide-react";
+import { PawPrintIcon, PlusCircle, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import Image from "next/image";
 import {
   Form,
   FormControl,
@@ -27,7 +27,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   CheckCircle,
   Clock,
@@ -111,6 +111,9 @@ export default function CardsStatusPage() {
   const [cards, setCards] = useState<CardData[]>();
   const [loading, setLoading] = useState(true);
   const user = useUser();
+  const [uploadImages, setUploadImages] = useState<File[]>([]);
+  const [images, setImages] = useState<(string | null)[]>([null, null, null]);
+  let imageArray: string[];
 
   const fetchPet = async () => {
     try {
@@ -216,34 +219,61 @@ export default function CardsStatusPage() {
     }
   };
 
-  const uploadImage = async () => {
-    if (image) {
-      try {
-        const data: any = await getPresignedURL();
-        await axios.put(data.uploadUrl, image, {
-          headers: { "Content-Type": image.type },
-        });
-        return data;
-      } catch (error) {
-        console.log(error);
-      }
+  const handleUpload = async () => {
+    const { data } = await axios.get<{
+      uploadUrl: string[];
+      accessUrls: string[];
+    }>(`${process.env.BACKEND_URL}/image/${uploadImages.length}`);
+    console.log(data);
+
+    const uploadUrls = data.uploadUrl;
+    console.log(uploadUrls);
+
+    const accessUrls = data.accessUrls;
+    imageArray = data.accessUrls;
+
+    try {
+      await Promise.all(
+        uploadUrls.map(async (uploadUrl: string, index: number) => {
+          await axios.put(uploadUrl, uploadImages[index], {
+            headers: {
+              "Content-Type": uploadImages[index].type,
+            },
+          });
+        })
+      );
+    } catch (error) {
+      console.error("Error uploading file:", error);
     }
   };
 
+  const onImageChange =
+    (index: number) => (event: ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files[0]) {
+        const file = event.target.files[0];
+        setUploadImages([...uploadImages, file]);
+        const newImages = [...images];
+        newImages[index] = URL.createObjectURL(event.target.files[0]);
+        setImages(newImages);
+      }
+    };
+
+  const onImageRemove = (index: number) => {
+    const newImages = [...images];
+    newImages[index] = null;
+    setImages(newImages);
+    setUploadImages((prev) => {
+      const newUploadImages = [...prev];
+      newUploadImages[index] = undefined as any;
+      return newUploadImages;
+    });
+  };
   const getCategories = async () => {
     try {
       const res = await axios.get(`${process.env.BACKEND_URL}/get/categories`);
       setCategories(res.data);
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-
-    if (file) {
-      setImage(file);
     }
   };
 
@@ -266,7 +296,7 @@ export default function CardsStatusPage() {
 
   const handleSubmit = async (data: z.infer<typeof petSchema>) => {
     setLoading1(true);
-    const imgData = await uploadImage();
+    const imgData = await handleUpload();
     try {
       const response = await fetch(`${process.env.BACKEND_URL}/update/pet`, {
         method: "POST",
@@ -275,7 +305,7 @@ export default function CardsStatusPage() {
         },
         body: JSON.stringify({
           ...data,
-          image: [imgData?.accessUrls],
+          image: imageArray,
           id: user.user?.id,
           petId: fetchPetid,
         }),
@@ -461,7 +491,6 @@ export default function CardsStatusPage() {
                         Амьтны дэлгэрэнгүй мэдээллийг оруулна уу
                       </CardDescription>
                     </DialogTitle>
-                    <DialogDescription></DialogDescription>
                   </DialogHeader>
                 </CardHeader>
                 <CardContent>
@@ -470,7 +499,7 @@ export default function CardsStatusPage() {
                       onSubmit={form.handleSubmit(handleSubmit)}
                       className="space-y-6"
                     >
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <FormField
                           control={form.control}
                           name="petCategoryId"
@@ -479,7 +508,7 @@ export default function CardsStatusPage() {
                               <FormLabel>Амьтны төрөл</FormLabel>
                               <Select
                                 onValueChange={field.onChange}
-                                defaultValue={field.value}
+                                value={field.value}
                               >
                                 <FormControl>
                                   <SelectTrigger>
@@ -501,7 +530,6 @@ export default function CardsStatusPage() {
                             </FormItem>
                           )}
                         />
-
                         <FormField
                           control={form.control}
                           name="petName"
@@ -542,7 +570,7 @@ export default function CardsStatusPage() {
                               <FormLabel>Хүйс</FormLabel>
                               <Select
                                 onValueChange={field.onChange}
-                                defaultValue={field.value}
+                                value={field.value}
                               >
                                 <FormControl>
                                   <SelectTrigger>
@@ -566,7 +594,7 @@ export default function CardsStatusPage() {
                               <FormLabel>Хэмжээ</FormLabel>
                               <Select
                                 onValueChange={field.onChange}
-                                defaultValue={field.value}
+                                value={field.value}
                               >
                                 <FormControl>
                                   <SelectTrigger>
@@ -607,7 +635,7 @@ export default function CardsStatusPage() {
                               <FormLabel>Статус</FormLabel>
                               <Select
                                 onValueChange={field.onChange}
-                                defaultValue={field.value}
+                                value={field.value}
                               >
                                 <FormControl>
                                   <SelectTrigger>
@@ -636,7 +664,7 @@ export default function CardsStatusPage() {
                               <FormLabel>Вакцинд хамрагдсан эсэх</FormLabel>
                               <Select
                                 onValueChange={field.onChange}
-                                defaultValue={field.value}
+                                value={field.value}
                               >
                                 <FormControl>
                                   <SelectTrigger>
@@ -686,27 +714,54 @@ export default function CardsStatusPage() {
                           </FormItem>
                         )}
                       />
-                      <div>
-                        <Label htmlFor="picture" className="text-primary">
-                          Зураг{" "}
-                          <span className="text-xs">/Заавал оруулах/</span>
-                        </Label>
-                        <Input
-                          id="picture"
-                          type="file"
-                          onChange={handleFileChange}
-                          className="mt-1"
-                        />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {images.map((image, index) => (
+                          <div key={index} className="relative group">
+                            <label className="block w-full aspect-square rounded-lg overflow-hidden border-2 border-dashed border-gray-300 hover:border-gray-400 transition-colors duration-200 cursor-pointer">
+                              <input
+                                type="file"
+                                onChange={onImageChange(index)}
+                                className="hidden"
+                                accept="image/*"
+                              />
+                              {image ? (
+                                <Image
+                                  src={image}
+                                  alt={`Uploaded image ${index + 1}`}
+                                  fill
+                                  className="object-cover"
+                                />
+                              ) : (
+                                <div className="flex flex-col items-center justify-center h-full text-gray-500">
+                                  <PlusCircle className="w-8 h-8 mb-2" />
+                                  <span className="text-sm font-medium">
+                                    ЗУРАГ НЭМЭХ
+                                  </span>
+                                </div>
+                              )}
+                            </label>
+                            {image && (
+                              <Button
+                                variant="destructive"
+                                size="icon"
+                                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                                onClick={() => onImageRemove(index)}
+                              >
+                                <X className="w-4 h-4" />
+                                <span className="sr-only">Remove image</span>
+                              </Button>
+                            )}
+                          </div>
+                        ))}
                       </div>
-                      <div className="flex justify-center">
-                        <Button
-                          type="submit"
-                          className="w-4/6"
-                          disabled={loading1}
-                        >
-                          Мэдээлэл илгээх
-                        </Button>
-                      </div>
+
+                      <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={loading}
+                      >
+                        Мэдээлэл илгээх
+                      </Button>
                     </form>
                   </Form>
                 </CardContent>

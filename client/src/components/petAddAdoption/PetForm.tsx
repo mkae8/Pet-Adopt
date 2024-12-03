@@ -7,7 +7,7 @@ import { z } from "zod";
 import { toast } from "@/hooks/use-toast";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
-import { Loader2, PawPrintIcon } from "lucide-react";
+import { Loader2, PawPrintIcon, PlusCircle, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -121,6 +121,16 @@ const PetForm = ({ fetchData }: PetFormProps) => {
         setImages(newImages);
       }
     };
+  const onImageRemove = (index: number) => {
+    const newImages = [...images];
+    newImages[index] = null;
+    setImages(newImages);
+    setUploadImages((prev) => {
+      const newUploadImages = [...prev];
+      newUploadImages[index] = undefined as any;
+      return newUploadImages;
+    });
+  };
 
   const handleSubmit = async (data: z.infer<typeof petSchema>) => {
     setLoading(true);
@@ -409,29 +419,43 @@ const PetForm = ({ fetchData }: PetFormProps) => {
                     </FormItem>
                   )}
                 />
-                <div className="flex flex-wrap gap-4 sm:gap-6 md:gap-8 lg:gap-[67px]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {images.map((image, index) => (
-                    <div key={index} className="w-[150px] sm:w-[185px]">
-                      <label key={index}>
+                    <div key={index} className="relative group">
+                      <label className="block w-full aspect-square rounded-lg overflow-hidden border-2 border-dashed border-gray-300 hover:border-gray-400 transition-colors duration-200 cursor-pointer">
                         <input
                           type="file"
                           onChange={onImageChange(index)}
                           className="hidden"
+                          accept="image/*"
                         />
-                        <div className="border relative rounded-sm h-[150px] sm:h-[200px] w-full flex items-center justify-center border-black">
-                          <h1 className="text-sm sm:text-base flex justify-center items-center">
-                            ЗУРАГ НЭМЭХ +
-                          </h1>
-                          {image && (
-                            <Image
-                              src={image}
-                              fill
-                              className="absolute object-cover rounded-sm"
-                              alt="image"
-                            />
-                          )}
-                        </div>
+                        {image ? (
+                          <Image
+                            src={image}
+                            alt={`Uploaded image ${index + 1}`}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="flex flex-col items-center justify-center h-full text-gray-500">
+                            <PlusCircle className="w-8 h-8 mb-2" />
+                            <span className="text-sm font-medium">
+                              ЗУРАГ НЭМЭХ
+                            </span>
+                          </div>
+                        )}
                       </label>
+                      {image && (
+                        <Button
+                          variant="destructive"
+                          size="icon"
+                          className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                          onClick={() => onImageRemove(index)}
+                        >
+                          <X className="w-4 h-4" />
+                          <span className="sr-only">Remove image</span>
+                        </Button>
+                      )}
                     </div>
                   ))}
                 </div>
