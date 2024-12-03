@@ -190,7 +190,6 @@ const Requests = () => {
         const { data }: any = await axios.get(
           `${process.env.BACKEND_URL}/applicationForm/${user.user?.id}`
         );
-        console.log(data);
         setRequests(data);
       } catch (error) {
         console.log(error);
@@ -215,7 +214,7 @@ const Requests = () => {
       case "Одоогоор хүлээгдэж байгаа":
         return "bg-green-500";
       case "Үрчлэгдсэн":
-        return "bg-аgrey-500";
+        return "bg-gray-300";
     }
   };
 

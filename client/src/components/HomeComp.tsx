@@ -301,7 +301,7 @@ export default function HomePage() {
               />
               <div className="w-[100px] md:w-[360px] absolute top-[150px] md:top-52 right-[320px] md:right-[550px] flex ">
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Дасгал хөдөлгөөн, оюун ухаан хөгжил
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
                   <FaDog className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaDog>
@@ -309,7 +309,7 @@ export default function HomePage() {
               </div>
               <div className="w-[100px] md:w-[360px] absolute top-[280px] md:top-[360px] right-[320px] md:right-[600px] flex">
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Эрүүл мэндийн үзлэг, вакцинжуулалт
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
                   <FaStethoscope className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaStethoscope>
@@ -317,7 +317,7 @@ export default function HomePage() {
               </div>
               <div className="w-[100px] md:w-[360px] absolute top-[360px] md:top-[480px] right-[320px] md:right-[560px] flex">
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Хоол тэжээлд анхаарал тавих
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center">
                   <FaBone className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaBone>
@@ -328,7 +328,7 @@ export default function HomePage() {
                   <MdNote className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></MdNote>
                 </div>
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Биеийн халуун, орчны тохиромжтой байдал
                 </div>
               </div>
               <div className="w-[100px] md:w-[360px] absolute top-[280px] md:top-[350px] left-[320px] md:left-[600px] flex">
@@ -336,7 +336,7 @@ export default function HomePage() {
                   <MdEmergencyRecording className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></MdEmergencyRecording>
                 </div>
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Тамхи, химийн бодисоос хол байлгах
                 </div>
               </div>
               <div className="w-[100px] md:w-[360px] absolute top-52 left-[200px]  md:left-[550px] flex ">
@@ -344,12 +344,11 @@ export default function HomePage() {
                   <FaPaw className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaPaw>
                 </div>
                 <div className="text-xs md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur
+                  Сэтгэл санааны анхаарал
                 </div>
               </div>
             </div>
           </div>
-
           <img
             src="./bottomshape.png"
             alt="Bottom Shape"

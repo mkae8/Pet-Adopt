@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import { ClerkProvider, useUser } from "@clerk/nextjs";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/toaster";
-import { localization } from "./util/localization";
+import { mnMN } from "./langs";
 
 import UserControl from "@/components/userData/UserControl";
 import "react-toastify/dist/ReactToastify.css";
@@ -48,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider localization={localization}>
+    <ClerkProvider localization={mnMN}>
       <html lang="en">
         <title>Pet Adoption</title>
         <link rel="icon" type="image/png" href="/logo.png" />
