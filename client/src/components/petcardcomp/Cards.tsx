@@ -219,7 +219,7 @@ export const Cards = ({ pet }: { pet: Pet }) => {
                       key={currentImageIndex}
                       src={pet.image[currentImageIndex]}
                       alt={`${pet.petName} - Image ${currentImageIndex + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-[500px] object-cover"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}

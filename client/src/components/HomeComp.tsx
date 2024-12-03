@@ -49,6 +49,8 @@ import { FaStethoscope } from "react-icons/fa";
 import { FaBone } from "react-icons/fa";
 import { FaPaw } from "react-icons/fa";
 import { MdNote } from "react-icons/md";
+import { GiFrontTeeth } from "react-icons/gi";
+import { IoEarSharp } from "react-icons/io5";
 
 export default function HomePage() {
   const { toast } = useToast();
@@ -292,22 +294,23 @@ export default function HomePage() {
             <div className="container absolute top-20 left-1/2 transform -translate-x-1/2 flex flex-col items-center justify-center text-center gap-10 w-full max-w-[690px] mx-auto">
               <FaPaw className="h-[40px] w-[40px] text-orange-500" />
               <p className="text-3xl font-bold tracking-tighter text-orange-500">
-                Амьтан арчилгаа
+                Нохой арчлах зарим зөвлөгөө
               </p>
               <img
                 className=" w-[200px] md:w-[500px] md:object-contain relative"
                 src="./nohoii.png"
                 alt="Interesting Animal Image"
               />
-              <div className="w-[100px] md:w-[360px] absolute top-[150px] md:top-52 right-[320px] md:right-[550px] flex ">
+              <div className="w-[100px] md:w-[360px] absolute top-[160px] md:top-52 right-[290px] md:right-[550px] flex ">
                 <div className="text-xs md:text-xl">
                   Дасгал хөдөлгөөн, оюун ухаан хөгжил
+
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
                   <FaDog className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaDog>
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[280px] md:top-[360px] right-[320px] md:right-[600px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[220px] md:top-[360px] right-[310px] md:right-[600px] flex">
                 <div className="text-xs md:text-xl">
                   Эрүүл мэндийн үзлэг, вакцинжуулалт
                 </div>
@@ -315,7 +318,7 @@ export default function HomePage() {
                   <FaStethoscope className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaStethoscope>
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[360px] md:top-[480px] right-[320px] md:right-[560px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[270px] md:top-[480px] right-[295px] md:right-[560px] flex">
                 <div className="text-xs md:text-xl">
                   Хоол тэжээлд анхаарал тавих
                 </div>
@@ -323,23 +326,23 @@ export default function HomePage() {
                   <FaBone className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaBone>
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[480px] left-[200px] md:left-[570px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[270px] md:top-[480px] left-[295px] md:left-[570px] flex">
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
-                  <MdNote className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></MdNote>
+                  <IoEarSharp className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></IoEarSharp>
                 </div>
                 <div className="text-xs md:text-xl">
                   Биеийн халуун, орчны тохиромжтой байдал
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[280px] md:top-[350px] left-[320px] md:left-[600px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[220px] md:top-[350px] left-[300px] md:left-[600px] flex">
                 <div className="h-12 w-12  rounded-full flex justify-center items-center">
-                  <MdEmergencyRecording className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></MdEmergencyRecording>
+                  <GiFrontTeeth className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></GiFrontTeeth>
                 </div>
                 <div className="text-xs md:text-xl">
                   Тамхи, химийн бодисоос хол байлгах
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-52 left-[200px]  md:left-[550px] flex ">
+              <div className="w-[100px] md:w-[360px] absolute top-[170px] md:top-[220px] left-[290px]  md:left-[550px] flex ">
                 <div className="h-12 w-12  rounded-full flex justify-center items-center  ">
                   <FaPaw className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaPaw>
                 </div>
