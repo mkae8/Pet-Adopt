@@ -304,7 +304,6 @@ export default function HomePage() {
               <div className="w-[100px] md:w-[360px] absolute top-[160px] md:top-52 right-[290px] md:right-[550px] flex ">
                 <div className="text-xs md:text-xl">
                   Дасгал хөдөлгөөн, оюун ухаан хөгжил
-
                 </div>
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
                   <FaDog className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaDog>
@@ -383,7 +382,7 @@ export default function HomePage() {
                 <p className="text-xl font-bold tracking-tighter text-orange-500">
                   Амьтнаа сонгох
                 </p>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                <p className="mx-auto max-w-[700px] text-justify text-gray-500 md:text-xl dark:text-gray-400">
                   Та өөрийн дуртай амьтнаа сайтар бодож сонгон үрчилж авах
                   эсэхээ эргэцүүлэн бодоорой. Энэ сонгож авсан амьтан таны нэг
                   насны анд юм шүү.
@@ -404,7 +403,7 @@ export default function HomePage() {
                 <p className="text-xl font-bold tracking-tighter text-orange-500">
                   Амьтнаа таниж мэдэх
                 </p>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                <p className="mx-auto max-w-[700px] text-justify text-gray-500 md:text-xl dark:text-gray-400">
                   Таны сонгож авсан амьтан ямархуу зан ааштайг таньж мэдэхийн
                   тулд тоглоом тоглох эсвэл өөр ямар нэгэн арга хэрэглэж
                   үзээрэй.
@@ -425,7 +424,7 @@ export default function HomePage() {
                 <p className="text-xl font-bold tracking-tighter text-orange-500">
                   Гэртээ дасгах
                 </p>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                <p className="mx-auto max-w-[700px] text-justify text-gray-500 md:text-xl dark:text-gray-400">
                   Амьтан гэртээ тэжээх нь хүүхдийн хүмүүжилд сайнаар нөлөөлдөг.
                   Хүүхэд багаасаа амьтныг хайрлаж сурдаг юм. Та амьтнаа
                   хүүхэдтэйгээ ойр байлгаарай.

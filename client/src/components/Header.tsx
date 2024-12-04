@@ -27,7 +27,6 @@ export default function Header() {
 
   const user = useUser();
 
-
   useEffect(() => {});
 
   const DotIcon = () => {
@@ -107,6 +106,12 @@ export default function Header() {
                   className="w-44 hover:nav_link nhome_link btn_text font-bold"
                 >
                   Үрчлэгдсэн амьтад
+                </Link>
+                <Link
+                  href="/donation"
+                  className="w-44 hover:nav_link nhome_link btn_text font-bold"
+                >
+                  Хандив
                 </Link>
               </nav>
             </div>
@@ -207,6 +212,15 @@ export default function Header() {
                 }}
               >
                 Үрчлэгдсэн амьтад
+              </Link>
+              <Link
+                href="/donation"
+                className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-accent"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                }}
+              >
+                Хандив
               </Link>
             </div>
             <div className="pt-4 pb-3 border-t border-muted">

@@ -7,6 +7,12 @@ import { PawPrintIcon, PlusCircle, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   Form,
   FormControl,
   FormField,
@@ -349,21 +355,36 @@ export default function CardsStatusPage() {
       <h1 className="text-3xl mt-2 md:mt-10  font-bold ">
         Таны үрчлүүлэх амьтад
       </h1>
-      <div className="text-[15px]">Үрчлэгдсэн:</div>
-      <div className="text-[12px]">
-        /та амьтны статусыг үрчлэгдсэн болгосноор тухайн амьтан луу хүсэлт
-        илгээх боломжгүй болж үрчлэгдсэн амьтдын хэсэгт шилжинэ/
-      </div>
-      <div className="text-[15px]">Одоогоор хүлээгдэж байгаа:</div>
-      <div className="text-[12px]">
-        /гадаадаадaac ирж буй аль эсвэл төрөх гэж буй зулзага ямар нэгэн
-        шалтгаанаар хүлээгдэж буй амьтадыг энэ ангилалд оруулна тань руу хүсэлт
-        илгээж болно/
-      </div>
-      <div className="text-[15px]"> Үрчлэх боломжтой:</div>
-      <div className="text-[12px]">
-        /шууд үрчилж өгөхөд бэлэн амьтадыг энэ ангилалд оруулна/
-      </div>
+      <Accordion type="single" collapsible className="max-w-96">
+        <AccordionItem value="item-1">
+          <AccordionTrigger className="font-semibold">
+            Үрчлэгдсэн гэж юу вэ?
+          </AccordionTrigger>
+          <AccordionContent>
+            Та амьтны статусыг үрчлэгдсэн болгосноор тухайн амьтан луу хүсэлт
+            илгээх боломжгүй болж үрчлэгдсэн амьтдын хэсэгт шилжинэ
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+          <AccordionTrigger className="font-semibold">
+            Одоогоор хүлээгдэж байгаа гэж юу вэ ?
+          </AccordionTrigger>
+          <AccordionContent>
+            Гадаадаадaac ирж буй аль эсвэл төрөх гэж буй зулзага ямар нэгэн
+            шалтгаанаар хүлээгдэж буй амьтадыг энэ ангилалд оруулна тань руу
+            хүсэлт илгээж болно
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-3">
+          <AccordionTrigger className="font-semibold">
+            Үрчлэх боломжтой гэж юу вэ ?
+          </AccordionTrigger>
+          <AccordionContent>
+            Шууд үрчилж өгөхөд бэлэн амьтадыг энэ ангилалд оруулна
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
       <ScrollArea className="md:h-[100%] h-[75%] w-full md:border-none border  rounded-md ">
         {loading ? (
           <Loader />
