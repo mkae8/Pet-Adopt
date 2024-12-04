@@ -105,8 +105,6 @@ export const Cards = ({ pet }: { pet: Pet }) => {
       prevIndex === 0 ? pet.image.length - 1 : prevIndex - 1
     );
   };
-  console.log(isHovered);
-
   return (
     <>
       <motion.div
