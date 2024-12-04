@@ -26,13 +26,17 @@ const UserControl = ({
     };
 
     try {
-      const endpoint = userData.id ? "/user/update" : "/user/register";
-      await axios.post(`${process.env.BACKEND_URL}${endpoint}`, userData);
+      await axios.post(`${process.env.BACKEND_URL}/user/register`, userData);
     } catch (error) {
-      console.error(
-        `Error ${userData.id ? "updating" : "registering"} user:`,
-        error
-      );
+      console.log(`Error  user:`, error);
+    } finally {
+      setLoading(false);
+    }
+
+    try {
+      await axios.post(`${process.env.BACKEND_URL}/user/update`, userData);
+    } catch (error) {
+      console.log(`Error  user:`, error);
     } finally {
       setLoading(false);
     }
