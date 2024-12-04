@@ -188,13 +188,13 @@ export default function HomePage() {
               transition={{ duration: 0.5 }}
               className="flex-1"
             >
-              <div className="w-full max-w-[1200px] bg-[#1D2B32] p-4 rounded-sm flex flex-col md:w-screen md:flex-col gap-5 items-center justify-between">
+              <div className="w-full max-w-[1200px] bg-[#1D2B32] p-4 rounded-sm flex flex-col lg:w-screen lg:flex-col gap-5 items-center justify-between">
                 <div className="flex-1 text-center md:text-left">
                   <h2 className="text-white text-2xl md:text-3xl font-bold">
                     Тэжээвэр амьтан хайх
                   </h2>
                 </div>
-                <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto items-center justify-center mt-4 md:mt-0">
+                <div className="flex flex-col lg:flex-row gap-4 w-full md:w-auto items-center justify-center mt-4 md:mt-0">
                   <Button
                     onClick={() => handleClick("Dog")}
                     className="bg-orange-500 hover:bg-orange-600/90 text-white text-lg flex justify-center items-center h-[60px] md:h-[80px] w-full max-w-[200px]"

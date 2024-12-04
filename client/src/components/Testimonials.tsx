@@ -80,18 +80,18 @@ const Testimonials = () => {
         <div className="container absolute top-72 left-1/2 overflow-hidden transform -translate-x-1/2 flex flex-col lg:flex-row justify-center gap-10 w-full max-w-[1000px]">
           <div
             ref={testimonialRef}
-            className="flex justify-start gap-5 overflow-x-auto algabol"
+            className="flex justify-start gap-5 px-5 overflow-x-auto algabol"
           >
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
                 className="flex flex-col w-[500px] rounded-lg bg-white lg:flex-row gap-4"
               >
-                <div className="min-w-[300px] w-[300px] md:w-[500px]  bg-white flex flex-col gap-5 p-4 rounded-lg shadow-md md:h-[280px] ">
+                <div className="min-w-[300px] w-[300px] lg:w-[480px] h-full  bg-white flex flex-col gap-5 p-4 rounded-lg shadow-md lg:h-[280px] ">
                   <div className="flex justify-center">
                     <div className="bg-orange-500 h-[90px] w-[90px] flex justify-center items-center rounded-full">
                       <img
-                        className="h-[70px] w-[70px] rounded-full object-fit"
+                        className="h-[70px] w-[70px] rounded-full object-cover"
                         src={testimonial.image}
                         alt={testimonial.name}
                       />
