@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { ToastAction } from "@/components/ui/toast";
+import { boolean } from "zod";
 
 type Pet = {
   _id: string;
@@ -41,8 +42,8 @@ type PetCategory = {
 };
 
 export const Cards = ({ pet }: { pet: Pet }) => {
-  const [isHovered, setIsHovered] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const router = useRouter();
   const data = useUser();
@@ -88,7 +89,7 @@ export const Cards = ({ pet }: { pet: Pet }) => {
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined" && window.innerWidth < 1100) {
+    if (window.innerWidth < 1000) {
       setIsHovered(true);
     }
   }, []);
@@ -122,7 +123,7 @@ export const Cards = ({ pet }: { pet: Pet }) => {
         />
         <motion.div
           className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4"
-          initial={{ height: "auto" }}
+          initial={{ height: "15%" }}
           animate={{ height: isHovered ? "auto" : "15%" }}
           transition={{ duration: 0.5 }}
         >

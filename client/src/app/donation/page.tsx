@@ -11,6 +11,7 @@ import { CreditCard, QrCode } from "lucide-react";
 import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export type DonateModelType = {
   _id: string;
@@ -114,7 +115,7 @@ export default function DonationSection() {
   if (loading) {
     return <Loading />;
   }
-
+  const router = useRouter();
   return (
     <section className="bg-gray-50 py-16">
       <div className="container mx-auto px-4">
@@ -198,7 +199,17 @@ export default function DonationSection() {
 
                 <TabsContent value="qr">
                   {isDonationPaid ? (
-                    <div>Amjilttia tologdloo</div>
+                    <div>
+                      Шилжүүлэг амжилттай. Таньд баярлалаа.{" "}
+                      <Button
+                        onClick={() => {
+                          router.push("/");
+                        }}
+                        className="w-full text-xl font-bold"
+                      >
+                        Нүүр хуудаслуу буцах
+                      </Button>
+                    </div>
                   ) : (
                     <div className="space-y-4 text-center">
                       <p className="text-gray-600 text-xl font-bold">

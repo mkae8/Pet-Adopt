@@ -11,6 +11,7 @@ import { GrInstagram } from "react-icons/gr";
 import { usePathname } from "next/navigation";
 import { IoLocationOutline } from "react-icons/io5";
 import Image from "next/image";
+import { FaPhone } from "react-icons/fa6";
 
 export default function Footer() {
   const pathname = usePathname();
@@ -45,7 +46,7 @@ export default function Footer() {
               height={128}
             />
 
-            <div className="mt-6 text-center md:text-left">
+            <div className=" text-center md:text-left">
               <h3 className="text-xl font-bold mb-4 text-[#0a303a]">
                 Холбоосууд
               </h3>
@@ -68,14 +69,20 @@ export default function Footer() {
                 >
                   Үрчлэгдсэн амьтад
                 </Link>
+                <Link
+                  href="/donation"
+                  className="hover:text-orange-600 transition-colors text-[#0a303a]"
+                >
+                  Хандив
+                </Link>
               </div>
             </div>
           </div>
-          <div className="flex flex-col justify-between flex-grow">
-            <div className="flex flex-col sm:flex-row gap-6 sm:gap-10 mt-5">
+          <div className="flex flex-col justify-center flex-grow">
+            <div className="flex flex-col sm:flex-col gap-3 sm:gap-4 mt-5">
               <div className="flex items-center gap-4">
                 <div className="h-16 w-16 flex-shrink-0 flex justify-center items-center rounded-full bg-orange-500 text-white">
-                  <FaHeadphonesAlt className="h-8 w-8 text-[#0a303a]" />
+                  <FaPhone className="h-6 w-6 text-[#0a303a]" />
                 </div>
                 <div className="flex flex-col">
                   <div className="text-xl font-bold text-[#0a303a]">
@@ -106,7 +113,7 @@ export default function Footer() {
                 </div>
               </div>
             </div>
-            <div className="text-[#0a303a] text-base sm:text-lg mt-6">
+            <div className="text-[#0a303a] text-justify text-base sm:text-lg mt-6">
               Бид үйлчлүүлэгчиддээ хамгийн сайн үйлчилгээг үзүүлэхийн төлөө
               ажилладаг.гэрийн тэжээвэр амьтдыг хамгаалах, нийгэмд эерэг, зөв
               ойлголт түгээх, гудамжинд зовсон амьтангүй жаргалтай нийгмийг бий
@@ -123,25 +130,11 @@ export default function Footer() {
         className="w-full"
       />
       <div className="bg-[#0a303a] py-8 w-full">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-center items-center gap-4">
           <p className="text-gray-400 text-center sm:text-left">
             &copy; {new Date().getFullYear()} Pet Adopt. Бүх эрх хуулиар
             хамгаалагдсан.
           </p>
-          <div className="flex gap-5 text-3xl sm:text-4xl">
-            <a href="#" aria-label="Facebook">
-              <FaFacebook className="hover:text-gray-300 cursor-pointer" />
-            </a>
-            <a href="#" aria-label="Instagram">
-              <GrInstagram className="hover:text-gray-300 cursor-pointer" />
-            </a>
-            <a href="#" aria-label="Twitter">
-              <FaTwitter className="hover:text-gray-300 cursor-pointer" />
-            </a>
-            <a href="#" aria-label="GitHub">
-              <FaGithub className="hover:text-gray-300 cursor-pointer" />
-            </a>
-          </div>
         </div>
       </div>
     </footer>
