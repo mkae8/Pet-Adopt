@@ -199,7 +199,7 @@ export default function DonationSection() {
 
                 <TabsContent value="qr">
                   {isDonationPaid ? (
-                    <div>
+                    <div className="text-center">
                       Шилжүүлэг амжилттай. Таньд баярлалаа.{" "}
                       <Button
                         onClick={() => {
