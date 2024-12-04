@@ -121,8 +121,8 @@ export const Cards = ({ pet }: { pet: Pet }) => {
         />
         <motion.div
           className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white p-4"
-          initial={{ height: "15%" }}
-          animate={{ height: isHovered ? "auto" : "15%" }}
+          initial={{ height: "58px" }}
+          animate={{ height: isHovered ? "auto" : "58px" }}
           transition={{ duration: 0.5 }}
         >
           <div className="flex items-center justify-center gap-x-2 group cursor-pointer">
