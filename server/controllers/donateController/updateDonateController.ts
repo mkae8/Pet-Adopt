@@ -64,9 +64,9 @@ export const updateDonateController = async (req: Request, res: Response) => {
       </head>
       <body>
         <div class="success-container">
-          <h1>Payment Successful</h1>
-          <p>Thank you for your donation! Your payment was processed successfully.</p>
-          <a href="https://pet-adopt-nu.vercel.app/" class="btn">Return to Home</a>
+          <h1>Төлбөрийг амжилттай хийлээ</h1>
+          <p>Хандив өгсөнд баярлалаа! Таны төлбөр амжилттай.</p>
+          <a href="https://pet-adopt-nu.vercel.app/" class="btn">Нүүр хуудас руу буцах</a>
         </div>
       </body>
       </html>
