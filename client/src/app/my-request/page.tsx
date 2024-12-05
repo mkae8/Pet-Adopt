@@ -13,7 +13,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import moment from "moment";
+
+import { motion } from "framer-motion";
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -38,6 +39,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { Loader } from "@/components/Loader";
+import { AnimatePresence } from "framer-motion";
 
 interface Question {
   id: number;
@@ -270,9 +272,9 @@ const Requests = () => {
             </div>
           )}
 
-          <Dialog open={selectedRequest !== null} onOpenChange={closeModal}>
-            <DialogContent className="z-[100] h-[85%] w-full md:min-h-[800px] max-w-[400px] rounded-md sm:max-w-[600px] lg:max-w-[700px] min-w-[300px]">
-              <ScrollArea className="h-[100%]  w-full  border  rounded-md ">
+          <AnimatePresence>
+            <Dialog open={selectedRequest !== null} onOpenChange={closeModal}>
+              <DialogContent className="z-[100] h-[85%] w-full md:min-h-[800px] max-w-[400px] rounded-md sm:max-w-[600px] lg:max-w-[700px] min-w-[300px]">
                 <DialogHeader>
                   <DialogTitle>{selectedRequest?.userId.username}</DialogTitle>
                   <div>
@@ -285,27 +287,35 @@ const Requests = () => {
                     </Badge>
                   </div>
                 </DialogHeader>
-                <div className="mt-2 flex flex-col sm:flex-row gap-4">
-                  <div className="flex flex-col p-5 gap-5">
-                    {questions.map((el, index) => (
-                      <div key={index} className="border rounded-sm px-1 py-2">
-                        <h1 className="font-bold">Асуулт {index + 1}</h1>
-                        <div>{questions[index].text}</div>
-                        <h1 className="font-bold">Хариулт</h1>
-                        <div className="text-slate-600">
-                          {index == 0 ? selectedRequest?.question1 : ""}
-                          {index == 1 ? selectedRequest?.question2 : ""}
-                          {index == 2 ? selectedRequest?.question3 : ""}
-                          {index == 3 ? selectedRequest?.question4 : ""}
-                          {index == 4 ? selectedRequest?.question5 : ""}
-                          {index == 5 ? selectedRequest?.question6 : ""}
-                          {index == 6 ? selectedRequest?.question7 : ""}
-                          {index == 7 ? selectedRequest?.question8 : ""}
+                <ScrollArea className="mt-6 max-h-[60vh] pr-4">
+                  <div className="space-y-4">
+                    {questions.map((question, index) => (
+                      <motion.div
+                        key={question.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        className="bg-gray-50 rounded-lg p-4 shadow-sm"
+                      >
+                        <h3 className="font-semibold text-gray-700 mb-2">
+                          {question.text}
+                        </h3>
+                        <div className="text-gray-600">
+                          <div className="text-slate-600">
+                            {index == 0 ? selectedRequest?.question1 : ""}
+                            {index == 1 ? selectedRequest?.question2 : ""}
+                            {index == 2 ? selectedRequest?.question3 : ""}
+                            {index == 3 ? selectedRequest?.question4 : ""}
+                            {index == 4 ? selectedRequest?.question5 : ""}
+                            {index == 5 ? selectedRequest?.question6 : ""}
+                            {index == 6 ? selectedRequest?.question7 : ""}
+                            {index == 7 ? selectedRequest?.question8 : ""}
+                          </div>
                         </div>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
-                </div>
+                </ScrollArea>
                 <div className="w-3/3 space-y-6 px-5">
                   <div className="mt-4 flex justify-between items-center">
                     <Button onClick={closeModal} className="w-full sm:w-auto">
@@ -313,9 +323,9 @@ const Requests = () => {
                     </Button>
                   </div>
                 </div>
-              </ScrollArea>
-            </DialogContent>
-          </Dialog>
+              </DialogContent>
+            </Dialog>
+          </AnimatePresence>
         </div>
       </div>
     </div>
