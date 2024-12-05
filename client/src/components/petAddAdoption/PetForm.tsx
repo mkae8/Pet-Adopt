@@ -82,10 +82,12 @@ const PetForm = ({ fetchData }: PetFormProps) => {
   });
 
   const handleUpload = async () => {
+    const filteredUploadImages = uploadImages.filter((images) => !!images);
+
     const { data } = await axios.get<{
       uploadUrl: string[];
       accessUrls: string[];
-    }>(`${process.env.BACKEND_URL}/image/${uploadImages.length}`);
+    }>(`${process.env.BACKEND_URL}/image/${filteredUploadImages.length}`);
 
     const uploadUrls = data.uploadUrl;
     const accessUrls = data.accessUrls;
@@ -94,15 +96,15 @@ const PetForm = ({ fetchData }: PetFormProps) => {
     try {
       await Promise.all(
         uploadUrls.map(async (uploadUrl: string, index: number) => {
-          await axios.put(uploadUrl, uploadImages[index], {
+          await axios.put(uploadUrl, filteredUploadImages[index], {
             headers: {
-              "Content-Type": uploadImages[index].type,
+              "Content-Type": filteredUploadImages[index].type,
             },
           });
         })
       );
     } catch (error) {
-      console.error("Error uploading file:", error);
+      console.log("Error uploading file:", error);
     }
   };
 
@@ -110,11 +112,13 @@ const PetForm = ({ fetchData }: PetFormProps) => {
     (index: number) => (event: ChangeEvent<HTMLInputElement>) => {
       if (event.target.files && event.target.files[0]) {
         const file = event.target.files[0];
-
-        setUploadImages([...uploadImages, file]);
-
+        setUploadImages((prev) => {
+          const newUploadImages = [...prev];
+          newUploadImages[index] = file;
+          return newUploadImages;
+        });
         const newImages = [...images];
-        newImages[index] = URL.createObjectURL(event.target.files[0]);
+        newImages[index] = URL.createObjectURL(file);
         setImages(newImages);
       }
     };
@@ -122,9 +126,9 @@ const PetForm = ({ fetchData }: PetFormProps) => {
     const newImages = [...images];
     newImages[index] = null;
     setImages(newImages);
-    setUploadImages((prev) => {
-      const newUploadImages = [...prev];
-      newUploadImages[index] = undefined as any;
+    setUploadImages((prevUploadImages) => {
+      const newUploadImages = [...prevUploadImages];
+      newUploadImages.splice(index, 1); 
       return newUploadImages;
     });
   };
@@ -454,7 +458,6 @@ const PetForm = ({ fetchData }: PetFormProps) => {
                     </div>
                   ))}
                 </div>
-
                 <Button type="submit" className="w-full" disabled={loading}>
                   Мэдээлэл илгээх
                 </Button>
