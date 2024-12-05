@@ -351,7 +351,7 @@ export default function CardsStatusPage() {
   }
 
   return (
-    <div className="container bg-orange-50 h-screen mx-auto p-4">
+    <div className="container bg-orange-50 min-h-screen rounded-2xl mx-auto p-4">
       <h1 className="text-3xl mt-2 md:mt-10  font-bold ">
         Таны үрчлүүлэх амьтад
       </h1>
