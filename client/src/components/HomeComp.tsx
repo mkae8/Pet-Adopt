@@ -162,7 +162,7 @@ export default function HomePage() {
                               }}
                               altText="Goto schedule to undo"
                             >
-                              нэвтрэх
+                              Нэвтрэх
                             </ToastAction>
                           ),
                         });
