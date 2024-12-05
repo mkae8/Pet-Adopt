@@ -151,13 +151,13 @@ export default function ApplicationForm() {
           <div className="text-gray-500 ">
             /Таны бөглөсөн мэдээллийг амьтны эзэн харах болно/
           </div>
-          <div className="flex flex-col gap-5 ">
+          <div className="flex flex-wrap gap-5 justify-center">
             {questions.map((question, index) => {
               if (question.id == "question8") {
                 return (
                   <div
                     key={index}
-                    className="flex justify-start items-center gap-5"
+                    className="flex justify-start items-center gap-5 w-full md:w-[48%]"
                   >
                     <label>
                       {question.number}.{question.text}*
@@ -182,7 +182,7 @@ export default function ApplicationForm() {
               return (
                 <div
                   key={index}
-                  className="w-100vw flex flex-col gap-2 bg-orange-200 rounded-sm p-1 "
+                  className="flex flex-col gap-2 bg-orange-200 rounded-sm p-1 w-full md:w-[48%]"
                 >
                   <p>
                     {question.number}. {question.text}*
@@ -201,6 +201,7 @@ export default function ApplicationForm() {
               );
             })}
           </div>
+
           {errorMessage && (
             <div className="text-red-500 mt-2">
               <p className="text-xl font-semibold">{errorMessage}</p>

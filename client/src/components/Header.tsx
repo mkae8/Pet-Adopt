@@ -85,31 +85,41 @@ export default function Header() {
               <nav className="hidden  md:flex gap-5">
                 <Link
                   href="/"
-                  className="w-12 hover:nav_link nhome_link btn_text font-bold "
+                  className={`w-12 hover:nav_link ${
+                    pathname === "/" ? "text-orange-400" : ""
+                  } nhome_link btn_text font-bold `}
                 >
                   Нүүр
                 </Link>
                 <Link
                   href="/petcard?filter=бүгд"
-                  className="w-36 hover:nav_link nhome_link btn_text  font-bold"
+                  className={`w-36 hover:nav_link ${
+                    pathname === "/petcard" ? "text-orange-400" : ""
+                  } nhome_link btn_text  font-bold`}
                 >
                   Амьтан үрчлэх
                 </Link>
                 <Link
                   href={user.isSignedIn ? `pet-add-adoption` : `sign-in`}
-                  className="w-44 hover:nav_link nhome_link btn_text font-bold"
+                  className={`w-44 hover:nav_link ${
+                    pathname === "/pet-add-adoption" ? "text-orange-400" : ""
+                  } nhome_link btn_text font-bold`}
                 >
                   Амьтан үрчлүүлэх
                 </Link>
                 <Link
                   href="/adoptedpet"
-                  className="w-44 hover:nav_link nhome_link btn_text font-bold"
+                  className={`w-44 hover:nav_link ${
+                    pathname === "/adoptedpet" ? "text-orange-400" : ""
+                  } nhome_link btn_text font-bold`}
                 >
                   Үрчлэгдсэн амьтад
                 </Link>
                 <Link
                   href="/donation"
-                  className="w-44 hover:nav_link nhome_link btn_text font-bold"
+                  className={`w-44 hover:nav_link ${
+                    pathname === "/donation" ? "text-orange-400" : ""
+                  } nhome_link btn_text font-bold`}
                 >
                   Хандив
                 </Link>
