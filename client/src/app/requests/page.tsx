@@ -246,7 +246,7 @@ const Requests = () => {
       <div className=" mt-10 md:mt-28 text-3xl font-bold">
         Үрчлэгчийн мэдээлэл
       </div>
-      <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-2 md:mt-28 relative z-10">
+      <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-2 md:mt-16 relative z-10">
         <div className="container mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4">Хүсэлтүүд</h1>
           {loading ? (
@@ -264,7 +264,7 @@ const Requests = () => {
                     ? requests.toReversed().map((request, index) => (
                         <CarouselItem
                           key={index}
-                          className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3"
+                          className="pl-2 md:pl-4 lg:basis-1/3 md:basis-1/3"
                         >
                           <Card
                             className="w-full cursor-pointer hover:shadow-lg"
@@ -289,20 +289,20 @@ const Requests = () => {
                                 </div>
                               </CardTitle>
                             </CardHeader>
-                            <CardContent>
+                            <CardContent className="flex flex-col">
                               <Badge
                                 className={`${getStatusColor(
                                   request.petId.status
-                                )} text-white text-xs h-14 text-center hover:${getStatusColor(
+                                )} text-white text-xs h-14 flex justify-center text-center items-center hover:${getStatusColor(
                                   request.petId.status
                                 )}`}
                               >
                                 {request.petId.status}
                               </Badge>
-                              <p className="text-sm text-gray-500 h-12 text-wrap truncate">
+                              <p className="text-sm text-center pt-2 text-gray-500 h-12 text-wrap truncate">
                                 {request.userId.username}-ээс хүсэлт ирлээ.
                               </p>
-                              <Button className="mt-4 w-full">
+                              <Button className=" w-full">
                                 Хүсэлтийг харах
                               </Button>
                             </CardContent>
@@ -330,7 +330,7 @@ const Requests = () => {
                       <span>Хүсэлтийн дэлгэрэнгүй</span>
                     </DialogTitle>
                   </DialogHeader>
-                  <ScrollArea className="mt-6 max-h-[60vh] pr-4">
+                  <ScrollArea className="mt-6 max-h-[40vh] pr-4">
                     <div className="space-y-4">
                       {questions.map((question, index) => (
                         <motion.div
