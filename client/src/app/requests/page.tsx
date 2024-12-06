@@ -243,10 +243,10 @@ const Requests = () => {
           zIndex: -1,
         }}
       />
-      <div className=" mt-10 md:mt-28 text-3xl font-bold">
+      <div className=" mt-10 md:mt-16 text-3xl font-bold">
         Үрчлэгчийн мэдээлэл
       </div>
-      <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-2 md:mt-16 relative z-10">
+      <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-2 md:mt-14 relative z-10">
         <div className="container mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4">Хүсэлтүүд</h1>
           {loading ? (

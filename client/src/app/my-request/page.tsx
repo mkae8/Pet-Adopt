@@ -193,10 +193,10 @@ const Requests = () => {
           zIndex: -1,
         }}
       />
-      <div className=" mt-10 md:mt-28 text-3xl font-bold">
+      <div className=" mt-10 md:mt-16 text-3xl font-bold">
         Таны явуулсан хүсэлтүүд
       </div>
-      <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-2 md:mt-28 relative z-10">
+      <div className="w-[350px] sm:w-[400px] lg:w-[950px] md:w-[600px]  rounded-xl mt-2 md:mt-14 relative z-10">
         <div className="container mx-auto p-4">
           <h1 className="text-2xl font-bold mb-4">Хүсэлтүүд</h1>
           {loading ? (
@@ -214,7 +214,7 @@ const Requests = () => {
                     ? requests.toReversed().map((request, index) => (
                         <CarouselItem
                           key={index}
-                          className="pl-2 md:pl-4 lg:basis-1/5 md:basis-1/3"
+                          className="pl-2 md:pl-4 lg:basis-1/3 md:basis-1/3"
                         >
                           <Card
                             className="w-full cursor-pointer hover:shadow-lg"
@@ -239,20 +239,20 @@ const Requests = () => {
                                 </div>
                               </CardTitle>
                             </CardHeader>
-                            <CardContent>
+                            <CardContent className="flex flex-col">
                               <Badge
                                 className={`${getStatusColor(
                                   request.petId.status
-                                )} text-white text-xs h-14 text-center hover:${getStatusColor(
+                                )} text-white text-xs h-14 flex justify-center text-center hover:${getStatusColor(
                                   request.petId.status
                                 )}`}
                               >
                                 {request.petId.status}
                               </Badge>
-                              <p className="text-sm text-gray-500 h-12 text-wrap truncate">
+                              <p className="text-sm pt-2 text-gray-500 text-center h-12 text-wrap truncate">
                                 {request.ownerId.username}- руу явуулсан хүсэлт.
                               </p>
-                              <Button className="mt-4 w-full">
+                              <Button className="w-full">
                                 Хүсэлтийг харах
                               </Button>
                             </CardContent>
@@ -274,7 +274,7 @@ const Requests = () => {
 
           <AnimatePresence>
             <Dialog open={selectedRequest !== null} onOpenChange={closeModal}>
-              <DialogContent className="z-[100] h-[85%] w-full md:min-h-[800px] max-w-[400px] rounded-md sm:max-w-[600px] lg:max-w-[700px] min-w-[300px]">
+              <DialogContent className="z-[100] w-full max-w-[400px] rounded-md sm:max-w-[600px] lg:max-w-[700px] min-w-[300px]">
                 <DialogHeader>
                   <DialogTitle>{selectedRequest?.userId.username}</DialogTitle>
                   <div>
@@ -287,7 +287,7 @@ const Requests = () => {
                     </Badge>
                   </div>
                 </DialogHeader>
-                <ScrollArea className="mt-6 max-h-[60vh] pr-4">
+                <ScrollArea className="mt-6 max-h-[40vh] pr-4">
                   <div className="space-y-4">
                     {questions.map((question, index) => (
                       <motion.div
