@@ -199,8 +199,10 @@ export default function DonationSection() {
 
                 <TabsContent value="qr">
                   {isDonationPaid ? (
-                    <div className="text-center">
-                      Шилжүүлэг амжилттай. Таньд баярлалаа.{" "}
+                    <div className="flex flex-col gap-2">
+                      <div className="text-center text-xl font-bold flex">
+                        Шилжүүлэг амжилттай. Таньд баярлалаа.
+                      </div>
                       <Button
                         onClick={() => {
                           router.push("/");
