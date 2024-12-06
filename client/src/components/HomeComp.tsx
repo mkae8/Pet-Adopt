@@ -297,11 +297,11 @@ export default function HomePage() {
                 Нохой арчлах зарим зөвлөгөө
               </p>
               <img
-                className=" w-[200px] md:w-[500px] md:object-contain relative"
+                className=" w-[100px] md:w-[500px] md:object-contain relative"
                 src="./nohoii.png"
                 alt="Interesting Animal Image"
               />
-              <div className="w-[100px] md:w-[360px] absolute top-[160px] md:top-52 right-[290px] md:right-[550px] flex ">
+              <div className="w-[100px] md:w-[360px] absolute top-[160px] md:top-52 right-[250px] md:right-[550px] flex ">
                 <div className="text-xs md:text-xl">
                   Дасгал хөдөлгөөн, оюун ухаан хөгжил
                 </div>
@@ -309,7 +309,7 @@ export default function HomePage() {
                   <FaDog className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaDog>
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[220px] md:top-[360px] right-[310px] md:right-[600px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[220px] md:top-[360px] right-[270px] md:right-[600px] flex">
                 <div className="text-xs md:text-xl">
                   Эрүүл мэндийн үзлэг, вакцинжуулалт
                 </div>
@@ -317,7 +317,7 @@ export default function HomePage() {
                   <FaStethoscope className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaStethoscope>
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[270px] md:top-[480px] right-[295px] md:right-[560px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[270px] md:top-[480px] right-[250px] md:right-[520px] flex">
                 <div className="text-xs md:text-xl">
                   Хоол тэжээлд анхаарал тавих
                 </div>
@@ -325,7 +325,7 @@ export default function HomePage() {
                   <FaBone className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaBone>
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[270px] md:top-[480px] left-[295px] md:left-[570px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[270px] md:top-[480px] left-[240px] md:left-[570px] flex">
                 <div className="h-12 w-12  rounded-full flex justify-center items-center ">
                   <IoEarSharp className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></IoEarSharp>
                 </div>
@@ -333,7 +333,7 @@ export default function HomePage() {
                   Биеийн халуун, орчны тохиромжтой байдал
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[220px] md:top-[350px] left-[300px] md:left-[600px] flex">
+              <div className="w-[100px] md:w-[360px] absolute top-[220px] md:top-[350px] left-[250px] md:left-[600px] flex">
                 <div className="h-12 w-12  rounded-full flex justify-center items-center">
                   <GiFrontTeeth className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></GiFrontTeeth>
                 </div>
@@ -341,7 +341,7 @@ export default function HomePage() {
                   Тамхи, химийн бодисоос хол байлгах
                 </div>
               </div>
-              <div className="w-[100px] md:w-[360px] absolute top-[170px] md:top-[220px] left-[290px]  md:left-[550px] flex ">
+              <div className="w-[100px] md:w-[360px] absolute top-[170px] md:top-[220px] left-[240px]  md:left-[550px] flex ">
                 <div className="h-12 w-12  rounded-full flex justify-center items-center  ">
                   <FaPaw className="h-5 w-5 md:h-10 md:w-10 text-orange-500"></FaPaw>
                 </div>
