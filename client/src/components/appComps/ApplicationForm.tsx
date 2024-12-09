@@ -124,9 +124,9 @@ export default function ApplicationForm() {
       setLoading(false);
       toast({
         title: "Амжилттай",
-        description: "мэдээлэл илгээлээ",
+        description: "Хүсэлт илгээгдлээ. Таны мэйл рүү хариу иртэл хүлээнэ үү",
       });
-      push("/");
+      push("/petcard?filter=бүгд");
     } catch (error) {
       toast({
         title: "aldaa zaalaa",
@@ -210,13 +210,13 @@ export default function ApplicationForm() {
           <div className=" flex justify-between w-full">
             <Button
               onClick={back}
-              className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
+              className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[150px]"
             >
               Буцах
             </Button>
             <Button
               onClick={submit}
-              className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
+              className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[150px]"
             >
               Үргэлжлүүлэх
             </Button>

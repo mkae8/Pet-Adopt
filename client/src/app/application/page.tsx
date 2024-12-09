@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import ApplicationForm from "../../components/appComps/ApplicationForm";
 
-const AppQeustions = () => {
+const Application = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-around relative bg-[url('https://i.pinimg.com/736x/f0/3d/f4/f03df4a95910ed3098b63c74a731fefa.jpg')]">
       <div
@@ -21,4 +21,4 @@ const AppQeustions = () => {
   );
 };
 
-export default AppQeustions;
+export default Application;
