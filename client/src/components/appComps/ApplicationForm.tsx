@@ -1,22 +1,15 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
 import { useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useUser } from "@clerk/nextjs";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 import { Loading } from "../Loading";
+
+import { Button } from "@/components/ui/button";
+import { QuestionSelect } from "../mkae/QuestionSelect";
+import { QuestionInput } from "../mkae/QuestionInput";
 
 interface Question {
   id: string;
@@ -24,48 +17,46 @@ interface Question {
   text: string;
 }
 
+const questions: Question[] = [
+  {
+    id: "question1",
+    number: "1",
+    text: "Танд яагаад амьтан үрчлэн авах сонирхол төрсөн бэ?",
+  },
+  { id: "question2", number: "2", text: "Таны амьдрах орчин ямар вэ?" },
+  { id: "question3", number: "3", text: "Танд өөр амьтад бий юу?" },
+  {
+    id: "question4",
+    number: "4",
+    text: "Өмнө нь амьтан тэжээж байсан уу? Хэрэв тийм бол юу болсон бэ?",
+  },
+  {
+    id: "question5",
+    number: "5",
+    text: "Өдөр бүр амьтанд хэр их цаг зарцуулах боломжтой вэ?",
+  },
+  {
+    id: "question6",
+    number: "6",
+    text: "Хэрэв та аялалд гарах эсвэл удаан хугацаагаар хол байх шаардлага гарвал амьтандаа хэрхэн анхаарал тавих төлөвлөгөөтэй вэ?",
+  },
+  {
+    id: "question7",
+    number: "7",
+    text: "Амьтны хоол, малын эмчид үзүүлэх, яаралтай тусламж зэрэг зардлуудад санхүүгийн хувьд бэлтгэлтэй юу?",
+  },
+  {
+    id: "question8",
+    number: "8",
+    text: "Танай өрхөд хүүхэд эсвэл бусад хараат хүн байгаа уу?",
+  },
+];
+
 export default function ApplicationForm() {
   const paramName = useSearchParams();
   const petId: string | null = paramName.get("petId");
   const router = useRouter();
-  const { push } = useRouter();
   const [loading, setLoading] = useState(false);
-
-  const questions: Question[] = [
-    {
-      id: "question1",
-      number: "1",
-      text: "Танд яагаад амьтан үрчлэн авах сонирхол төрсөн бэ?",
-    },
-    { id: "question2", number: "2", text: "Таны амьдрах орчин ямар вэ?" },
-    { id: "question3", number: "3", text: "Танд өөр амьтад бий юу?" },
-    {
-      id: "question4",
-      number: "4",
-      text: "Өмнө нь амьтан тэжээж байсан уу? Хэрэв тийм бол юу болсон бэ?",
-    },
-    {
-      id: "question5",
-      number: "5",
-      text: "Өдөр бүр амьтанд хэр их цаг зарцуулах боломжтой вэ?",
-    },
-    {
-      id: "question6",
-      number: "6",
-      text: "Хэрэв та аялалд гарах эсвэл удаан хугацаагаар хол байх шаардлага гарвал амьтандаа хэрхэн анхаарал тавих төлөвлөгөөтэй вэ?",
-    },
-    {
-      id: "question7",
-      number: "7",
-      text: "Амьтны хоол, малын эмчид үзүүлэх, яаралтай тусламж зэрэг зардлуудад санхүүгийн хувьд бэлтгэлтэй юу?",
-    },
-    {
-      id: "question8",
-      number: "8",
-      text: "Танай өрхөд хүүхэд эсвэл бусад хараат хүн байгаа уу?",
-    },
-  ];
-
   const { user } = useUser();
   const { toast } = useToast();
 
@@ -77,17 +68,8 @@ export default function ApplicationForm() {
   });
 
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [selectedValue, setSelectedValue] = useState<string>("");
 
-  const handleSelectChange = (value: string) => {
-    setSelectedValue(value);
-    setInputValues((prev) => ({
-      ...prev,
-      question8: value,
-    }));
-  };
-
-  const handleInputChange = (id: string, value: any) => {
+  const handleInputChange = (id: string, value: string) => {
     setInputValues((prev) => ({
       ...prev,
       [id]: value,
@@ -99,21 +81,15 @@ export default function ApplicationForm() {
   };
 
   const submit = async () => {
-    setLoading(false);
+    setLoading(true);
     for (const question of questions) {
       const inputValue = inputValues[question.id];
 
-      if (
-        question.id !== "question8" &&
-        (inputValue === "" || inputValue === undefined || selectedValue === "")
-      ) {
+      if (inputValue === "" || inputValue === undefined) {
         setErrorMessage("Бүх асуултад хариулт бичнэ үү!");
+        setLoading(false);
         return;
       }
-
-      setInputValues((prev) => ({
-        ...prev,
-      }));
     }
     setErrorMessage("");
 
@@ -126,11 +102,11 @@ export default function ApplicationForm() {
         title: "Амжилттай",
         description: "мэдээлэл илгээлээ",
       });
-      push("/");
+      router.push("/");
     } catch (error) {
       toast({
-        title: "aldaa zaalaa",
-        description: "dahin oroldnu ",
+        title: "Алдаа гарлаа",
+        description: "Дахин оролдоно уу",
       });
       setLoading(false);
     }
@@ -145,81 +121,53 @@ export default function ApplicationForm() {
           </div>
         </div>
       )}
-      <div className="flex border-solid border-2 rounded-2xl ">
-        <div className="flex flex-col items-center gap-4 rounded-2xl p-6 opacity-95 bg-white ">
-          <div className=" mt-5 text-3xl font-bold">Үрчлэгчийн мэдээлэл</div>
-          <div className="text-gray-500 ">
-            /Таны бөглөсөн мэдээллийг амьтны эзэн харах болно/
-          </div>
-          <div className="flex flex-wrap gap-5 justify-center">
-            {questions.map((question, index) => {
-              if (question.id == "question8") {
-                return (
-                  <div
-                    key={index}
-                    className="flex justify-start items-center gap-5 w-full md:w-[48%]"
-                  >
-                    <label>
-                      {question.number}.{question.text}*
-                    </label>
-                    <Select
-                      value={selectedValue}
-                      onValueChange={handleSelectChange}
-                    >
-                      <SelectTrigger className="w-[180px]">
-                        <SelectValue placeholder="Сонгох" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectItem value="Тийм">Тийм</SelectItem>
-                          <SelectItem value="Үгүй">Үгүй</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                );
-              }
-              return (
-                <div
-                  key={index}
-                  className="flex flex-col gap-2 bg-orange-200 rounded-sm p-1 w-full md:w-[48%]"
-                >
-                  <p>
-                    {question.number}. {question.text}*
-                  </p>
-                  <Input
-                    className="border-0 bg-orange-100"
-                    id={`input-${question.text}`}
-                    value={String(inputValues[question.id] || "")}
-                    onChange={(e) =>
-                      handleInputChange(question.id, e.target.value)
-                    }
-                    required
-                    type="text"
+      <div className="container mx-auto px-4 py-8 bg-white border rounded-lg">
+        <div className="max-w-4xl mx-auto  overflow-hidden ">
+          <div className="p-8">
+            <h1 className="text-3xl font-bold text-center mb-2">
+              Үрчлэгчийн мэдээлэл
+            </h1>
+            <p className="text-gray-500 text-center mb-8">
+              /Таны бөглөсөн мэдээллийг амьтны эзэн харах болно/
+            </p>
+            <div className="grid gap-6 md:grid-cols-2">
+              {questions.map((question) =>
+                question.id === "question8" ? (
+                  <QuestionSelect
+                    key={question.id}
+                    question={question}
+                    value={inputValues[question.id] as string}
+                    onChange={(value) => handleInputChange(question.id, value)}
                   />
-                </div>
-              );
-            })}
-          </div>
-
-          {errorMessage && (
-            <div className="text-red-500 mt-2">
-              <p className="text-xl font-semibold">{errorMessage}</p>
+                ) : (
+                  <QuestionInput
+                    key={question.id}
+                    question={question}
+                    value={inputValues[question.id] as string}
+                    onChange={(value) => handleInputChange(question.id, value)}
+                  />
+                )
+              )}
             </div>
-          )}
-          <div className=" flex justify-between w-full">
-            <Button
-              onClick={back}
-              className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
-            >
-              Буцах
-            </Button>
-            <Button
-              onClick={submit}
-              className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded w-[200px]"
-            >
-              Үргэлжлүүлэх
-            </Button>
+            {errorMessage && (
+              <div className="text-red-500 mt-4 text-center">
+                <p className="text-xl font-semibold">{errorMessage}</p>
+              </div>
+            )}
+            <div className="flex justify-between mt-8">
+              <Button
+                onClick={back}
+                className="bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded"
+              >
+                Буцах
+              </Button>
+              <Button
+                onClick={submit}
+                className="bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded"
+              >
+                Үргэлжлүүлэх
+              </Button>
+            </div>
           </div>
         </div>
       </div>
